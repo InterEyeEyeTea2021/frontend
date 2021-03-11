@@ -1,0 +1,38 @@
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background-color: $background-alt;
+  .wrapper {
+    flex-grow: 1;
+    max-width: 1000px;
+    display: flex;
+    padding: 0.5rem 2rem;
+    align-items: center;
+    justify-content: space-between;
+
+    @include sm {
+      max-width: 80vw;
+      flex-direction: column;
+    }
+  }
+  ul {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    li {
+      cursor: pointer;
+      margin: 0 1rem;
+      padding: 1rem;
+      a {
+        text-decoration: none;
+        color: $text;
+        &.active {
+          color: $primary;
+          font-weight: 600;
+        }
+      }
+    }
+  }
+}
