@@ -1,0 +1,71 @@
+.authform {
+  display: flex;
+  justify-content: space-around;
+  max-width: 1000px;
+  margin: 0 auto;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  margin-bottom: 4rem;
+
+  @include sm {
+    flex-direction: column;
+
+    h1 {
+      margin-top: 2rem !important;
+    }
+
+    .illus {
+      img {
+        max-width: 80vw;
+      }
+    }
+  }
+
+  h1 {
+    color: $primary;
+    margin: 0 0 1rem;
+  }
+  form {
+    display: flex;
+    flex-direction: column;
+    input,
+    select {
+      outline: 0;
+      background-color: $background-alt;
+      padding: 0.5rem 1rem;
+      margin: 0.5rem 0;
+      border: none;
+      border-radius: 4px;
+      font-size: 20px;
+      color: $text;
+      font-family: "Quicksand", sans-serif;
+      &:active,
+      &:focus {
+        background-color: darken($background-alt, 3%);
+        border: none;
+      }
+      &[type="submit"] {
+        background-color: $primary;
+        color: $background;
+        width: max-content;
+        padding: 0.5rem 2rem;
+        cursor: pointer;
+        transition: all 0.25s ease-in-out;
+
+        margin: 1rem 0 0;
+        &:disabled {
+          opacity: 0.5;
+          background-color: grey;
+        }
+        &:hover {
+          transform: scale(1.05) translateY(-4px);
+          box-shadow: 0px 10px 20px rgba($color: $text, $alpha: 0.5);
+        }
+        &:active {
+          transform: scale(0.95) translateY(0);
+        }
+      }
+    }
+  }
+}
