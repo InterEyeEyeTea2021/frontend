@@ -9,6 +9,7 @@ import Home from "./views/Home";
 import Dashboard from "./views/Dashboard";
 import Login from "./views/Login";
 import Register from "./views/Register";
+import Payments from "./views/Payments"
 
 import "./styles/main.scss";
 
@@ -28,6 +29,9 @@ function App() {
             <PrivateRoute path="/dashboard">
               <Dashboard />
             </PrivateRoute>
+            <Route path="/payments">
+              <Payments />
+            </Route>
             <Route path="/">
               <Home />
             </Route>
