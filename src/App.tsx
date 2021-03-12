@@ -11,6 +11,8 @@ import Login from "./views/Login";
 import Register from "./views/Register";
 
 import "./styles/main.scss";
+import TenderForm from "./views/TenderForm";
+import TenderStatus from "./views/TenderStatus";
 
 function App() {
   return (
@@ -28,6 +30,13 @@ function App() {
             <PrivateRoute path="/dashboard">
               <Dashboard />
             </PrivateRoute>
+            <Route path="/tender/create">
+              <TenderForm />
+            </Route>
+            <Route path="/tender/status">
+              <TenderStatus />
+            </Route>
+
             <Route path="/">
               <Home />
             </Route>
