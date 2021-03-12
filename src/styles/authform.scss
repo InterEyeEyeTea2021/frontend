@@ -29,6 +29,10 @@
   form {
     display: flex;
     flex-direction: column;
+    span {
+      margin: 1rem 0;
+    }
+
     input,
     select {
       outline: 0;
@@ -39,13 +43,14 @@
       border-radius: 4px;
       font-size: 20px;
       color: $text;
-      font-family: "Quicksand", sans-serif;
+      font-family: 'Quicksand', sans-serif;
       &:active,
       &:focus {
         background-color: darken($background-alt, 3%);
         border: none;
       }
-      &[type="submit"] {
+      &[type='submit'],
+      &[type='button'] {
         background-color: $primary;
         color: $background;
         width: max-content;
