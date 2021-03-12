@@ -5,6 +5,8 @@ import StepOne from '../component/StepOne';
 import { stat } from 'node:fs';
 import StepTwo from '../component/StepTwo';
 import StepThree from '../component/StepThree';
+import Step2 from '../component/Step2';
+import Step3 from '../component/Step3';
 
 function Register() {
   let auth = useAuth();
@@ -16,16 +18,24 @@ function Register() {
     name: 'Name',
     username: 'Username',
     phone: '+91 XXXX XX XXXX',
-    type: '',
+    type: 'SHG',
     nameSHG: 'Name of SHG',
     productionCap: 'Production Capacity',
     orderSize: 'Order Size',
-    contact: '+91 XXXX XX XXXX',
-    industryType: '',
+    contactSHG: '+91 XXXX XX XXXX',
+    industryTypeSHG: '',
+    members: 'No members added yet',
     memberName: 'Name',
     memberAadhar: 'Aadhar',
     memberContact: '+91 XXXX XX XXXX',
     skill: '',
+
+    address: 'Address',
+    productSold: 'Products Sold',
+    contactSME: '+91 XXXX XX XXXX',
+    industryTypeSME: '',
+    accountNumber: 'Account Number',
+    branchCode: 'IFSC Code',
   });
 
   const [step, setStep] = useState(1);
@@ -88,14 +98,15 @@ function Register() {
                 nameSHG={state.nameSHG}
                 productionCap={state.productionCap}
                 orderSize={state.orderSize}
-                contact={state.contact}
-                industryType={state.industryType}
+                contact={state.contactSHG}
+                industryType={state.industryTypeSHG}
                 type={state.type}
                 currentStep={step}
                 handleChange={handleChange}
               />
 
               <StepThree
+                members={state.members}
                 memberName={state.memberName}
                 memberAadhar={state.memberAadhar}
                 memberContact={state.memberContact}
@@ -109,8 +120,40 @@ function Register() {
             ''
           )}
 
-          <input type='button' value='Next' onClick={handleNext} />
-          {step > 1 ? (
+          {state.type === 'SME' ? (
+            <>
+              <Step2
+                address={state.address}
+                productSold={state.productSold}
+                contact={state.contactSME}
+                industryType={state.industryTypeSME}
+                type={state.type}
+                currentStep={step}
+                handleChange={handleChange}
+              />
+
+              <Step3
+                accountNumber={state.accountNumber}
+                branchCode={state.branchCode}
+                type={state.type}
+                currentStep={step}
+                handleChange={handleChange}
+              />
+            </>
+          ) : (
+            ''
+          )}
+
+          {step < 4 ? (
+            <>
+              <input type='button' value='Next' onClick={handleNext} />
+              <span>{step}/3</span>
+            </>
+          ) : (
+            ''
+          )}
+
+          {step > 1 && step < 4 ? (
             <input
               type='button'
               className='back'
@@ -121,7 +164,11 @@ function Register() {
             ''
           )}
 
-          <span>{step}/3</span>
+          {step === 4 ? (
+            <input type='submit' value='Verify' onClick={handleNext} />
+          ) : (
+            ''
+          )}
 
           <hr />
           <span>If you have an account, please login</span>
