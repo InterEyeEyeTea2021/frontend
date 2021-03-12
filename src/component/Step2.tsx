@@ -3,23 +3,21 @@ import React, { useState } from 'react';
 import { useAuth, registerForm } from '../hooks/Auth';
 
 interface Props {
-	members: string;
-  memberName: string;
-  memberContact: string;
-  memberAadhar: string;
-  skill: string;
+	address: string;
+	productSold: string;
+	contact: string;
+	industryType: string;
   type: string;
   currentStep: number;
 
   handleChange: (e: any) => void;
 }
 
-export default function StepThree({
-	members,
-  memberName,
-  memberAadhar,
-  memberContact,
-  skill,
+export default function Step2({
+	address,
+	productSold,
+	contact,
+  industryType,
   type,
   currentStep,
   handleChange,
@@ -29,7 +27,7 @@ export default function StepThree({
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState('');
 
-  if (currentStep != 3) return null;
+  if (currentStep != 2) return null;
   // const onSubmit = (data: registerForm) => {
   //   setIsLoading(true);
   //   // console.log("Submitted Form Data: ", data);
@@ -47,42 +45,33 @@ export default function StepThree({
 
   return (
     <>
-      <span className='label'> Members </span>
+      <span className='label'> Address </span>
       <input
-        name='members'
-        placeholder={members}
-        onChange={(e) => handleChange(e)}
-      />
-      <span className='label'> Member Name </span>
-			
-      <input
-        name='memberName'
-        placeholder={memberName}
+        name='address'
+        placeholder={address}
         onChange={(e) => handleChange(e)}
       />
 
-      <span className='label'> Member Aadhar </span>
+      <span className='label'> Product Sold </span>
       <input
-        name='memberAadhar'
-        placeholder={memberAadhar}
+        name='productSold'
+        placeholder={productSold}
         onChange={(e) => handleChange(e)}
       />
 
-      <span className='label'> Contact Number </span>
+      <span className='label'> Contact Number (WhatsApp) </span>
       <input
-        name='memberContact'
-        placeholder={memberContact}
+        name='contact'
+        placeholder={contact}
         onChange={(e) => handleChange(e)}
       />
 
-      <span className='label'> Skill </span>
+      <span className='label'> Industry Type </span>
       <input
-        name='skill'
-        placeholder={skill}
+        name='industryType'
+        placeholder={industryType}
         onChange={(e) => handleChange(e)}
       />
-
-      <input type='button' value='Add Member' />
     </>
   );
 }
