@@ -27,7 +27,7 @@ export default function TenderForm() {
   ];
 
   return (
-    <div className="authform">
+    <div className="main_content">
       <h1>Create Tender</h1>
       <div className="form">
         <h2>Tender Details</h2>
@@ -121,11 +121,7 @@ export default function TenderForm() {
 
           <h2>Milestones</h2>
 
-          <ol
-            style={{
-              maxWidth: 200,
-            }}
-          >
+          <ol>
             {milestones.map((m, index) => (
               <li>
                 <input

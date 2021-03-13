@@ -1,0 +1,266 @@
+html {
+  scrollbar-color: var(--scrollbar-thumb) var(--background-body);
+  scrollbar-width: thin;
+}
+
+.main_content {
+  margin: 2rem 1rem;
+  max-width: 100vw;
+
+  label,
+  .label {
+    margin-bottom: 0rem;
+  }
+
+  ol,
+  ul {
+    max-width: 100vw;
+
+    li input {
+      max-width: 93%;
+    }
+  }
+
+  .detail {
+    margin: 1rem 0;
+    .label {
+      font-size: 1rem;
+      margin-bottom: 0;
+    }
+    .value {
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+  }
+
+  hr {
+    height: 8px;
+    border: none;
+    background-color: $background-alt;
+    margin: 2rem -3rem;
+  }
+
+  .call_box {
+    display: flex;
+    align-items: center;
+    width: calc(100vw - 2rem);
+    // justify-content: space-between;
+    img {
+      width: 64px;
+      height: 64px;
+      margin-right: 1rem;
+      border-radius: 12px;
+    }
+    .details {
+      flex-grow: 10;
+    }
+    h1 {
+      font-size: 1.5rem;
+      margin: 0 0 0.5rem;
+    }
+    p {
+      margin: 0;
+    }
+    .call {
+      width: 64px;
+      height: 64px;
+      border-radius: 12px;
+      background-color: $green;
+      svg {
+        stroke: white;
+        padding: 14px;
+        width: 36px;
+        height: 36px;
+      }
+    }
+  }
+}
+
+button,
+.button,
+input,
+textarea {
+  transition: background-color var(--animation-duration) linear,
+    border-color var(--animation-duration) linear,
+    color var(--animation-duration) linear,
+    box-shadow var(--animation-duration) linear,
+    transform var(--animation-duration) ease;
+}
+
+button,
+.button,
+select,
+input[type="submit"],
+input[type="reset"],
+input[type="button"],
+input[type="checkbox"],
+input[type="range"],
+input[type="radio"] {
+  cursor: pointer;
+}
+
+input:not([type="checkbox"]):not([type="radio"]),
+select {
+  display: block;
+}
+
+input,
+button,
+.button,
+textarea,
+select {
+  color: var(--form-text);
+  background-color: $background-alt;
+  font-family: inherit;
+  font-size: inherit;
+  margin-right: 6px;
+  margin-top: 6px;
+  margin-bottom: 6px;
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  outline: none;
+  display: inline-block;
+}
+
+button,
+.button {
+  border: none;
+  background-color: $primary;
+  color: white;
+  text-decoration: none;
+}
+
+input[type="color"] {
+  min-height: 2rem;
+  padding: 8px;
+  cursor: pointer;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+  height: 1em;
+  width: 1em;
+}
+
+input[type="radio"] {
+  border-radius: 100%;
+}
+
+input {
+  vertical-align: top;
+}
+
+label {
+  vertical-align: middle;
+  margin-bottom: 4px;
+  display: inline-block;
+}
+
+input:not([type="checkbox"]):not([type="radio"]),
+input[type="range"],
+select,
+button,
+.button,
+textarea {
+  -webkit-appearance: none;
+}
+
+textarea {
+  display: block;
+  margin-right: 0;
+  box-sizing: border-box;
+  resize: vertical;
+}
+
+textarea:not([cols]) {
+  width: 100%;
+}
+
+textarea:not([rows]) {
+  min-height: 40px;
+  height: 140px;
+}
+
+select {
+  background: $background-alt;
+  padding-right: 35px;
+}
+
+select::-ms-expand {
+  display: none;
+}
+
+select[multiple] {
+  padding-right: 10px;
+  background-image: none;
+  overflow-y: auto;
+}
+
+button,
+.button,
+input[type="submit"],
+input[type="reset"],
+input[type="button"] {
+  padding-right: 30px;
+  padding-left: 30px;
+  width: max-content;
+}
+
+button:hover,
+.button:hover,
+input[type="submit"]:hover,
+input[type="reset"]:hover,
+input[type="button"]:hover {
+  background: var(--button-hover);
+}
+
+input:focus,
+select:focus,
+button:focus,
+.button:focus,
+textarea:focus {
+  box-shadow: 0 0 0 2px var(--focus);
+}
+
+input[type="checkbox"]:active,
+input[type="radio"]:active,
+input[type="submit"]:active,
+input[type="reset"]:active,
+input[type="button"]:active,
+input[type="range"]:active,
+button:active,
+.button:active {
+  transform: translateY(2px);
+}
+
+input:disabled,
+select:disabled,
+button:disabled,
+.button:disabled,
+textarea:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+::placeholder {
+  color: var(--form-placeholder);
+}
+
+fieldset {
+  border: 1px var(--focus) solid;
+  border-radius: 6px;
+  margin: 0;
+  margin-bottom: 12px;
+  padding: 10px;
+}
+
+legend {
+  font-size: 0.9em;
+  font-weight: 600;
+}
+
+::selection {
+  background-color: var(--selection);
+  color: var(--text-bright);
+}

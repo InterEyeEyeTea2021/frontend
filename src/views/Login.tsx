@@ -38,7 +38,7 @@ function Login() {
   };
 
   return (
-    <div className="authform login">
+    <div className="main_content login">
       <div className="form">
         <h1>Login</h1>
         <div className="error">{message}</div>

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import * as Icon from "react-feather";
 
 export default function BidForm() {
   const { register, handleSubmit, errors } = useForm();
@@ -29,16 +30,18 @@ export default function BidForm() {
   };
 
   return (
-    <div className="authform">
-      <h1>Bid Status</h1>
+    <div className="main_content">
+      <h1>Create Bid</h1>
       <div className="form" style={{ width: "90%" }}>
-        <div className="sme-details">
-          <h1>Box</h1>
-          <div>
+        <div className="sme-details call_box">
+          <img src="https://i.imgur.com/khUO2T7.png" alt="" />
+          <div className="details">
             <h1>SHG NAME</h1>
-            <h2>XXXX XX XXXX</h2>
+            <p>XXXX XX XXXX</p>
           </div>
-          <h1>Call icon</h1>
+          <div className="call">
+            <Icon.PhoneCall></Icon.PhoneCall>
+          </div>
         </div>
 
         <h2>Tender Details</h2>
@@ -102,6 +105,7 @@ export default function BidForm() {
                 required: false,
               })}
             />
+            <br />
           </div>
         ))}
 
