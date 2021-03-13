@@ -6,7 +6,8 @@ import Navbar from "./component/Navbar";
 import Footer from "./component/Footer";
 
 import Home from "./views/Home";
-import Dashboard from "./views/Dashboard";
+import DashboardSME from "./views/DashboardSME";
+import DashboardSHG from "./views/DashboardSHG";
 import Login from "./views/Login";
 import Register from "./views/Register";
 import SMEPayments from "./views/SMEPayments"
@@ -35,9 +36,12 @@ function App() {
             <Route exact path="/register">
               <Register />
             </Route>
-            <PrivateRoute exact path="/dashboard">
-              <Dashboard />
-            </PrivateRoute>
+            <Route exact path="/dashboard/sme">
+              <DashboardSME />
+            </Route>
+            <Route exact path="/dashboard/shg">
+              <DashboardSHG />
+            </Route>
 
             <Route exact path="/tender/create">
               <TenderForm />
