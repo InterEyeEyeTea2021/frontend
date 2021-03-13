@@ -80,7 +80,7 @@ function RequestPayment() {
                                 <h1>{p.name}</h1>
                                 <h2>{p.status[0].toUpperCase() + p.status.slice(1)}</h2>
                             </div>
-                            <button>{(p.status == "pending") ? "Pay": "Details"}</button>
+                            <button>Details</button>
                         </div> 
                     )
                 )}
