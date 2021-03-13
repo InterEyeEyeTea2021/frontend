@@ -1,5 +1,6 @@
 import { AxiosResponse } from 'axios';
 import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { useAuth, registerForm } from '../hooks/Auth';
 
 interface Props {
@@ -8,10 +9,10 @@ interface Props {
   contact: string;
   type: string;
   orderSize: string;
-  industryType: string;
+  industryType: string[];
   currentStep: number;
 
-  handleChange: (e: any) => void;
+  handleNextSubmit: (e: any) => void;
 }
 
 export default function StepTwo({
@@ -22,10 +23,11 @@ export default function StepTwo({
   type,
   industryType,
   currentStep,
-  handleChange,
+  handleNextSubmit,
 }: Props) {
   let auth = useAuth();
   const [isRegistrered, setIsRegistered] = useState(false);
+  const { register, handleSubmit, errors } = useForm();
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState('');
 
@@ -46,41 +48,46 @@ export default function StepTwo({
   // };
 
   return (
-    <>
+    <form onSubmit={handleSubmit(handleNextSubmit)}>
       <span className='label'> Name of SHG </span>
       <input
         name='nameSHG'
         placeholder={nameSHG}
-        onChange={(e) => handleChange(e)}
+        ref={register({ required: false })}
       />
 
       <span className='label'> Prodcution Capacity </span>
       <input
         name='productionCap'
         placeholder={productionCap}
-        onChange={(e) => handleChange(e)}
+        ref={register({ required: false })}
       />
 
       <span className='label'> Order Size </span>
       <input
         name='orderSize'
         placeholder={orderSize}
-        onChange={(e) => handleChange(e)}
+        ref={register({ required: false })}
       />
 
       <span className='label'> Contact Number (WhatsApp) </span>
       <input
         name='contact'
         placeholder={contact}
-        onChange={(e) => handleChange(e)}
+        ref={register({ required: false })}
       />
 
       <span className='label'> Industry Type </span>
-      <input
-        name='industryType'
-        placeholder={industryType}
-        onChange={(e) => handleChange(e)}
-      />
-    </>
+      {
+        <select name='industryType' ref={register({ required: false })}>
+          {industryType.map((type) => (
+            <option> {type} </option>
+          ))}
+        </select>
+      }
+
+      <input type='submit' value='Next' />
+      <span> Steps: {currentStep}/3</span>
+    </form>
   );
 }

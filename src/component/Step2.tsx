@@ -1,28 +1,30 @@
 import { AxiosResponse } from 'axios';
 import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { useAuth, registerForm } from '../hooks/Auth';
 
 interface Props {
-	address: string;
-	productSold: string;
-	contact: string;
-	industryType: string;
+  address: string;
+  productSold: string;
+  contact: string;
+  industryType: string[];
   type: string;
   currentStep: number;
 
-  handleChange: (e: any) => void;
+  handleNextSubmit: (e: any) => void;
 }
 
 export default function Step2({
-	address,
-	productSold,
-	contact,
+  address,
+  productSold,
+  contact,
   industryType,
   type,
   currentStep,
-  handleChange,
+  handleNextSubmit,
 }: Props) {
   let auth = useAuth();
+  const { register, handleSubmit, errors } = useForm();
   const [isRegistrered, setIsRegistered] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState('');
@@ -44,34 +46,39 @@ export default function Step2({
   // };
 
   return (
-    <>
+    <form onSubmit={handleSubmit(handleNextSubmit)}>
       <span className='label'> Address </span>
       <input
         name='address'
         placeholder={address}
-        onChange={(e) => handleChange(e)}
+        ref={register({ required: false })}
       />
 
       <span className='label'> Product Sold </span>
       <input
         name='productSold'
         placeholder={productSold}
-        onChange={(e) => handleChange(e)}
+        ref={register({ required: false })}
       />
 
       <span className='label'> Contact Number (WhatsApp) </span>
       <input
         name='contact'
         placeholder={contact}
-        onChange={(e) => handleChange(e)}
+        ref={register({ required: false })}
       />
 
       <span className='label'> Industry Type </span>
-      <input
-        name='industryType'
-        placeholder={industryType}
-        onChange={(e) => handleChange(e)}
-      />
-    </>
+      {
+        <select name='industryType' ref={register({ required: false })}>
+          {industryType.map((type) => (
+            <option> {type} </option>
+          ))}
+        </select>
+      }
+
+      <input type='submit' value='Next' />
+      <span> Steps: {currentStep}/3</span>
+    </form>
   );
 }

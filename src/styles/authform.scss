@@ -8,10 +8,23 @@
   width: 100%;
   margin-bottom: 4rem;
 
+  .title {
+    display: flex;
+    justify-content: space-evenly;
+
+    p {
+      border: 2px solid #5891ff;
+      border-radius: 8px;
+      padding: 0.25rem;
+      padding-top: 0.4rem;
+    }
+  }
+
   @include sm {
     flex-direction: column;
 
-    h1 {
+    h1,
+    p {
       margin-top: 2rem !important;
     }
 
@@ -33,6 +46,35 @@
       margin: 1rem 0;
     }
 
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+
+      .back {
+        background-color: rgba(165, 173, 190, 1);
+      }
+    }
+
+    .types {
+      display: flex;
+
+      .type {
+        min-width: 40%;
+        text-align: center;
+        padding: 0.5rem 1rem;
+        border-radius: 10px;
+
+        background-color: $background-alt;
+
+        cursor: pointer;
+      }
+
+      .current {
+        background-color: $btn-color;
+        color: white;
+      }
+    }
+
     input,
     select {
       outline: 0;
@@ -51,7 +93,7 @@
       }
       &[type='submit'],
       &[type='button'] {
-        background-color: $primary;
+        background-color: $btn-color;
         color: $background;
         width: max-content;
         padding: 0.5rem 2rem;

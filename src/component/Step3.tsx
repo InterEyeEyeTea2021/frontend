@@ -1,5 +1,6 @@
 import { AxiosResponse } from 'axios';
 import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { useAuth, registerForm } from '../hooks/Auth';
 
 interface Props {
@@ -8,7 +9,7 @@ interface Props {
   type: string;
   currentStep: number;
 
-  handleChange: (e: any) => void;
+  handleNextSubmit: (e: any) => void;
 }
 
 export default function Step3({
@@ -16,9 +17,10 @@ export default function Step3({
   branchCode,
   type,
   currentStep,
-  handleChange,
+  handleNextSubmit,
 }: Props) {
   let auth = useAuth();
+  const { register, handleSubmit, errors } = useForm();
   const [isRegistrered, setIsRegistered] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState('');
@@ -40,22 +42,23 @@ export default function Step3({
   // };
 
   return (
-    <>
+    <form onSubmit={handleSubmit(handleNextSubmit)}>
       <span className='label'> Account Number </span>
       <input
         name='accountNumber'
         placeholder={accountNumber}
-        onChange={(e) => handleChange(e)}
+        ref={register({ required: false })}
       />
 
       <span className='label'> IFSC Code </span>
       <input
         name='branchCode'
         placeholder={branchCode}
-        onChange={(e) => handleChange(e)}
+        ref={register({ required: false })}
       />
 
-      <input type='button' value='Add Member' />
-    </>
+      <input type='submit' value='Next' />
+      <span> Steps: {currentStep}/3</span>
+    </form>
   );
 }
