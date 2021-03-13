@@ -9,6 +9,9 @@ import Home from "./views/Home";
 import Dashboard from "./views/Dashboard";
 import Login from "./views/Login";
 import Register from "./views/Register";
+import SMEPayments from "./views/SMEPayments"
+import SHGPayments from "./views/SHGPayments"
+import RequestPayment from "./views/paymentRequest"
 
 import "./styles/main.scss";
 import TenderForm from "./views/TenderForm";
@@ -35,6 +38,7 @@ function App() {
             <PrivateRoute exact path="/dashboard">
               <Dashboard />
             </PrivateRoute>
+
             <Route exact path="/tender/create">
               <TenderForm />
             </Route>
@@ -58,6 +62,16 @@ function App() {
 
             <Route exact path="/product/edit">
               <ProductEdit />
+            </Route>
+  
+            <Route exact path="/smepayments">
+              <SMEPayments />
+            </Route>
+            <Route exact path="/shgpayments">
+              <SHGPayments />
+            </Route>
+            <Route exact path="/paymentRequest">
+              <RequestPayment />
             </Route>
             <Route exact path="/">
               <Home />
