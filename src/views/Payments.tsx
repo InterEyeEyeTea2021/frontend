@@ -5,6 +5,24 @@ function Payments() {
     const [isLoading, setIsLoading] = useState(false);
     let auth = useAuth();
 
+    const paymentsList = [
+        {
+            amount: 2000,
+            name: "Machinery",
+            status: "pending",
+        },
+        {
+            amount: 5000,
+            name: "Machinery",
+            status: "paid",
+        },
+        {
+            amount: 2000,
+            name: "Machinery",
+            status: "paid",
+        },
+    ]
+
     return (
         <div className="payments">
             <div>
@@ -35,30 +53,17 @@ function Payments() {
             </div>
             <div>
                 <h1>All payments</h1>
-                <div>
-                    <h1></h1>
-                    <div>
-                        <h1>Machinery</h1>
-                        <h2>Pending</h2>
-                    </div>
-                    <button>Pay</button>
-                </div>
-                <div>
-                    <h1>₹2000</h1>
-                    <div>
-                        <h1>Machinery</h1>
-                        <h2>Pending</h2>
-                    </div>
-                    <button>Pay</button>
-                </div>
-                <div>
-                    <h1>₹2000</h1>
-                    <div>
-                        <h1>Machinery</h1>
-                        <h2>Pending</h2>
-                    </div>
-                    <button>Pay</button>
-                </div>
+                {paymentsList.map(p => (
+                        <div>
+                            <h1>₹{p.amount}</h1>
+                            <div>
+                                <h1>{p.name}</h1>
+                                <h2>{p.status[0].toUpperCase() + p.status.slice(1)}</h2>
+                            </div>
+                            <button>{(p.status == "pending") ? "Pay": "Details"}</button>
+                        </div> 
+                    )
+                )}
             </div>
         </div>
     )
