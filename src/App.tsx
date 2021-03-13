@@ -13,6 +13,7 @@ import Register from "./views/Register";
 import "./styles/main.scss";
 import TenderForm from "./views/TenderForm";
 import TenderStatus from "./views/TenderStatus";
+import BidForm from "./views/BidForm";
 
 function App() {
   return (
@@ -36,7 +37,9 @@ function App() {
             <Route path="/tender/status">
               <TenderStatus />
             </Route>
-
+            <Route path="/bid/create">
+              <BidForm />
+            </Route>
             <Route path="/">
               <Home />
             </Route>
