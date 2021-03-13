@@ -14,6 +14,10 @@ import "./styles/main.scss";
 import TenderForm from "./views/TenderForm";
 import TenderStatus from "./views/TenderStatus";
 import BidForm from "./views/BidForm";
+import OrderStatus from "./views/OrderStatus";
+import Portfolio from "./views/Portfolio";
+import Product from "./views/Product";
+import ProductEdit from "./views/ProductEdit";
 
 function App() {
   return (
@@ -22,25 +26,40 @@ function App() {
         <div className="App">
           <Navbar />
           <Switch>
-            <Route path="/login">
+            <Route exact path="/login">
               <Login />
             </Route>
-            <Route path="/register">
+            <Route exact path="/register">
               <Register />
             </Route>
-            <PrivateRoute path="/dashboard">
+            <PrivateRoute exact path="/dashboard">
               <Dashboard />
             </PrivateRoute>
-            <Route path="/tender/create">
+            <Route exact path="/tender/create">
               <TenderForm />
             </Route>
-            <Route path="/tender/status">
+            <Route exact path="/tender/status">
               <TenderStatus />
             </Route>
-            <Route path="/bid/create">
+            <Route exact path="/bid/create">
               <BidForm />
             </Route>
-            <Route path="/">
+            <Route exact path="/order/1">
+              <OrderStatus />
+            </Route>
+
+            <Route exact path="/portfolio">
+              <Portfolio />
+            </Route>
+
+            <Route exact path="/product">
+              <Product />
+            </Route>
+
+            <Route exact path="/product/edit">
+              <ProductEdit />
+            </Route>
+            <Route exact path="/">
               <Home />
             </Route>
           </Switch>

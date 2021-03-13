@@ -1,24 +1,31 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
-export default function BidForm() {
+export default function OrderStatus() {
   const { register, handleSubmit, errors } = useForm();
-  const milestones = [
-    { name: "Milestone 1" },
-    { name: "Milestone 2" },
-    { name: "Milestone 3" },
-    { name: "Milestone 4" },
-  ];
 
   const data = {
-    tender_name: "Tender Name",
+    order_name: "Order Name",
     industry_type: "Agriculture",
     description: "Description",
     skills_req: "Skills Required",
     location: "Location",
     payments: [
-      { pay_name: "Order Completion", suggested_value: 2000 },
-      { pay_name: "Order Completion", suggested_value: null },
+      {
+        amount: 2000,
+        name: "Machinery",
+        status: "pending",
+      },
+      {
+        amount: 5000,
+        name: "Machinery",
+        status: "paid",
+      },
+      {
+        amount: 2000,
+        name: "Machinery",
+        status: "paid",
+      },
     ],
     milestones: [
       { name: "Milestone 1" },
@@ -30,21 +37,12 @@ export default function BidForm() {
 
   return (
     <div className="authform">
-      <h1>Bid Status</h1>
+      <h1>Order Status</h1>
       <div className="form" style={{ width: "90%" }}>
-        <div className="sme-details">
-          <h1>Box</h1>
-          <div>
-            <h1>SHG NAME</h1>
-            <h2>XXXX XX XXXX</h2>
-          </div>
-          <h1>Call icon</h1>
-        </div>
-
-        <h2>Tender Details</h2>
+        <h2>Order Details</h2>
         <div className="detail">
           <div className="label">Tender Name</div>
-          <div className="value">{data.tender_name}</div>
+          <div className="value">{data.order_name}</div>
         </div>
         <div className="detail">
           <div className="label">Industry Type</div>
@@ -68,6 +66,32 @@ export default function BidForm() {
 
         <hr />
 
+        <div className="sme-details">
+          <h1>Box</h1>
+          <div>
+            <h1>SHG NAME</h1>
+            <h2>XXXX XX XXXX</h2>
+          </div>
+          <h1>Call icon</h1>
+        </div>
+
+        <h2>Payments</h2>
+
+        {data.payments.map((p, i) => (
+          <div>
+            <h1>₹{p.amount}</h1>
+            <div>
+              <h1>{p.name}</h1>
+              <h2>{p.status[0].toUpperCase() + p.status.slice(1)}</h2>
+            </div>
+            <button>{p.status == "pending" ? "Pay" : "Details"}</button>
+          </div>
+        ))}
+
+        <button className="button">Request Payment</button>
+
+        <hr />
+
         <h2>Milestones</h2>
 
         <ol
@@ -76,36 +100,14 @@ export default function BidForm() {
           }}
         >
           {data.milestones.map((m, index) => (
-            <li>{m.name}</li>
+            <li>
+              <div className="name">{m.name}</div>
+              <div className="check">check</div>
+            </li>
           ))}
         </ol>
 
         <hr />
-
-        <h2>Payments</h2>
-
-        {data.payments.map((p, i) => (
-          <div className="payment">
-            <div className="detail">
-              <div className="label">{p.pay_name} (Suggested by SME)</div>
-              <div className="value">
-                {p.suggested_value ? p.suggested_value : "Nil"}
-              </div>
-            </div>
-
-            <label htmlFor={"payment" + p.pay_name}>{p.pay_name}</label>
-            <input
-              name={"payment" + p.pay_name}
-              id={"payment" + p.pay_name}
-              placeholder="Price"
-              ref={register({
-                required: false,
-              })}
-            />
-          </div>
-        ))}
-
-        <button className="button">Bid for Order</button>
       </div>
     </div>
   );
