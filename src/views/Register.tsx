@@ -23,17 +23,17 @@ function Register() {
     productionCap: 'Production Capacity',
     orderSize: 'Order Size',
     contactSHG: '+91 XXXX XX XXXX',
-    industryTypeSHG: '',
+    industryTypeSHG: ['Agriculture', 'Something', 'Engineering'],
     members: 'No members added yet',
     memberName: 'Name',
     memberAadhar: 'Aadhar',
     memberContact: '+91 XXXX XX XXXX',
-    skill: '',
+    skill: ['Agriculture', 'Something', 'Engineering'],
 
     address: 'Address',
     productSold: 'Products Sold',
     contactSME: '+91 XXXX XX XXXX',
-    industryTypeSME: '',
+    industryTypeSME: ['Agriculture', 'Something', 'Engineering'],
     accountNumber: 'Account Number',
     branchCode: 'IFSC Code',
   });
@@ -55,18 +55,25 @@ function Register() {
   //   });
   // };
 
-  const handleChange = (e: any) => {
-    const { Name, Username, Phone, Type, NameSHG, ProdcutionCap } = e.target;
+  const handleNextSubmit = 
+    (data: Partial< {
+      name: string,
+      username: string,
+      phone: string,
+      type: string,
+      nameSHG: string,
+      prodcutionCap: string,
+      member_name: string,
+      member_contact: string,
+      member_aadhar: string,
+    }>)  => {
 
-    setState((prev) => ({
-      ...prev,
-      name: Name,
-      username: Username,
-      phone: Phone,
-      type: Type,
-      nameSHG: NameSHG,
-      productionCap: ProdcutionCap,
-    }));
+    setState({
+      ...state,
+      ...data
+    });
+
+    handleNext();
   };
 
   const handleNext = () => {
@@ -80,102 +87,97 @@ function Register() {
   return (
     <div className='authform register'>
       <div className='form'>
-        <h1>Signup</h1>
+        <div className='title'>
+          <h1>Signup</h1>
+          {step > 1 ? <p>{state.type}</p> : null}
+        </div>
         <div className='error'>{message}</div>
-        <form>
-          <StepOne
-            name={state.name}
-            username={state.username}
-            phone={state.phone}
-            type={state.type}
-            currentStep={step}
-            handleChange={handleChange}
-          />
+        <StepOne
+          name={state.name}
+          username={state.username}
+          phone={state.phone}
+          type={state.type}
+          currentStep={step}
+          handleNextSubmit={handleNextSubmit}
+        />
 
-          {state.type === 'SHG' ? (
-            <>
-              <StepTwo
-                nameSHG={state.nameSHG}
-                productionCap={state.productionCap}
-                orderSize={state.orderSize}
-                contact={state.contactSHG}
-                industryType={state.industryTypeSHG}
-                type={state.type}
-                currentStep={step}
-                handleChange={handleChange}
-              />
-
-              <StepThree
-                members={state.members}
-                memberName={state.memberName}
-                memberAadhar={state.memberAadhar}
-                memberContact={state.memberContact}
-                skill={state.skill}
-                type={state.type}
-                currentStep={step}
-                handleChange={handleChange}
-              />
-            </>
-          ) : (
-            ''
-          )}
-
-          {state.type === 'SME' ? (
-            <>
-              <Step2
-                address={state.address}
-                productSold={state.productSold}
-                contact={state.contactSME}
-                industryType={state.industryTypeSME}
-                type={state.type}
-                currentStep={step}
-                handleChange={handleChange}
-              />
-
-              <Step3
-                accountNumber={state.accountNumber}
-                branchCode={state.branchCode}
-                type={state.type}
-                currentStep={step}
-                handleChange={handleChange}
-              />
-            </>
-          ) : (
-            ''
-          )}
-
-          {step < 4 ? (
-            <>
-              <input type='button' value='Next' onClick={handleNext} />
-              <span>{step}/3</span>
-            </>
-          ) : (
-            ''
-          )}
-
-          {step > 1 && step < 4 ? (
-            <input
-              type='button'
-              className='back'
-              value='Back'
-              onClick={handleBack}
+        {state.type === 'SHG' ? (
+          <>
+            <StepTwo
+              nameSHG={state.nameSHG}
+              productionCap={state.productionCap}
+              orderSize={state.orderSize}
+              contact={state.contactSHG}
+              industryType={state.industryTypeSHG}
+              type={state.type}
+              currentStep={step}
+              handleNextSubmit={handleNextSubmit}
             />
-          ) : (
-            ''
-          )}
 
-          {step === 4 ? (
-            <input type='submit' value='Verify' onClick={handleNext} />
-          ) : (
-            ''
-          )}
+            <StepThree
+              members={state.members}
+              memberName={state.memberName}
+              memberAadhar={state.memberAadhar}
+              memberContact={state.memberContact}
+              skill={state.skill}
+              type={state.type}
+              currentStep={step}
+              handleNextSubmit={handleNextSubmit}
+            />
+          </>
+        ) : (
+          ''
+        )}
 
-          <hr />
-          <span>If you have an account, please login</span>
-          <a className='button' href='/login' rel='noreferrer noopener'>
-            Login
-          </a>
+        {state.type === 'SME' ? (
+          <>
+            <Step2
+              address={state.address}
+              productSold={state.productSold}
+              contact={state.contactSME}
+              industryType={state.industryTypeSME}
+              type={state.type}
+              currentStep={step}
+              handleNextSubmit={handleNextSubmit}
+            />
+
+            <Step3
+              accountNumber={state.accountNumber}
+              branchCode={state.branchCode}
+              type={state.type}
+              currentStep={step}
+              handleNextSubmit={handleNextSubmit}
+            />
+          </>
+        ) : (
+          ''
+        )}
+        <form>
+          <div className='buttons'>
+            {step > 1 && step < 4 ? (
+              <input
+                type='button'
+                className='back'
+                value='Back'
+                onClick={handleBack}
+              />
+            ) : (
+              ''
+            )}
+
+            {step === 4 ? (
+              <input type='submit' value='Verify' onClick={handleNext} />
+            ) : (
+              ''
+            )}
+          </div>
         </form>
+
+        <hr />
+        <span>If you have an account, please login</span>
+        <a className='button back' href='/login' rel='noreferrer noopener'>
+          Login
+        </a>
       </div>
     </div>
   );

@@ -1,31 +1,33 @@
 import { AxiosResponse } from 'axios';
 import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { useAuth, registerForm } from '../hooks/Auth';
 
 interface Props {
-	members: string;
+  members: string;
   memberName: string;
   memberContact: string;
   memberAadhar: string;
-  skill: string;
+  skill: string[];
   type: string;
   currentStep: number;
 
-  handleChange: (e: any) => void;
+  handleNextSubmit: (e: any) => void;
 }
 
 export default function StepThree({
-	members,
+  members,
   memberName,
   memberAadhar,
   memberContact,
   skill,
   type,
   currentStep,
-  handleChange,
+  handleNextSubmit,
 }: Props) {
   let auth = useAuth();
   const [isRegistrered, setIsRegistered] = useState(false);
+  const { register, handleSubmit, errors } = useForm();
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState('');
 
@@ -46,43 +48,47 @@ export default function StepThree({
   // };
 
   return (
-    <>
+    <form onSubmit={handleSubmit(handleNextSubmit)}>
       <span className='label'> Members </span>
       <input
         name='members'
         placeholder={members}
-        onChange={(e) => handleChange(e)}
+        ref={register({ required: false })}
       />
+
       <span className='label'> Member Name </span>
-			
       <input
         name='memberName'
         placeholder={memberName}
-        onChange={(e) => handleChange(e)}
+        ref={register({ required: false })}
       />
 
       <span className='label'> Member Aadhar </span>
       <input
         name='memberAadhar'
         placeholder={memberAadhar}
-        onChange={(e) => handleChange(e)}
+        ref={register({ required: false })}
       />
 
       <span className='label'> Contact Number </span>
       <input
         name='memberContact'
         placeholder={memberContact}
-        onChange={(e) => handleChange(e)}
+        ref={register({ required: false })}
       />
 
       <span className='label'> Skill </span>
-      <input
-        name='skill'
-        placeholder={skill}
-        onChange={(e) => handleChange(e)}
-      />
+      {
+        <select name='skill' >
+          {skill.map((type) => (
+            <option> {type} </option>
+          ))}
+        </select>
+      }
 
       <input type='button' value='Add Member' />
-    </>
+      <input type='submit' value='Next' />
+      <span> Steps: {currentStep}/3</span>
+    </form>
   );
 }
