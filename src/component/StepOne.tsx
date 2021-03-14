@@ -1,7 +1,7 @@
-import { AxiosResponse } from 'axios';
-import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { useAuth, registerForm } from '../hooks/Auth';
+import { AxiosResponse } from "axios";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { useAuth, registerForm } from "../hooks/Auth";
 
 interface Props {
   name: string;
@@ -11,6 +11,7 @@ interface Props {
   currentStep: number;
 
   handleNextSubmit: (e: any) => void;
+  handleTypeChange: (s: string) => void;
 }
 
 export default function StepOne({
@@ -20,17 +21,13 @@ export default function StepOne({
   type,
   currentStep,
   handleNextSubmit,
+  handleTypeChange,
 }: Props) {
   let auth = useAuth();
   const { register, handleSubmit, errors } = useForm();
   const [isRegistrered, setIsRegistered] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [message, setMessage] = useState('');
-  const [current, setCurrent] = useState(type);
-
-  const handleTypeChange = (s: any) => {
-    setCurrent(s);
-  };
+  const [message, setMessage] = useState("");
 
   if (currentStep != 1) return null;
   // const onSubmit = (data: registerForm) => {
@@ -50,38 +47,38 @@ export default function StepOne({
 
   return (
     <form onSubmit={handleSubmit(handleNextSubmit)}>
-      <span className='label'> Name </span>
+      <span className="label"> Name </span>
       <input
-        name='name'
+        name="name"
         placeholder={name}
         ref={register({ required: false })}
       />
 
-      <span className='label'> Username </span>
+      <span className="label"> Username </span>
       <input
-        name='username'
+        name="username"
         placeholder={username}
         ref={register({ required: false })}
       />
 
-      <span className='label'> Phone Number </span>
+      <span className="label"> Phone Number </span>
       <input
-        name='phone'
+        name="phone"
         placeholder={phone}
         ref={register({ required: false })}
       />
 
-      <span className='label'> Type of User </span>
-      <div className='types'>
+      <span className="label"> Type of User </span>
+      <div className="types">
         <div
-          className={`type ${current == 'SHG' && 'current'}`}
-          onClick={() => handleTypeChange('SHG')}
+          className={`type ${type == "SHG" && "current"}`}
+          onClick={() => handleTypeChange("SHG")}
         >
           SHG
         </div>
         <div
-          className={`type ${current == 'SME' && 'current'}`}
-          onClick={() => handleTypeChange('SME')}
+          className={`type ${type == "SME" && "current"}`}
+          onClick={() => handleTypeChange("SME")}
         >
           SME
         </div>
@@ -92,7 +89,7 @@ export default function StepOne({
         ref={register({ required: false })}
       /> */}
 
-      <input type='submit' value='Next' />
+      <input type="submit" value="Next" />
       <span> Steps: {currentStep}/3</span>
     </form>
   );
