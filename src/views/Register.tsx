@@ -76,6 +76,13 @@ function Register() {
     handleNext();
   };
 
+  const handleTypeChange = (type: string) => {
+    setState({
+      ...state,
+      type,
+    });
+  };
+
   const handleNext = () => {
     setStep(step + 1);
   };
@@ -99,6 +106,7 @@ function Register() {
           type={state.type}
           currentStep={step}
           handleNextSubmit={handleNextSubmit}
+          handleTypeChange={handleTypeChange}
         />
 
         {state.type === "SHG" ? (
@@ -174,7 +182,7 @@ function Register() {
         </form>
 
         <hr />
-        <span>If you have an account, please login</span>
+        <span>If you have an account, please </span>
         <a className="button back" href="/login" rel="noreferrer noopener">
           Login
         </a>
