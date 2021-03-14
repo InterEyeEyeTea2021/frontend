@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import TitleHeader from "../component/TitleHeader";
 
 export default function TenderStatus() {
   const milestones = [
@@ -37,7 +38,8 @@ export default function TenderStatus() {
 
   return (
     <div className="main_content tender_status">
-      <h1>Tender Status</h1>
+      <TitleHeader title="Tender Status" user_type="SME" />
+
       <div className="form" style={{ width: "90%" }}>
         <h2>{data.tender_name}</h2>
 

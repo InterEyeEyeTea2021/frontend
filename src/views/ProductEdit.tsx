@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import TitleHeader from "../component/TitleHeader";
 import BidForm from "./BidForm";
 
 export default function ProductEdit() {
@@ -20,7 +21,8 @@ export default function ProductEdit() {
 
   return (
     <div className="main_content">
-      <h1>Product</h1>
+      <TitleHeader title="Edit Product" user_type="SHG" />
+
       <div className="form" style={{ width: "90%" }}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <label htmlFor="prod_name">Name of Product</label>

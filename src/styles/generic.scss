@@ -4,8 +4,31 @@ html {
 }
 
 .main_content {
-  margin: 2rem 1rem;
+  margin: 1rem 1rem 3rem;
   max-width: 100vw;
+
+  .title_header {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin: 0 0 3rem;
+
+    h1 {
+      margin: 0;
+      flex-grow: 1;
+      font-size: 2rem;
+    }
+
+    .icon {
+      margin-left: 1rem;
+      margin-bottom: -0.25rem;
+    }
+
+    .user_type {
+      color: $primary;
+      font-size: 1.5rem;
+    }
+  }
 
   label,
   .label {
@@ -19,6 +42,11 @@ html {
     li input {
       max-width: 93%;
     }
+  }
+
+  h2 {
+    font-size: 1.75rem;
+    margin-top: 3rem;
   }
 
   .detail {

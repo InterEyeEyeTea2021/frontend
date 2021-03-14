@@ -2,6 +2,7 @@ import { useAuth, loginForm } from "../hooks/Auth";
 import React, { useState } from "react";
 
 import * as Icon from "react-feather";
+import TitleHeader from "../component/TitleHeader";
 
 function SMEPayments() {
   const [isLoading, setIsLoading] = useState(false);
@@ -35,7 +36,8 @@ function SMEPayments() {
 
   return (
     <div className="main_content">
-      <h1>Payment</h1>
+      <TitleHeader title="Payment" user_type="SME" />
+
       <div>
         <h1>{currPayment.name}</h1>
         <p>

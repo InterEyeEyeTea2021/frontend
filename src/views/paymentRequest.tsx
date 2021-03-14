@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useAuth } from "../hooks/Auth";
 import * as Icon from "react-feather";
+import TitleHeader from "../component/TitleHeader";
 
 function RequestPayment() {
   const [isLoading, setIsLoading] = useState(false);
@@ -38,7 +39,7 @@ function RequestPayment() {
 
   return (
     <div className="main_content">
-      <h1>Payment</h1>
+      <TitleHeader title="Payment" user_type="SHG" />
 
       <div className="detail">
         <div className="label">Order</div>
