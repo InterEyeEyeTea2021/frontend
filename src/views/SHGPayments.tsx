@@ -1,6 +1,7 @@
 import { useAuth, loginForm } from "../hooks/Auth";
 import React, { useState } from "react";
 import * as Icon from "react-feather";
+import TitleHeader from "../component/TitleHeader";
 function SHGPayments() {
   const [isLoading, setIsLoading] = useState(false);
   let auth = useAuth();
@@ -36,7 +37,8 @@ function SHGPayments() {
 
   return (
     <div className="main_content">
-      <h1>Payment</h1>
+      <TitleHeader title="Payment" user_type="SHG" />
+
       <h2>
         <div className="label">{currPayment.name}</div>
         <div className="value">

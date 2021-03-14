@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import TitleHeader from "../component/TitleHeader";
 
 export default function TenderForm() {
   const [isLoading, setIsLoading] = useState(false);
@@ -28,7 +29,8 @@ export default function TenderForm() {
 
   return (
     <div className="main_content">
-      <h1>Create Tender</h1>
+      <TitleHeader title="Create Tender" user_type="SME" />
+
       <div className="form">
         <h2>Tender Details</h2>
         <form onSubmit={handleSubmit(onSubmit)}>
