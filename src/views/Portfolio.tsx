@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import TitleHeader from "../component/TitleHeader";
 
 export default function Portfolio() {
   const { register, handleSubmit, errors } = useForm();
@@ -32,7 +33,7 @@ export default function Portfolio() {
 
   return (
     <div className="main_content">
-      <h1>Portfolio</h1>
+      <TitleHeader title="Portfolio" user_type="SHG" />
       <div className="form" style={{ width: "90%" }}>
         <div className="detail">
           <div className="label">Name of SHG</div>
