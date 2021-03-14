@@ -81,10 +81,14 @@ export default function OrderStatus() {
 
       {data.payments.map((p, i) => (
         <div className="payment">
-          <h1 className="amount">₹{p.amount}</h1>
           <div className="details">
+            <h1 className="amount">
+              ₹{p.amount}
+              <span className="tag">
+                {p.status[0].toUpperCase() + p.status.slice(1)}
+              </span>
+            </h1>
             <h1>{p.name}</h1>
-            <p>{p.status[0].toUpperCase() + p.status.slice(1)}</p>
           </div>
           <button
             className={"small" + (p.status == "pending" ? "" : " default")}

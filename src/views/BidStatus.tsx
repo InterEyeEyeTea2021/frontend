@@ -89,7 +89,7 @@ export default function BidStatus() {
       <h2>Payments</h2>
 
       {data.payments.map((p, i) => (
-        <div className="payment">
+        <div className="payment_details">
           <div className="detail">
             <div className="label">{p.pay_name} (Suggested by SME)</div>
             <div className="value">
