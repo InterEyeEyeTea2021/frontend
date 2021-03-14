@@ -18,7 +18,11 @@ body {
   margin: auto;
 }
 
+@import "generic";
 @import "app";
 @import "authform";
 @import "navbar";
 @import "footer";
+@import "payments";
+
+@import "flex_comp";

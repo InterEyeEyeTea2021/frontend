@@ -1,41 +1,41 @@
-import { AxiosResponse } from 'axios';
-import React, { useState } from 'react';
-import { useAuth, registerForm } from '../hooks/Auth';
-import StepOne from '../component/StepOne';
-import { stat } from 'node:fs';
-import StepTwo from '../component/StepTwo';
-import StepThree from '../component/StepThree';
-import Step2 from '../component/Step2';
-import Step3 from '../component/Step3';
+import { AxiosResponse } from "axios";
+import React, { useState } from "react";
+import { useAuth, registerForm } from "../hooks/Auth";
+import StepOne from "../component/StepOne";
+import { stat } from "node:fs";
+import StepTwo from "../component/StepTwo";
+import StepThree from "../component/StepThree";
+import Step2 from "../component/Step2";
+import Step3 from "../component/Step3";
 
 function Register() {
   let auth = useAuth();
   const [isRegistrered, setIsRegistered] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
 
   const [state, setState] = useState({
-    name: 'Name',
-    username: 'Username',
-    phone: '+91 XXXX XX XXXX',
-    type: 'SHG',
-    nameSHG: 'Name of SHG',
-    productionCap: 'Production Capacity',
-    orderSize: 'Order Size',
-    contactSHG: '+91 XXXX XX XXXX',
-    industryTypeSHG: ['Agriculture', 'Something', 'Engineering'],
-    members: 'No members added yet',
-    memberName: 'Name',
-    memberAadhar: 'Aadhar',
-    memberContact: '+91 XXXX XX XXXX',
-    skill: ['Agriculture', 'Something', 'Engineering'],
+    name: "Name",
+    username: "Username",
+    phone: "+91 XXXX XX XXXX",
+    type: "SHG",
+    nameSHG: "Name of SHG",
+    productionCap: "Production Capacity",
+    orderSize: "Order Size",
+    contactSHG: "+91 XXXX XX XXXX",
+    industryTypeSHG: ["Agriculture", "Something", "Engineering"],
+    members: "No members added yet",
+    memberName: "Name",
+    memberAadhar: "Aadhar",
+    memberContact: "+91 XXXX XX XXXX",
+    skill: ["Agriculture", "Something", "Engineering"],
 
-    address: 'Address',
-    productSold: 'Products Sold',
-    contactSME: '+91 XXXX XX XXXX',
-    industryTypeSME: ['Agriculture', 'Something', 'Engineering'],
-    accountNumber: 'Account Number',
-    branchCode: 'IFSC Code',
+    address: "Address",
+    productSold: "Products Sold",
+    contactSME: "+91 XXXX XX XXXX",
+    industryTypeSME: ["Agriculture", "Something", "Engineering"],
+    accountNumber: "Account Number",
+    branchCode: "IFSC Code",
   });
 
   const [step, setStep] = useState(1);
@@ -55,22 +55,22 @@ function Register() {
   //   });
   // };
 
-  const handleNextSubmit = 
-    (data: Partial< {
-      name: string,
-      username: string,
-      phone: string,
-      type: string,
-      nameSHG: string,
-      prodcutionCap: string,
-      member_name: string,
-      member_contact: string,
-      member_aadhar: string,
-    }>)  => {
-
+  const handleNextSubmit = (
+    data: Partial<{
+      name: string;
+      username: string;
+      phone: string;
+      type: string;
+      nameSHG: string;
+      prodcutionCap: string;
+      member_name: string;
+      member_contact: string;
+      member_aadhar: string;
+    }>
+  ) => {
     setState({
       ...state,
-      ...data
+      ...data,
     });
 
     handleNext();
@@ -85,13 +85,13 @@ function Register() {
   };
 
   return (
-    <div className='authform register'>
-      <div className='form'>
-        <div className='title'>
+    <div className="authform main_content register">
+      <div className="form">
+        <div className="title">
           <h1>Signup</h1>
           {step > 1 ? <p>{state.type}</p> : null}
         </div>
-        <div className='error'>{message}</div>
+        <div className="error">{message}</div>
         <StepOne
           name={state.name}
           username={state.username}
@@ -101,7 +101,7 @@ function Register() {
           handleNextSubmit={handleNextSubmit}
         />
 
-        {state.type === 'SHG' ? (
+        {state.type === "SHG" ? (
           <>
             <StepTwo
               nameSHG={state.nameSHG}
@@ -126,10 +126,10 @@ function Register() {
             />
           </>
         ) : (
-          ''
+          ""
         )}
 
-        {state.type === 'SME' ? (
+        {state.type === "SME" ? (
           <>
             <Step2
               address={state.address}
@@ -150,32 +150,32 @@ function Register() {
             />
           </>
         ) : (
-          ''
+          ""
         )}
         <form>
-          <div className='buttons'>
+          <div className="buttons">
             {step > 1 && step < 4 ? (
               <input
-                type='button'
-                className='back'
-                value='Back'
+                type="button"
+                className="back"
+                value="Back"
                 onClick={handleBack}
               />
             ) : (
-              ''
+              ""
             )}
 
             {step === 4 ? (
-              <input type='submit' value='Verify' onClick={handleNext} />
+              <input type="submit" value="Verify" onClick={handleNext} />
             ) : (
-              ''
+              ""
             )}
           </div>
         </form>
 
         <hr />
         <span>If you have an account, please login</span>
-        <a className='button back' href='/login' rel='noreferrer noopener'>
+        <a className="button back" href="/login" rel="noreferrer noopener">
           Login
         </a>
       </div>

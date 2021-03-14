@@ -16,8 +16,16 @@ export default function TenderStatus() {
     skills_req: "Skills Required",
     location: "Location",
     bids: [
-      { image: "", shg_name: "SHG Name", bid: 2000 },
-      { image: "", shg_name: "SHG Name", bid: 1000 },
+      {
+        image: "https://i.imgur.com/khUO2T7.png",
+        shg_name: "SHG Name",
+        bid: 2000,
+      },
+      {
+        image: "https://i.imgur.com/khUO2T7.png",
+        shg_name: "SHG Name",
+        bid: 1000,
+      },
     ],
     milestones: [
       { name: "Milestone 1" },
@@ -28,8 +36,8 @@ export default function TenderStatus() {
   };
 
   return (
-    <div className="authform">
-      <h1>Create Tender</h1>
+    <div className="main_content tender_status">
+      <h1>Tender Status</h1>
       <div className="form" style={{ width: "90%" }}>
         <h2>{data.tender_name}</h2>
 
@@ -74,16 +82,15 @@ export default function TenderStatus() {
         <hr />
 
         <h2>Milestones</h2>
-
-        <ol
-          style={{
-            maxWidth: 200,
-          }}
-        >
+        <div className="milestones">
           {data.milestones.map((m, index) => (
-            <li>{m.name}</li>
+            <div className="milestone">
+              <div className="index">{index + 1}.</div>
+              <div className="name">{m.name}</div>
+              <div className="check">check</div>
+            </div>
           ))}
-        </ol>
+        </div>
       </div>
     </div>
   );
