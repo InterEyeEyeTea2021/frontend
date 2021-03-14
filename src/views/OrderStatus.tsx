@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as Icon from "react-feather";
+import TitleHeader from "../component/TitleHeader";
 export default function OrderStatus() {
   const { register, handleSubmit, errors } = useForm();
 
@@ -37,7 +38,7 @@ export default function OrderStatus() {
 
   return (
     <div className="main_content">
-      <h1>Order Status</h1>
+      <TitleHeader title="Order Status" user_type="SHG" />
       <div className="form" style={{ width: "90%" }}>
         <h2>Order Details</h2>
         <div className="detail">

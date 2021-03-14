@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as Icon from "react-feather";
+import TitleHeader from "../component/TitleHeader";
 
 export default function BidForm() {
   const { register, handleSubmit, errors } = useForm();
@@ -31,7 +32,7 @@ export default function BidForm() {
 
   return (
     <div className="main_content">
-      <h1>Create Bid</h1>
+      <TitleHeader title="Create Bid" user_type="SHG" />
       <div className="form" style={{ width: "90%" }}>
         <div className="sme-details call_box">
           <img src="https://i.imgur.com/khUO2T7.png" alt="" />
@@ -73,22 +74,22 @@ export default function BidForm() {
 
         <h2>Milestones</h2>
 
-        <ol
-          style={{
-            maxWidth: 200,
-          }}
-        >
+        <div className="milestones">
           {data.milestones.map((m, index) => (
-            <li>{m.name}</li>
+            <div className="milestone">
+              <div className="index">{index + 1}.</div>
+              <div className="name">{m.name}</div>
+              {/* <div className="check">check</div> */}
+            </div>
           ))}
-        </ol>
+        </div>
 
         <hr />
 
         <h2>Payments</h2>
 
         {data.payments.map((p, i) => (
-          <div className="payment">
+          <div className="payment_details">
             <div className="detail">
               <div className="label">{p.pay_name} (Suggested by SME)</div>
               <div className="value">

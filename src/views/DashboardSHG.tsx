@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { BACKEND_URL } from "../constants/constants";
 import { useAuth } from "../hooks/Auth";
 import axios from "axios";
+import TitleHeader from "../component/TitleHeader";
 
 export default function DashboardSHG() {
   const auth = useAuth();
@@ -70,7 +71,8 @@ export default function DashboardSHG() {
 
   return (
     <div className="main_content dashboard dashboard_shg">
-      <h1> Dashboard </h1>
+      <TitleHeader title="Dashboard" user_type="SHG" />
+
       <h2> Ongoing Order </h2>
       {data.ongoingOrder.map((order, id) => (
         <div className="order">
