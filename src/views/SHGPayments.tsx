@@ -1,6 +1,6 @@
 import { useAuth, loginForm } from "../hooks/Auth";
 import React, { useState } from "react";
-
+import * as Icon from "react-feather";
 function SHGPayments() {
   const [isLoading, setIsLoading] = useState(false);
   let auth = useAuth();
@@ -36,11 +36,7 @@ function SHGPayments() {
 
   return (
     <div className="main_content">
-      <div>
-        <h1>Payment</h1>
-        <h1>SME</h1>
-        <h1>Bell</h1>
-      </div>
+      <h1>Payment</h1>
       <h2>
         <div className="label">{currPayment.name}</div>
         <div className="value">
@@ -49,35 +45,39 @@ function SHGPayments() {
       </h2>
 
       <h1>₹{currPayment.amount}</h1>
-      <div>
-        <h1>Order</h1>
-        <h1>Order Name</h1>
+
+      <div className="detail">
+        <div className="label">Order</div>
+        <div className="value">Order Name</div>
       </div>
+
       <h1>SME</h1>
-      <div>
-        <h1>Box</h1>
-        <div>
-          <h1>{currSME.name}</h1>
-          <h2>{currSME.contact}</h2>
+      <div className="sme-details call_box">
+        <img src="https://i.imgur.com/khUO2T7.png" alt="" />
+        <div className="details">
+          <h1>SME NAME</h1>
+          <p>XXXX XX XXXX</p>
         </div>
-        <h1>Call icon</h1>
+        <div className="call">
+          <Icon.PhoneCall></Icon.PhoneCall>
+        </div>
       </div>
+
       <div>
         <button>Get Bill</button>
       </div>
-      <div>
-        <h1>All payments</h1>
-        {paymentsList.map((p) => (
-          <div>
-            <h1>₹{p.amount}</h1>
-            <div>
-              <h1>{p.name}</h1>
-              <h2>{p.status[0].toUpperCase() + p.status.slice(1)}</h2>
-            </div>
-            <button>Details</button>
+
+      <h1>All payments</h1>
+      {paymentsList.map((p) => (
+        <div className="payment">
+          <h1 className="amount">₹{p.amount}</h1>
+          <div className="details">
+            <h1>{p.name}</h1>
+            <p>{p.status[0].toUpperCase() + p.status.slice(1)}</p>
           </div>
-        ))}
-      </div>
+          <button className="small default">Details</button>
+        </div>
+      ))}
     </div>
   );
 }

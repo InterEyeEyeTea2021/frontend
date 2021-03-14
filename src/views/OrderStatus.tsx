@@ -76,6 +76,7 @@ export default function OrderStatus() {
             <Icon.PhoneCall></Icon.PhoneCall>
           </div>
         </div>
+
         <h2>Payments</h2>
 
         {data.payments.map((p, i) => (
