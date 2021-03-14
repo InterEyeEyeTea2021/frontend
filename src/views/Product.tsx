@@ -14,15 +14,15 @@ export default function Product() {
     media: [
       {
         type: "image",
-        uri: "#",
+        uri: "https://i.imgur.com/khUO2T7.png",
       },
       {
         type: "image",
-        uri: "#",
+        uri: "https://i.imgur.com/khUO2T7.png",
       },
       {
         type: "image",
-        uri: "#",
+        uri: "https://i.imgur.com/khUO2T7.png",
       },
     ],
   };
@@ -33,7 +33,7 @@ export default function Product() {
   };
 
   return (
-    <div className="authform">
+    <div className="main_content">
       <h1>Product</h1>
       <div className="form" style={{ width: "90%" }}>
         <div className="detail">
@@ -46,9 +46,11 @@ export default function Product() {
           <div className="value">{data.description}</div>
         </div>
 
-        {data.media.map((i) => (
-          <img src={i.uri} alt="" />
-        ))}
+        <div className="media_wrapper">
+          {data.media.map((i) => (
+            <img src={i.uri} alt="" />
+          ))}
+        </div>
 
         <div className="detail">
           <div className="label">Minimum Size</div>

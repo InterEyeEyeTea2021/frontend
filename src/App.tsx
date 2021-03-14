@@ -10,9 +10,9 @@ import DashboardSME from "./views/DashboardSME";
 import DashboardSHG from "./views/DashboardSHG";
 import Login from "./views/Login";
 import Register from "./views/Register";
-import SMEPayments from "./views/SMEPayments"
-import SHGPayments from "./views/SHGPayments"
-import RequestPayment from "./views/paymentRequest"
+import SMEPayments from "./views/SMEPayments";
+import SHGPayments from "./views/SHGPayments";
+import RequestPayment from "./views/paymentRequest";
 
 import "./styles/main.scss";
 import TenderForm from "./views/TenderForm";
@@ -22,6 +22,7 @@ import OrderStatus from "./views/OrderStatus";
 import Portfolio from "./views/Portfolio";
 import Product from "./views/Product";
 import ProductEdit from "./views/ProductEdit";
+import BidStatus from "./views/BidStatus";
 
 function App() {
   return (
@@ -52,6 +53,9 @@ function App() {
             <Route exact path="/bid/create">
               <BidForm />
             </Route>
+            <Route exact path="/bid/1">
+              <BidStatus />
+            </Route>
             <Route exact path="/order/1">
               <OrderStatus />
             </Route>
@@ -67,7 +71,7 @@ function App() {
             <Route exact path="/product/edit">
               <ProductEdit />
             </Route>
-  
+
             <Route exact path="/smepayments">
               <SMEPayments />
             </Route>
