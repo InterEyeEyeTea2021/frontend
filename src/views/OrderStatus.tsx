@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-
+import * as Icon from "react-feather";
 export default function OrderStatus() {
   const { register, handleSubmit, errors } = useForm();
 
@@ -36,7 +36,7 @@ export default function OrderStatus() {
   };
 
   return (
-    <div className="authform">
+    <div className="main_content">
       <h1>Order Status</h1>
       <div className="form" style={{ width: "90%" }}>
         <h2>Order Details</h2>
@@ -66,25 +66,30 @@ export default function OrderStatus() {
 
         <hr />
 
-        <div className="sme-details">
-          <h1>Box</h1>
-          <div>
+        <div className="sme-details call_box">
+          <img src="https://i.imgur.com/khUO2T7.png" alt="" />
+          <div className="details">
             <h1>SHG NAME</h1>
-            <h2>XXXX XX XXXX</h2>
+            <p>XXXX XX XXXX</p>
           </div>
-          <h1>Call icon</h1>
+          <div className="call">
+            <Icon.PhoneCall></Icon.PhoneCall>
+          </div>
         </div>
-
         <h2>Payments</h2>
 
         {data.payments.map((p, i) => (
-          <div>
-            <h1>₹{p.amount}</h1>
-            <div>
+          <div className="payment">
+            <h1 className="amount">₹{p.amount}</h1>
+            <div className="details">
               <h1>{p.name}</h1>
-              <h2>{p.status[0].toUpperCase() + p.status.slice(1)}</h2>
+              <p>{p.status[0].toUpperCase() + p.status.slice(1)}</p>
             </div>
-            <button>{p.status == "pending" ? "Pay" : "Details"}</button>
+            <button
+              className={"small" + (p.status == "pending" ? "" : " default")}
+            >
+              {p.status == "pending" ? "Pay" : "Details"}
+            </button>
           </div>
         ))}
 
@@ -94,18 +99,15 @@ export default function OrderStatus() {
 
         <h2>Milestones</h2>
 
-        <ol
-          style={{
-            maxWidth: 200,
-          }}
-        >
+        <div className="milestones">
           {data.milestones.map((m, index) => (
-            <li>
+            <div className="milestone">
+              <div className="index">{index + 1}.</div>
               <div className="name">{m.name}</div>
               <div className="check">check</div>
-            </li>
+            </div>
           ))}
-        </ol>
+        </div>
 
         <hr />
       </div>

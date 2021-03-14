@@ -19,7 +19,7 @@ export default function ProductEdit() {
   };
 
   return (
-    <div className="authform">
+    <div className="main_content">
       <h1>Product</h1>
       <div className="form" style={{ width: "90%" }}>
         <form onSubmit={handleSubmit(onSubmit)}>
