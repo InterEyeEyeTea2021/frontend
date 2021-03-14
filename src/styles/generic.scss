@@ -17,6 +17,7 @@ html {
       margin: 0;
       flex-grow: 1;
       font-size: 2rem;
+      color: $heading-text;
     }
 
     .icon {
@@ -32,7 +33,7 @@ html {
 
   label,
   .label {
-    margin-bottom: 0rem;
+    margin: 1rem 0 0rem;
   }
 
   ol,
@@ -47,6 +48,7 @@ html {
   h2 {
     font-size: 1.75rem;
     margin-top: 3rem;
+    color: $heading-text;
   }
 
   .detail {
@@ -57,7 +59,8 @@ html {
     }
     .value {
       font-size: 1.5rem;
-      font-weight: 600;
+      font-weight: 500;
+      color: $heading-text;
     }
   }
 
@@ -65,7 +68,7 @@ html {
     height: 8px;
     border: none;
     background-color: $background-alt;
-    margin: 2rem -3rem;
+    margin: 2rem -1rem;
   }
 
   .call_box {
@@ -83,6 +86,7 @@ html {
       flex-grow: 10;
     }
     h1 {
+      color: $heading-text;
       font-size: 1.5rem;
       margin: 0 0 0.5rem;
     }
@@ -103,6 +107,15 @@ html {
     }
   }
 
+  .tag {
+    font-size: 1rem;
+    margin: 0 1rem;
+    padding: 4px 8px;
+    background-color: $background-alt;
+    font-weight: 500;
+    border-radius: 6px;
+  }
+
   .milestones {
     .milestone {
       font-size: 1.3rem;
@@ -117,6 +130,7 @@ html {
       .name {
         font-weight: 600;
         flex-grow: 1;
+        color: $heading-text;
       }
     }
   }
@@ -124,11 +138,12 @@ html {
     display: flex;
     flex-wrap: wrap;
     width: calc(100vw - 2rem);
+    justify-content: space-between;
     .product {
       display: flex;
       flex-direction: column;
-      margin: 1rem 1rem 2rem 0;
-      width: calc(50vw - 2rem);
+      margin: 1rem 0 2rem 0;
+      width: calc(50vw - 1.5rem);
       .details {
         flex-grow: 1;
       }
@@ -142,7 +157,7 @@ html {
       img {
         width: 100%;
         // height: 64px;
-        margin-bottom: 1rem;
+        margin-bottom: 0.5rem;
         border-radius: 12px;
       }
     }
@@ -209,10 +224,11 @@ button,
   color: white;
   text-decoration: none;
   &.small {
-    padding: 4px 8px;
+    padding: 8px 16px;
     display: block;
     font-size: 1rem;
     height: max-content;
+    text-transform: uppercase;
   }
   &.default {
     color: $text;

@@ -37,36 +37,34 @@ export default function Product() {
     <div className="main_content">
       <TitleHeader title="Product" user_type="SHG" />
 
-      <div className="form" style={{ width: "90%" }}>
-        <div className="detail">
-          <div className="label">Name of Product</div>
-          <div className="value">{data.prod_name}</div>
-        </div>
-
-        <div className="detail">
-          <div className="label">Description</div>
-          <div className="value">{data.description}</div>
-        </div>
-
-        <div className="media_wrapper">
-          {data.media.map((i) => (
-            <img src={i.uri} alt="" />
-          ))}
-        </div>
-
-        <div className="detail">
-          <div className="label">Minimum Size</div>
-          <div className="value">{data.min_size}</div>
-        </div>
-
-        <div className="detail">
-          <div className="label">Price</div>
-          <div className="value">{data.price}</div>
-        </div>
-
-        <button className="button primary">Edit Product</button>
-        <button className="button">Delete</button>
+      <div className="detail">
+        <div className="label">Name of Product</div>
+        <div className="value">{data.prod_name}</div>
       </div>
+
+      <div className="detail">
+        <div className="label">Description</div>
+        <div className="value">{data.description}</div>
+      </div>
+
+      <div className="media_wrapper">
+        {data.media.map((i) => (
+          <img src={i.uri} alt="" />
+        ))}
+      </div>
+
+      <div className="detail">
+        <div className="label">Minimum Size</div>
+        <div className="value">{data.min_size}</div>
+      </div>
+
+      <div className="detail">
+        <div className="label">Price</div>
+        <div className="value">{data.price}</div>
+      </div>
+
+      <button className="button primary">Edit Product</button>
+      <button className="button">Delete</button>
     </div>
   );
 }
