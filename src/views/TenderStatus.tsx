@@ -82,16 +82,15 @@ export default function TenderStatus() {
         <hr />
 
         <h2>Milestones</h2>
-
-        <ol
-          style={{
-            maxWidth: 200,
-          }}
-        >
+        <div className="milestones">
           {data.milestones.map((m, index) => (
-            <li>{m.name}</li>
+            <div className="milestone">
+              <div className="index">{index + 1}.</div>
+              <div className="name">{m.name}</div>
+              <div className="check">check</div>
+            </div>
           ))}
-        </ol>
+        </div>
       </div>
     </div>
   );
