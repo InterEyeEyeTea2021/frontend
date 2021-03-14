@@ -13,17 +13,17 @@ export default function Portfolio() {
     location: "Location",
     products: [
       {
-        image: "",
+        image: "https://i.imgur.com/khUO2T7.png",
         name: "Product X",
         description: "Short detail of the prod",
       },
       {
-        image: "",
+        image: "https://i.imgur.com/khUO2T7.png",
         name: "Product X",
         description: "Short detail of the prod",
       },
       {
-        image: "",
+        image: "https://i.imgur.com/khUO2T7.png",
         name: "Product X",
         description: "Short detail of the prod",
       },
@@ -31,7 +31,7 @@ export default function Portfolio() {
   };
 
   return (
-    <div className="authform">
+    <div className="main_content">
       <h1>Portfolio</h1>
       <div className="form" style={{ width: "90%" }}>
         <div className="detail">
@@ -70,16 +70,17 @@ export default function Portfolio() {
         <hr />
 
         <h2>Products</h2>
-
-        {data.products.map((p, i) => (
-          <div className="product">
-            <img src={p.image} alt="" />
-            <div>
-              <h1>{p.name}</h1>
-              <h2>{p.description}</h2>
+        <div className="products">
+          {data.products.map((p, i) => (
+            <div className="product">
+              <img src={p.image} alt="" />
+              <div>
+                <h1>{p.name}</h1>
+                <p>{p.description}</p>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );

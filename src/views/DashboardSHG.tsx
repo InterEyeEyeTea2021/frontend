@@ -115,7 +115,7 @@ export default function DashboardSHG() {
 
       <h2> Payments </h2>
       {data.payments.map((payment, id) => (
-        <div className="payment">
+        <div className="payment lite">
           <h1 className="amount">{payment.amount}</h1>
           <div className="details">
             <h1> {payment.projectName} </h1>

@@ -2,91 +2,102 @@ import { paymentForm } from "../hooks/RequestPayment";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useAuth } from "../hooks/Auth";
+import * as Icon from "react-feather";
 
 function RequestPayment() {
-    const [isLoading, setIsLoading] = useState(false);
-    let auth = useAuth();
-    const { handleSubmit } = useForm();
-    const currSME = {
-        name: "SME NAME",
-        contact: "XXXX XX XXXX"
-    }
+  const [isLoading, setIsLoading] = useState(false);
+  let auth = useAuth();
+  const { handleSubmit } = useForm();
+  const currSME = {
+    name: "SME NAME",
+    contact: "XXXX XX XXXX",
+  };
 
-    const currOrder = "Order Name"
+  const currOrder = "Order Name";
 
-    const paymentsList = [
-        {
-            amount: 2000,
-            name: "Machinery",
-            status: "pending",
-        },
-        {
-            amount: 5000,
-            name: "Machinery",
-            status: "paid",
-        },
-        {
-            amount: 2000,
-            name: "Machinery",
-            status: "paid",
-        },
-    ]
-    const onSubmit = (data: paymentForm) => {
-        console.log(data)
-    }
+  const paymentsList = [
+    {
+      amount: 2000,
+      name: "Machinery",
+      status: "pending",
+    },
+    {
+      amount: 5000,
+      name: "Machinery",
+      status: "paid",
+    },
+    {
+      amount: 2000,
+      name: "Machinery",
+      status: "paid",
+    },
+  ];
+  const onSubmit = (data: paymentForm) => {
+    console.log(data);
+  };
 
-    return (
-        <div className="payments">
-            <div>
-                <h1>Payment</h1>
-                <h1>SME</h1>
-                <h1>Bell</h1>
-            </div>
-            <div>
-                <h2>Order</h2>
-                <h1>{currOrder}</h1>
-                <form onSubmit={handleSubmit(onSubmit)}>
-                    <h2>Reason</h2>
-                    <input
-                        name="reason"
-                        placeholder="Reason"
-                    />
-                    <h2>Description</h2>
-                    <input
-                        name="description"
-                        placeholder="Description"
-                    />
-                </form>
+  return (
+    <div className="main_content">
+      <h1>Payment</h1>
 
-            </div>
-            <h1>SME</h1>
-            <div>
-                <h1>Box</h1>
-                <div>
-                    <h1>{currSME.name}</h1>
-                    <h2>{currSME.contact}</h2>
-                </div>
-                <h1>Call icon</h1>
-            </div>
-            <div>
-                <button>Get Bill</button>
-            </div>
-            <div>
-                <h1>All payments</h1>
-                {paymentsList.map(p => (
-                        <div>
-                            <h1>₹{p.amount}</h1>
-                            <div>
-                                <h1>{p.name}</h1>
-                                <h2>{p.status[0].toUpperCase() + p.status.slice(1)}</h2>
-                            </div>
-                            <button>Details</button>
-                        </div> 
-                    )
-                )}
-            </div>
+      <div className="detail">
+        <div className="label">Order</div>
+        <div className="value">{currOrder}</div>
+      </div>
+
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <label htmlFor="reason">Reason</label>
+        <input
+          name="reason"
+          id="reason"
+          placeholder="Reason"
+          // defaultValue={data.prod_name}
+          // ref={register({
+          //   required: true,
+          // })}
+        />
+
+        <label htmlFor="description">Description</label>
+        <input
+          name="description"
+          id="description"
+          placeholder="Description"
+          // defaultValue={data.prod_name}
+          // ref={register({
+          //   required: true,
+          // })}
+        />
+
+        <h2>SME</h2>
+        <div className="sme-details call_box">
+          <img src="https://i.imgur.com/khUO2T7.png" alt="" />
+          <div className="details">
+            <h1>SHG NAME</h1>
+            <p>XXXX XX XXXX</p>
+          </div>
+          <div className="call">
+            <Icon.PhoneCall></Icon.PhoneCall>
+          </div>
         </div>
-    )
+
+        <div>
+          <button>Request Payment</button>
+        </div>
+      </form>
+
+      <h2>All payments</h2>
+      {paymentsList.map((p, i) => (
+        <div className="payment">
+          <h1 className="amount">₹{p.amount}</h1>
+          <div className="details">
+            <h1>{p.name}</h1>
+            <p>{p.status[0].toUpperCase() + p.status.slice(1)}</p>
+          </div>
+          <button className="small default">Details</button>
+        </div>
+      ))}
+    </div>
+  );
 }
 
-export default RequestPayment
+export default RequestPayment;
