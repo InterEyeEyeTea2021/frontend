@@ -31,119 +31,114 @@ export default function TenderForm() {
     <div className="main_content">
       <TitleHeader title="Create Tender" user_type="SME" />
 
-      <div className="form">
-        <h2>Tender Details</h2>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <label htmlFor="order_name">Order Name</label>
-          <input
-            name="order_name"
-            id="order_name"
-            placeholder="Order Name"
-            ref={register({
-              required: true,
-            })}
-          />
+      <h2>Tender Details</h2>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <label htmlFor="order_name">Order Name</label>
+        <input
+          name="order_name"
+          id="order_name"
+          placeholder="Order Name"
+          ref={register({
+            required: true,
+          })}
+        />
 
-          <label htmlFor="industry_type">Industry Type</label>
-          <input
-            name="industry_type"
-            id="industry_type"
-            placeholder="Industry Type"
-            ref={register({
-              required: true,
-            })}
-          />
+        <label htmlFor="industry_type">Industry Type</label>
+        <input
+          name="industry_type"
+          id="industry_type"
+          placeholder="Industry Type"
+          ref={register({
+            required: true,
+          })}
+        />
 
-          <label htmlFor="description">Description</label>
-          <input
-            name="description"
-            id="description"
-            placeholder="Description"
-            ref={register({
-              required: true,
-            })}
-          />
+        <label htmlFor="description">Description</label>
+        <input
+          name="description"
+          id="description"
+          placeholder="Description"
+          ref={register({
+            required: true,
+          })}
+        />
 
-          <label htmlFor="skills_req">Skills Required</label>
-          <input
-            name="skills_req"
-            id="skills_req"
-            placeholder="Skills Required"
-            ref={register({
-              required: true,
-            })}
-          />
+        <label htmlFor="skills_req">Skills Required</label>
+        <input
+          name="skills_req"
+          id="skills_req"
+          placeholder="Skills Required"
+          ref={register({
+            required: true,
+          })}
+        />
 
-          <label htmlFor="location">Location</label>
-          <input
-            name="location"
-            id="location"
-            placeholder="Location"
-            ref={register({
-              required: true,
-            })}
-          />
+        <label htmlFor="location">Location</label>
+        <input
+          name="location"
+          id="location"
+          placeholder="Location"
+          ref={register({
+            required: true,
+          })}
+        />
 
-          <label htmlFor="media">Attach Media</label>
-          <input
-            type="file"
-            accept=" text/csv"
-            id="media"
-            style={{
-              maxWidth: 300,
-            }}
-            // onChange={}
-          />
+        <label htmlFor="media">Attach Media</label>
+        <input
+          type="file"
+          accept=" text/csv"
+          id="media"
+          // onChange={}
+        />
 
-          <hr />
+        <hr />
 
-          <h2>Payments</h2>
+        <h2>Payments</h2>
 
-          <label htmlFor="order_completion">Order Completion</label>
-          <input
-            name="order_completion"
-            id="order_completion"
-            placeholder="Order Completion"
-            ref={register({
-              required: true,
-            })}
-          />
+        <label htmlFor="order_completion">Order Completion</label>
+        <input
+          name="order_completion"
+          id="order_completion"
+          placeholder="Order Completion"
+          ref={register({
+            required: true,
+          })}
+        />
 
-          <label htmlFor="advanced">Advanced (Empty if not required)</label>
-          <input
-            name="advanced"
-            id="advanced"
-            placeholder="Price"
-            ref={register({
-              required: false,
-            })}
-          />
+        <label htmlFor="advanced">Advanced (Empty if not required)</label>
+        <input
+          name="advanced"
+          id="advanced"
+          placeholder="Price"
+          ref={register({
+            required: false,
+          })}
+        />
 
-          <hr />
+        <hr />
 
-          <h2>Milestones</h2>
+        <h2>Milestones</h2>
 
-          <ol>
-            {milestones.map((m, index) => (
-              <li>
-                <input
-                  name={"milestone" + index}
-                  id={"milestone" + index}
-                  placeholder={m.name}
-                  ref={register({
-                    required: false,
-                  })}
-                />
-              </li>
-            ))}
-          </ol>
-          <button className="button">Add Milestone</button>
+        <ol>
+          {milestones.map((m, index) => (
+            <li>
+              <input
+                name={"milestone" + index}
+                id={"milestone" + index}
+                placeholder={m.name}
+                ref={register({
+                  required: false,
+                })}
+              />
+            </li>
+          ))}
+        </ol>
+        <button className="button">Add Milestone</button>
 
-          <input type="submit" value="Create Tender" disabled={isLoading} />
-          <input type="submit" value="Invite SHGs" disabled={isLoading} />
-          <div className="error">{message}</div>
-        </form>
-      </div>
+        <input type="submit" value="Create Tender" disabled={isLoading} />
+        <input type="submit" value="Invite SHGs" disabled={isLoading} />
+        <div className="error">{message}</div>
+      </form>
     </div>
   );
 }

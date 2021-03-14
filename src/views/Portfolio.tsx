@@ -34,54 +34,52 @@ export default function Portfolio() {
   return (
     <div className="main_content">
       <TitleHeader title="Portfolio" user_type="SHG" />
-      <div className="form" style={{ width: "90%" }}>
-        <div className="detail">
-          <div className="label">Name of SHG</div>
-          <div className="value">{data.shg_name}</div>
-        </div>
+      <div className="detail">
+        <div className="label">Name of SHG</div>
+        <div className="value">{data.shg_name}</div>
+      </div>
 
-        <div className="detail">
-          <div className="label">Description</div>
-          <div className="value">{data.description}</div>
-        </div>
+      <div className="detail">
+        <div className="label">Description</div>
+        <div className="value">{data.description}</div>
+      </div>
 
-        <div className="detail">
-          <div className="label">Industry Type</div>
-          <div className="value">{data.industry_type}</div>
-        </div>
+      <div className="detail">
+        <div className="label">Industry Type</div>
+        <div className="value">{data.industry_type}</div>
+      </div>
 
-        <div className="detail">
-          <div className="label">Production Capacity</div>
-          <div className="value">{data.prod_cap}</div>
-        </div>
+      <div className="detail">
+        <div className="label">Production Capacity</div>
+        <div className="value">{data.prod_cap}</div>
+      </div>
 
-        <div className="detail">
-          <div className="label">Order Sizes</div>
-          <div className="value">{data.order_sizes}</div>
-        </div>
+      <div className="detail">
+        <div className="label">Order Sizes</div>
+        <div className="value">{data.order_sizes}</div>
+      </div>
 
-        <div className="detail">
-          <div className="label">Location</div>
-          <div className="value">{data.location}</div>
-        </div>
+      <div className="detail">
+        <div className="label">Location</div>
+        <div className="value">{data.location}</div>
+      </div>
 
-        <button className="button primary">Add Product</button>
-        <button className="button">Edit</button>
+      <button className="button primary">Add Product</button>
+      <button className="button">Edit</button>
 
-        <hr />
+      <hr />
 
-        <h2>Products</h2>
-        <div className="products">
-          {data.products.map((p, i) => (
-            <div className="product">
-              <img src={p.image} alt="" />
-              <div>
-                <h1>{p.name}</h1>
-                <p>{p.description}</p>
-              </div>
+      <h2>Products</h2>
+      <div className="products">
+        {data.products.map((p, i) => (
+          <div className="product">
+            <img src={p.image} alt="" />
+            <div>
+              <h1>{p.name}</h1>
+              <p>{p.description}</p>
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
     </div>
   );
