@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { ProvideAuth } from "./hooks/Auth";
+import { ProvideAuth, useAuth } from "./hooks/Auth";
 import PrivateRoute from "./component/PrivateRoute";
 import Navbar from "./component/Navbar";
 import Footer from "./component/Footer";
@@ -23,8 +23,11 @@ import Portfolio from "./views/Portfolio";
 import Product from "./views/Product";
 import ProductEdit from "./views/ProductEdit";
 import BidStatus from "./views/BidStatus";
+import BottomNavbar from "./component/BottomNavbar";
 
 function App() {
+  let auth = useAuth();
+
   return (
     <ProvideAuth>
       <Router>
@@ -85,6 +88,7 @@ function App() {
               <Home />
             </Route>
           </Switch>
+          {auth?.user ? <BottomNavbar /> : ""}
           <Footer />
         </div>
       </Router>
