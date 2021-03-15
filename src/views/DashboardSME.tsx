@@ -72,7 +72,7 @@ export default function DashboardSME() {
   return (
     <div className="main_content dashboard dashboard_shg">
       <TitleHeader title="Dashboard" user_type="SME" />
-      <h2> Ongoing Order </h2>
+      <h2>Ongoing Orders</h2>
       {data.ongoingOrder.map((order, id) => (
         <div className="order">
           <div className="image">
@@ -85,7 +85,7 @@ export default function DashboardSME() {
         </div>
       ))}
 
-      <h2> Tenders </h2>
+      <h2>Tenders</h2>
       {data.tenders.map((tender, id) => (
         <div className="tender">
           <div className="image">
@@ -101,7 +101,7 @@ export default function DashboardSME() {
 
       <input type="submit" value="Create Tender" />
 
-      <h2> Completed Orders </h2>
+      <h2>Completed Orders</h2>
       {data.completedOrders.map((order, id) => (
         <div className="order">
           <div className="image">

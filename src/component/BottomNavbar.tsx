@@ -12,12 +12,12 @@ export default function BottomNavbar() {
             <p>HOME</p>
           </li>
         </NavLink>
-        <NavLink exact to="/order/1">
+        {/* <NavLink exact to="/dashboard/#orders">
           <li>
             <Icon.File />
             <p>ORDERS</p>
           </li>
-        </NavLink>
+        </NavLink> */}
         <NavLink exact to="/something">
           <li>
             <Icon.Search />
