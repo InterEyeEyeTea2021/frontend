@@ -2,13 +2,6 @@ import React, { useContext, createContext, useState } from "react";
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
 import { BACKEND_URL } from "../constants/constants";
 
-export type signupForm = {
-  id: string;
-  name: string;
-  password: string;
-  jwt: string;
-};
-
 export type registerForm_SHG = {
   name: string;
   phone: string;
@@ -37,7 +30,8 @@ export type registerForm_SME = {
 };
 
 export type loginForm = {
-  email: string;
+  username: string;
+  user_type: string;
   password: string;
 };
 
@@ -182,23 +176,6 @@ const authConnector = {
         cb(error.response);
       });
   },
-  signup(data: signupForm, cb: (response: AxiosResponse) => void) {
-    authConnector.isAuthenticated = false;
-    axios
-      .post(`${BACKEND_URL}/signup`, data, {
-        headers: {
-          Authorization: `Bearer ${data.jwt}`,
-        },
-      })
-      .then((response) => {
-        // console.log(response);
-        cb(response);
-      })
-      .catch((error) => {
-        // console.log(error.response);
-        cb(error.response);
-      });
-  },
 };
 
 export type AuthContextType = {
@@ -217,7 +194,6 @@ export type AuthContextType = {
     data: registerForm_SME,
     cb: (response: AxiosResponse) => void
   ) => void;
-  signup: (data: signupForm, cb: (response: AxiosResponse) => void) => void;
   authHeader: () => AxiosRequestConfig;
 };
 
@@ -284,13 +260,6 @@ function useProvideAuth() {
     });
   };
 
-  const signup = (data: signupForm, cb: (response: AxiosResponse) => void) => {
-    return authConnector.signup(data, (response) => {
-      setUser(null);
-      cb(response);
-    });
-  };
-
   const authHeader = (): AxiosRequestConfig => {
     if (user !== null) {
       return {
@@ -308,7 +277,6 @@ function useProvideAuth() {
     signout,
     registerSME,
     registerSHG,
-    signup,
     authHeader,
   };
 }
