@@ -1,7 +1,7 @@
-import { AxiosResponse } from 'axios';
-import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { useAuth, registerForm } from '../hooks/Auth';
+import { AxiosResponse } from "axios";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { useAuth, registerForm } from "../hooks/Auth";
 
 interface Props {
   address: string;
@@ -27,7 +27,7 @@ export default function Step2({
   const { register, handleSubmit, errors } = useForm();
   const [isRegistrered, setIsRegistered] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
 
   if (currentStep != 2) return null;
   // const onSubmit = (data: registerForm) => {
@@ -47,38 +47,40 @@ export default function Step2({
 
   return (
     <form onSubmit={handleSubmit(handleNextSubmit)}>
-      <span className='label'> Address </span>
+      <span className="label"> Address </span>
       <input
-        name='address'
+        name="address"
         placeholder={address}
         ref={register({ required: false })}
       />
 
-      <span className='label'> Product Sold </span>
+      <span className="label"> Product Sold </span>
       <input
-        name='productSold'
+        name="productSold"
         placeholder={productSold}
         ref={register({ required: false })}
       />
 
-      <span className='label'> Contact Number (WhatsApp) </span>
+      <span className="label"> Contact Number (WhatsApp) </span>
       <input
-        name='contact'
+        name="contact"
         placeholder={contact}
         ref={register({ required: false })}
       />
 
-      <span className='label'> Industry Type </span>
+      <span className="label"> Industry Type </span>
       {
-        <select name='industryType' ref={register({ required: false })}>
+        <select name="industryType" ref={register({ required: false })}>
           {industryType.map((type) => (
             <option> {type} </option>
           ))}
         </select>
       }
 
-      <input type='submit' value='Next' />
-      <span> Steps: {currentStep}/3</span>
+      <div className="signup-btns">
+        <input type="submit" value="Next" />
+        <span> Steps: {currentStep}/3</span>
+      </div>
     </form>
   );
 }
