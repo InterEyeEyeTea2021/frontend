@@ -4,10 +4,15 @@ import { useForm } from "react-hook-form";
 import { useAuth } from "../hooks/Auth";
 import * as Icon from "react-feather";
 import TitleHeader from "../component/TitleHeader";
+import { useParams } from "react-router";
+import { url } from "inspector";
 
 function RequestPayment() {
   const [isLoading, setIsLoading] = useState(false);
   let auth = useAuth();
+
+  let urlParams: { pay_id: string; id: string } = useParams();
+
   const { handleSubmit } = useForm();
   const currSME = {
     name: "SME NAME",
@@ -40,9 +45,12 @@ function RequestPayment() {
   return (
     <div className="main_content">
       <TitleHeader title="Payment" user_type="SHG" />
-
       <div className="detail">
-        <div className="label">Order</div>
+        <div className="label">Payment</div>
+        <div className="value">{urlParams.pay_id}</div>
+      </div>
+      <div className="detail">
+        <div className="label">Order: {urlParams.id}</div>
         <div className="value">{currOrder}</div>
       </div>
 
