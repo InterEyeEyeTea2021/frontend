@@ -25,7 +25,7 @@ class SHGUser {
   name: string;
   phone: string;
   contact: string;
-  type: string;
+  user_type: string;
   industry_type: string;
   account_number: string;
   branch_code: string;
@@ -41,7 +41,7 @@ class SHGUser {
     name: string,
     phone: string,
     contact: string,
-    type: string,
+    user_type: string,
     industry_type: string,
     account_number: string,
     branch_code: string,
@@ -56,7 +56,7 @@ class SHGUser {
     this.name = name;
     this.phone = phone;
     this.contact = contact;
-    this.type = type;
+    this.user_type = user_type;
     this.industry_type = industry_type;
     this.account_number = account_number;
     this.branch_code = branch_code;
@@ -74,7 +74,7 @@ class SMEUser {
   name: string;
   phone: string;
   contact: string;
-  type: string;
+  user_type: string;
   industry_type: string;
   account_number: string;
   branch_code: string;
@@ -89,7 +89,7 @@ class SMEUser {
     name: string,
     phone: string,
     contact: string,
-    type: string,
+    user_type: string,
     industry_type: string,
     account_number: string,
     branch_code: string,
@@ -103,7 +103,7 @@ class SMEUser {
     this.name = name;
     this.phone = phone;
     this.contact = contact;
-    this.type = type;
+    this.user_type = user_type;
     this.industry_type = industry_type;
     this.account_number = account_number;
     this.branch_code = branch_code;

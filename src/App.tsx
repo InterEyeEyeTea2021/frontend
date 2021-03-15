@@ -47,17 +47,18 @@ function App() {
               <Register />
             </Route>
 
-            <Route exact path="/dashboard/sme">
-              <DashboardSME />
-            </Route>
-            <Route exact path="/dashboard/shg">
-              <DashboardSHG />
+            <Route exact path="/dashboard/">
+              {auth?.user?.user_type === "sme" ? (
+                <DashboardSME />
+              ) : (
+                <DashboardSHG />
+              )}
             </Route>
 
             {/* Tender */}
-            <Route path="/tender">
+            <PrivateRoute path="/tender" user_type="sme">
               <TenderRouter />
-            </Route>
+            </PrivateRoute>
 
             {/* Bid */}
             <Route path="/bid">
