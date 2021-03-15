@@ -3,8 +3,10 @@ import { useForm } from "react-hook-form";
 import * as Icon from "react-feather";
 import TitleHeader from "../component/TitleHeader";
 import { Link } from "react-router-dom";
+import { useAuth } from "../hooks/Auth";
 export default function OrderStatus() {
   const { register, handleSubmit, errors } = useForm();
+  const auth = useAuth();
 
   const data = {
     order_name: "Order Name",
@@ -67,16 +69,29 @@ export default function OrderStatus() {
 
       <hr />
 
-      <div className="sme-details call_box">
-        <img src="https://i.imgur.com/khUO2T7.png" alt="" />
-        <div className="details">
-          <h1>SHG NAME</h1>
-          <p>XXXX XX XXXX</p>
+      {auth?.user?.user_type === "sme" ? (
+        <div className="call_box">
+          <img src="https://i.imgur.com/khUO2T7.png" alt="" />
+          <div className="details">
+            <h1>SHG NAME</h1>
+            <p>XXXX XX XXXX</p>
+          </div>
+          <div className="call">
+            <Icon.PhoneCall></Icon.PhoneCall>
+          </div>
         </div>
-        <div className="call">
-          <Icon.PhoneCall></Icon.PhoneCall>
+      ) : (
+        <div className="call_box">
+          <img src="https://i.imgur.com/khUO2T7.png" alt="" />
+          <div className="details">
+            <h1>SME NAME</h1>
+            <p>XXXX XX XXXX</p>
+          </div>
+          <div className="call">
+            <Icon.PhoneCall></Icon.PhoneCall>
+          </div>
         </div>
-      </div>
+      )}
 
       <h2>Payments</h2>
 
@@ -92,11 +107,15 @@ export default function OrderStatus() {
               </h1>
               <h1>{p.name}</h1>
             </div>
-            <button
-              className={"small" + (p.status == "pending" ? "" : " default")}
-            >
-              {p.status == "pending" ? "Pay" : "Details"}
-            </button>
+            {auth?.user?.user_type === "sme" ? (
+              <button
+                className={"small" + (p.status == "pending" ? "" : " default")}
+              >
+                {p.status == "pending" ? "Pay" : "Details"}
+              </button>
+            ) : (
+              <button className="small default">Details</button>
+            )}
           </div>
         </Link>
       ))}
@@ -112,7 +131,12 @@ export default function OrderStatus() {
           <div className="milestone">
             <div className="index">{index + 1}.</div>
             <div className="name">{m.name}</div>
-            <div className="check">check</div>
+            <div className="check">
+              <input type="checkbox" name={m.name} id={"mile_check" + m.name} />
+              <span className="checkbox__control">
+                <Icon.Check></Icon.Check>
+              </span>
+            </div>
           </div>
         ))}
       </div>
