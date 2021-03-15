@@ -1,5 +1,5 @@
 import React from "react";
-import { ProvideAuth, useAuth } from "./hooks/Auth";
+import { useAuth } from "./hooks/Auth";
 import {
   BrowserRouter as Router,
   Switch,
@@ -34,74 +34,72 @@ function App() {
   let auth = useAuth();
 
   return (
-    <ProvideAuth>
-      <Router>
-        <div className="App">
-          <Navbar />
-          <Switch>
-            {/* Authentication and Signup */}
-            <Route exact path="/login">
-              <Login />
-            </Route>
-            <Route exact path="/register">
-              <Register />
-            </Route>
+    <Router>
+      <div className="App">
+        <Navbar />
+        <Switch>
+          {/* Authentication and Signup */}
+          <Route exact path="/login">
+            <Login />
+          </Route>
+          <Route exact path="/register">
+            <Register />
+          </Route>
 
-            <PrivateRoute exact path="/dashboard/">
-              {auth?.user?.user_type === "sme" ? (
-                <DashboardSME />
-              ) : (
-                <DashboardSHG />
-              )}
-            </PrivateRoute>
+          <PrivateRoute exact path="/dashboard/">
+            {auth?.user?.user_type === "sme" ? (
+              <DashboardSME />
+            ) : (
+              <DashboardSHG />
+            )}
+          </PrivateRoute>
 
-            {/* Tender */}
-            <PrivateRoute path="/tender" user_type="sme">
-              <TenderRouter />
-            </PrivateRoute>
+          {/* Tender */}
+          <PrivateRoute path="/tender" user_type="sme">
+            <TenderRouter />
+          </PrivateRoute>
 
-            {/* Bid */}
-            <Route path="/bid">
-              <BidRouter />
-            </Route>
+          {/* Bid */}
+          <Route path="/bid">
+            <BidRouter />
+          </Route>
 
-            {/* Order */}
-            <Route path="/order">
-              <OrderRouter />
-            </Route>
+          {/* Order */}
+          <Route path="/order">
+            <OrderRouter />
+          </Route>
 
-            {/* Portfolio */}
-            <Route exact path="/portfolio">
-              <Portfolio />
-            </Route>
+          {/* Portfolio */}
+          <Route exact path="/portfolio">
+            <Portfolio />
+          </Route>
 
-            {/* product */}
-            <Route exact path="/product/1">
-              <Product />
-            </Route>
+          {/* product */}
+          <Route exact path="/product/1">
+            <Product />
+          </Route>
 
-            <Route exact path="/product/edit">
-              <ProductEdit />
-            </Route>
+          <Route exact path="/product/edit">
+            <ProductEdit />
+          </Route>
 
-            <Route exact path="/smepayments">
-              <SMEPayments />
-            </Route>
-            <Route exact path="/shgpayments">
-              <SHGPayments />
-            </Route>
-            <Route exact path="/paymentRequest">
-              <RequestPayment />
-            </Route>
-            <Route exact path="/">
-              <Home />
-            </Route>
-          </Switch>
-          {auth?.user != null && <BottomNavbar />}
-          <Footer />
-        </div>
-      </Router>
-    </ProvideAuth>
+          <Route exact path="/smepayments">
+            <SMEPayments />
+          </Route>
+          <Route exact path="/shgpayments">
+            <SHGPayments />
+          </Route>
+          <Route exact path="/paymentRequest">
+            <RequestPayment />
+          </Route>
+          <Route exact path="/">
+            <Home />
+          </Route>
+        </Switch>
+        {auth?.user != null && <BottomNavbar />}
+        <Footer />
+      </div>
+    </Router>
   );
 }
 
