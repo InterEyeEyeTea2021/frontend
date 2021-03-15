@@ -1,7 +1,7 @@
-import { AxiosResponse } from 'axios';
-import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { useAuth, registerForm } from '../hooks/Auth';
+import { AxiosResponse } from "axios";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { useAuth, registerForm } from "../hooks/Auth";
 
 interface Props {
   members: string;
@@ -29,7 +29,7 @@ export default function StepThree({
   const [isRegistrered, setIsRegistered] = useState(false);
   const { register, handleSubmit, errors } = useForm();
   const [isLoading, setIsLoading] = useState(false);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
 
   if (currentStep != 3) return null;
   // const onSubmit = (data: registerForm) => {
@@ -49,46 +49,48 @@ export default function StepThree({
 
   return (
     <form onSubmit={handleSubmit(handleNextSubmit)}>
-      <span className='label'> Members </span>
+      <span className="label"> Members </span>
       <input
-        name='members'
+        name="members"
         placeholder={members}
         ref={register({ required: false })}
       />
 
-      <span className='label'> Member Name </span>
+      <span className="label"> Member Name </span>
       <input
-        name='memberName'
+        name="memberName"
         placeholder={memberName}
         ref={register({ required: false })}
       />
 
-      <span className='label'> Member Aadhar </span>
+      <span className="label"> Member Aadhar </span>
       <input
-        name='memberAadhar'
+        name="memberAadhar"
         placeholder={memberAadhar}
         ref={register({ required: false })}
       />
 
-      <span className='label'> Contact Number </span>
+      <span className="label"> Contact Number </span>
       <input
-        name='memberContact'
+        name="memberContact"
         placeholder={memberContact}
         ref={register({ required: false })}
       />
 
-      <span className='label'> Skill </span>
+      <span className="label"> Skill </span>
       {
-        <select name='skill' >
+        <select name="skill">
           {skill.map((type) => (
             <option> {type} </option>
           ))}
         </select>
       }
 
-      <input type='button' value='Add Member' />
-      <input type='submit' value='Next' />
-      <span> Steps: {currentStep}/3</span>
+      <input type="submit" value="Add Member" />
+      <div className="signup-btns">
+        <input type="submit" value="Next" />
+        <span> Steps: {currentStep}/3</span>
+      </div>
     </form>
   );
 }

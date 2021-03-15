@@ -191,6 +191,11 @@ input[type="checkbox"],
 input[type="range"],
 input[type="radio"] {
   cursor: pointer;
+  color: #fff;
+}
+
+input[type="submit"] {
+  background: linear-gradient(277.15deg, #45988e 37.28%, #82d0aa 100%);
 }
 
 input:not([type="checkbox"]):not([type="radio"]),
@@ -212,7 +217,7 @@ select {
   margin-bottom: 6px;
   padding: 10px;
   border: none;
-  border-radius: 6px;
+  border-radius: 12px;
   outline: none;
   display: inline-block;
 }

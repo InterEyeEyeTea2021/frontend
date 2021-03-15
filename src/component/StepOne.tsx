@@ -89,8 +89,10 @@ export default function StepOne({
         ref={register({ required: false })}
       /> */}
 
-      <input type="submit" value="Next" />
-      <span> Steps: {currentStep}/3</span>
+      <div className="signup-btns">
+        <input type="submit" value="Next" />
+        <span> Steps: {currentStep}/3</span>
+      </div>
     </form>
   );
 }
