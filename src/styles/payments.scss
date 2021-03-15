@@ -1,7 +1,7 @@
 .payment {
   display: flex;
   margin: 1rem 0 2rem;
-  width: calc(100vw - 2rem);
+  @include full_width(2rem);
   .details {
     flex-grow: 1;
   }
