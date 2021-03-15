@@ -10,6 +10,7 @@ function Login() {
   let history = useHistory();
   const { register, handleSubmit, errors } = useForm();
   const [message, setMessage] = useState("");
+  const [type, setType] = useState("SHG");
 
   const onSubmit = (data: loginForm) => {
     setIsLoading(true);
@@ -36,6 +37,10 @@ function Login() {
     );
   };
 
+  const handleTypeChange = (e: string) => {
+    setType(e);
+  };
+
   return (
     <div className="main_content login">
       <div className="form">
@@ -59,6 +64,21 @@ function Login() {
           />
           {errors.password && <p>This field is required</p>}
 
+          <span className="label"> Type of User </span>
+          <div className="types">
+            <div
+              className={`type ${type == "SHG" && "current"}`}
+              onClick={() => handleTypeChange("SHG")}
+            >
+              SHG
+            </div>
+            <div
+              className={`type ${type == "SME" && "current"}`}
+              onClick={() => handleTypeChange("SME")}
+            >
+              SME
+            </div>
+          </div>
           <input type="submit" value="Login" disabled={isLoading} />
         </form>
       </div>

@@ -1,11 +1,12 @@
 import { AxiosResponse } from "axios";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useAuth, registerForm } from "../../hooks/Auth";
+import { useAuth } from "../../hooks/Auth";
 
 interface Props {
   name: string;
   username: string;
+  password: string;
   phone: string;
   type: string;
   currentStep: number;
@@ -17,6 +18,7 @@ interface Props {
 export default function StepOne({
   name,
   username,
+  password,
   phone,
   type,
   currentStep,
@@ -58,6 +60,14 @@ export default function StepOne({
       <input
         name="username"
         placeholder={username}
+        ref={register({ required: false })}
+      />
+
+      <span className="label"> Password </span>
+      <input
+        name="password"
+        type="password"
+        placeholder={password}
         ref={register({ required: false })}
       />
 

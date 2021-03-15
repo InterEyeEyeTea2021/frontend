@@ -34,6 +34,26 @@ html {
     }
   }
 
+  .types {
+    display: flex;
+
+    .type {
+      min-width: 40%;
+      text-align: center;
+      padding: 0.5rem 1rem;
+      border-radius: 10px;
+
+      background-color: $background-alt;
+
+      cursor: pointer;
+    }
+
+    .current {
+      background-color: $primary-dark;
+      color: white;
+    }
+  }
+
   label,
   .label {
     margin: 1rem 0 0rem;

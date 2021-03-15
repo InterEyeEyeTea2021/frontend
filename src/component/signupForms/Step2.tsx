@@ -1,7 +1,7 @@
 import { AxiosResponse } from "axios";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useAuth, registerForm } from "../../hooks/Auth";
+import { useAuth } from "../../hooks/Auth";
 
 interface Props {
   address: string;
