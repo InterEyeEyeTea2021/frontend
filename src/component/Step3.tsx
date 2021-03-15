@@ -1,7 +1,7 @@
-import { AxiosResponse } from 'axios';
-import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { useAuth, registerForm } from '../hooks/Auth';
+import { AxiosResponse } from "axios";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { useAuth, registerForm } from "../hooks/Auth";
 
 interface Props {
   accountNumber: string;
@@ -23,7 +23,7 @@ export default function Step3({
   const { register, handleSubmit, errors } = useForm();
   const [isRegistrered, setIsRegistered] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
 
   if (currentStep != 3) return null;
   // const onSubmit = (data: registerForm) => {
@@ -43,22 +43,24 @@ export default function Step3({
 
   return (
     <form onSubmit={handleSubmit(handleNextSubmit)}>
-      <span className='label'> Account Number </span>
+      <span className="label"> Account Number </span>
       <input
-        name='accountNumber'
+        name="accountNumber"
         placeholder={accountNumber}
         ref={register({ required: false })}
       />
 
-      <span className='label'> IFSC Code </span>
+      <span className="label"> IFSC Code </span>
       <input
-        name='branchCode'
+        name="branchCode"
         placeholder={branchCode}
         ref={register({ required: false })}
       />
 
-      <input type='submit' value='Next' />
-      <span> Steps: {currentStep}/3</span>
+      <div className="signup-btns">
+        <input type="submit" value="Next" />
+        <span> Steps: {currentStep}/3</span>
+      </div>
     </form>
   );
 }
