@@ -2,19 +2,36 @@ import React, { useContext, createContext, useState } from "react";
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
 import { BACKEND_URL } from "../constants/constants";
 
-export type signupForm = {
-  id: string;
+export type registerForm_SHG = {
   name: string;
-  password: string;
-  jwt: string;
+  phone: string;
+  contact: string;
+  user_type: string;
+  industry_type: string;
+  account_number: string;
+  branch_code: string;
+
+  name_SHG: string;
+  production_cap: string;
+  order_size: string;
 };
 
-export type registerForm = {
-  email: string;
+export type registerForm_SME = {
+  name: string;
+  phone: string;
+  contact: string;
+  user_type: string;
+  industry_type: string;
+  account_number: string;
+  branch_code: string;
+
+  address: string;
+  product_sold: string;
 };
 
 export type loginForm = {
-  email: string;
+  username: string;
+  user_type: string;
   password: string;
 };
 
@@ -133,10 +150,10 @@ const authConnector = {
     authConnector.isAuthenticated = false;
     cb();
   },
-  register(data: registerForm, cb: (response: AxiosResponse) => void) {
+  registerSHG(data: registerForm_SHG, cb: (response: AxiosResponse) => void) {
     authConnector.isAuthenticated = false;
     axios
-      .post(`${BACKEND_URL}/register`, data)
+      .post(`${BACKEND_URL}/signup/shg`, data)
       .then((response) => {
         // console.log(response);
         cb(response);
@@ -146,14 +163,10 @@ const authConnector = {
         cb(error.response);
       });
   },
-  signup(data: signupForm, cb: (response: AxiosResponse) => void) {
+  registerSME(data: registerForm_SME, cb: (response: AxiosResponse) => void) {
     authConnector.isAuthenticated = false;
     axios
-      .post(`${BACKEND_URL}/signup`, data, {
-        headers: {
-          Authorization: `Bearer ${data.jwt}`,
-        },
-      })
+      .post(`${BACKEND_URL}/signup/sme`, data)
       .then((response) => {
         // console.log(response);
         cb(response);
@@ -173,8 +186,14 @@ export type AuthContextType = {
     cbe: (e: AxiosError) => void
   ) => void;
   signout: (cb: () => void) => void;
-  register: (data: registerForm, cb: (response: AxiosResponse) => void) => void;
-  signup: (data: signupForm, cb: (response: AxiosResponse) => void) => void;
+  registerSHG: (
+    data: registerForm_SHG,
+    cb: (response: AxiosResponse) => void
+  ) => void;
+  registerSME: (
+    data: registerForm_SME,
+    cb: (response: AxiosResponse) => void
+  ) => void;
   authHeader: () => AxiosRequestConfig;
 };
 
@@ -221,18 +240,21 @@ function useProvideAuth() {
     });
   };
 
-  const register = (
-    data: registerForm,
+  const registerSME = (
+    data: registerForm_SME,
     cb: (response: AxiosResponse) => void
   ) => {
-    return authConnector.register(data, (response) => {
+    return authConnector.registerSME(data, (response) => {
       setUser(null);
       cb(response);
     });
   };
 
-  const signup = (data: signupForm, cb: (response: AxiosResponse) => void) => {
-    return authConnector.signup(data, (response) => {
+  const registerSHG = (
+    data: registerForm_SHG,
+    cb: (response: AxiosResponse) => void
+  ) => {
+    return authConnector.registerSHG(data, (response) => {
       setUser(null);
       cb(response);
     });
@@ -253,8 +275,8 @@ function useProvideAuth() {
     user,
     login,
     signout,
-    register,
-    signup,
+    registerSME,
+    registerSHG,
     authHeader,
   };
 }
