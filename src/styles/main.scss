@@ -1,11 +1,6 @@
 @import "variables";
 @import "typography";
-
-@mixin sm {
-  @media (max-width: 900px) {
-    @content;
-  }
-}
+@import "responsive";
 
 body {
   color: $text;

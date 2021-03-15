@@ -1,0 +1,20 @@
+@mixin lg {
+  @media (min-width: 901px) {
+    @content;
+  }
+}
+
+@mixin sm {
+  @media (max-width: 900px) {
+    @content;
+  }
+}
+
+@mixin full_width($cut: 0rem) {
+  @include lg {
+    width: calc(1000px);
+  }
+  @include sm {
+    width: calc(100vw - #{$cut});
+  }
+}
