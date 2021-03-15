@@ -1,6 +1,11 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { ProvideAuth, useAuth } from "./hooks/Auth";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  useRouteMatch,
+} from "react-router-dom";
 import PrivateRoute from "./component/PrivateRoute";
 import Navbar from "./component/Navbar";
 import Footer from "./component/Footer";
@@ -34,12 +39,14 @@ function App() {
         <div className="App">
           <Navbar />
           <Switch>
+            {/* Authentication and Signup */}
             <Route exact path="/login">
               <Login />
             </Route>
             <Route exact path="/register">
               <Register />
             </Route>
+
             <Route exact path="/dashboard/sme">
               <DashboardSME />
             </Route>
@@ -47,27 +54,28 @@ function App() {
               <DashboardSHG />
             </Route>
 
-            <Route exact path="/tender/create">
-              <TenderForm />
-            </Route>
-            <Route exact path="/tender/status">
-              <TenderStatus />
-            </Route>
-            <Route exact path="/bid/create">
-              <BidForm />
-            </Route>
-            <Route exact path="/bid/1">
-              <BidStatus />
-            </Route>
-            <Route exact path="/order/1">
-              <OrderStatus />
+            {/* Tender */}
+            <Route path="/tender">
+              <TenderRouter />
             </Route>
 
+            {/* Bid */}
+            <Route path="/bid">
+              <BidRouter />
+            </Route>
+
+            {/* Order */}
+            <Route path="/order">
+              <OrderRouter />
+            </Route>
+
+            {/* Portfolio */}
             <Route exact path="/portfolio">
               <Portfolio />
             </Route>
 
-            <Route exact path="/product">
+            {/* product */}
+            <Route exact path="/product/1">
               <Product />
             </Route>
 
@@ -93,6 +101,48 @@ function App() {
         </div>
       </Router>
     </ProvideAuth>
+  );
+}
+
+function OrderRouter() {
+  let { path, url } = useRouteMatch();
+  return (
+    <Switch>
+      <Route exact path={`${path}/:id`}>
+        <OrderStatus />
+      </Route>
+      <Route path={`${path}/:id/payment/:pay_id`}>
+        <RequestPayment />
+      </Route>
+    </Switch>
+  );
+}
+
+function TenderRouter() {
+  let { path, url } = useRouteMatch();
+  return (
+    <Switch>
+      <Route exact path={path}>
+        <TenderForm />
+      </Route>
+      <Route path={`${path}/:id`}>
+        <TenderStatus />
+      </Route>
+    </Switch>
+  );
+}
+
+function BidRouter() {
+  let { path, url } = useRouteMatch();
+  return (
+    <Switch>
+      <Route exact path={path}>
+        <BidForm />
+      </Route>
+      <Route path={`${path}/:id`}>
+        <BidStatus />
+      </Route>
+    </Switch>
   );
 }
 
