@@ -18,15 +18,98 @@ export type loginForm = {
   password: string;
 };
 
-class User {
+class SHGUser {
   id: string;
-  name: string;
   jwt: string;
 
-  constructor(id: string, name: string, jwt: string) {
+  name: string;
+  phone: string;
+  contact: string;
+  type: string;
+  industry_type: string;
+  account_number: string;
+  branch_code: string;
+
+  name_SHG: string;
+  production_cap: string;
+  order_size: string;
+
+  constructor(
+    id: string,
+    jwt: string,
+
+    name: string,
+    phone: string,
+    contact: string,
+    type: string,
+    industry_type: string,
+    account_number: string,
+    branch_code: string,
+
+    name_SHG: string,
+    production_cap: string,
+    order_size: string
+  ) {
     this.id = id;
-    this.name = name;
     this.jwt = jwt;
+
+    this.name = name;
+    this.phone = phone;
+    this.contact = contact;
+    this.type = type;
+    this.industry_type = industry_type;
+    this.account_number = account_number;
+    this.branch_code = branch_code;
+
+    this.name_SHG = name_SHG;
+    this.production_cap = production_cap;
+    this.order_size = order_size;
+  }
+}
+
+class SMEUser {
+  id: string;
+  jwt: string;
+
+  name: string;
+  phone: string;
+  contact: string;
+  type: string;
+  industry_type: string;
+  account_number: string;
+  branch_code: string;
+
+  address: string;
+  product_sold: string;
+
+  constructor(
+    id: string,
+    jwt: string,
+
+    name: string,
+    phone: string,
+    contact: string,
+    type: string,
+    industry_type: string,
+    account_number: string,
+    branch_code: string,
+
+    address: string,
+    product_sold: string
+  ) {
+    this.id = id;
+    this.jwt = jwt;
+
+    this.name = name;
+    this.phone = phone;
+    this.contact = contact;
+    this.type = type;
+    this.industry_type = industry_type;
+    this.account_number = account_number;
+    this.branch_code = branch_code;
+
+    this.address = address;
+    this.product_sold = product_sold;
   }
 }
 
@@ -34,7 +117,7 @@ const authConnector = {
   isAuthenticated: false,
   login(
     data: loginForm,
-    cb: (user: User) => void,
+    cb: (user: SHGUser | SMEUser) => void,
     cbe: (e: AxiosError) => void
   ) {
     authConnector.isAuthenticated = true;
@@ -83,7 +166,7 @@ const authConnector = {
 };
 
 export type AuthContextType = {
-  user: User | null;
+  user: SHGUser | SMEUser | null;
   login: (
     data: loginForm,
     cb: () => void,
@@ -109,7 +192,9 @@ function useAuth() {
 }
 
 function useProvideAuth() {
-  const [user, setUser] = useState<User | null>(getUserFromLocalStorage());
+  const [user, setUser] = useState<SMEUser | SHGUser | null>(
+    getUserFromLocalStorage()
+  );
 
   const login = (
     data: loginForm,
@@ -174,7 +259,7 @@ function useProvideAuth() {
   };
 }
 
-function getUserFromLocalStorage(): User | null {
+function getUserFromLocalStorage(): SHGUser | SMEUser | null {
   let userJSON = localStorage.getItem("user");
   if (userJSON) {
     return JSON.parse(userJSON);

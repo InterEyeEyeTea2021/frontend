@@ -23,23 +23,23 @@ function Register() {
     phone: "+91 XXXX XX XXXX",
     contact: "+91 XXXX XX XXXX", // for WhatsApp
     type: "SHG",
-    industryType: "Agriculture, Something, Engineering",
-    accountNumber: "Account Number",
-    branchCode: "IFSC Code",
+    industry_type: "Agriculture, Something, Engineering",
+    account_number: "Account Number",
+    branch_code: "IFSC Code",
 
     // for SHGs only
-    nameSHG: "Name of SHG",
-    productionCap: "Production Capacity",
-    orderSize: "Order Size",
+    name_SHG: "Name of SHG",
+    production_cap: "Production Capacity",
+    order_size: "Order Size",
     members: "No members added yet",
-    memberName: "Name",
-    memberAadhar: "Aadhar",
-    memberContact: "+91 XXXX XX XXXX",
+    member_name: "Name",
+    member_aadhar: "Aadhar",
+    member_contact: "+91 XXXX XX XXXX",
     skill: "Agriculture, Something, Engineering",
 
     // for SMEs only
     address: "Address",
-    productSold: "Products Sold",
+    product_sold: "Products Sold",
   });
 
   const [step, setStep] = useState(1);
@@ -66,19 +66,19 @@ function Register() {
       phone: string;
       contact: string;
       type: string;
-      industryType: string;
-      accountNumber: string;
-      branchCode: string;
+      industry_type: string;
+      account_number: string;
+      branch_code: string;
 
-      nameSHG: string;
-      prodcutionCap: string;
-      memberName: string;
-      memberContact: string;
-      memberAadhar: string;
+      name_SHG: string;
+      production_cap: string;
+      member_name: string;
+      member_contact: string;
+      member_aadhar: string;
       skill: string;
 
       address: string;
-      productSold: string;
+      product_sold: string;
     }>
   ) => {
     setState({
@@ -125,11 +125,11 @@ function Register() {
         {state.type === "SHG" ? (
           <>
             <StepTwo
-              nameSHG={state.nameSHG}
-              productionCap={state.productionCap}
-              orderSize={state.orderSize}
+              nameSHG={state.name_SHG}
+              productionCap={state.production_cap}
+              orderSize={state.order_size}
               contact={state.contact}
-              industryType={state.industryType}
+              industryType={state.industry_type}
               type={state.type}
               currentStep={step}
               handleNextSubmit={handleNextSubmit}
@@ -137,9 +137,9 @@ function Register() {
 
             <StepThree
               members={state.members}
-              memberName={state.memberName}
-              memberAadhar={state.memberAadhar}
-              memberContact={state.memberContact}
+              memberName={state.member_name}
+              memberAadhar={state.member_aadhar}
+              memberContact={state.member_contact}
               skill={state.skill}
               type={state.type}
               currentStep={step}
@@ -147,8 +147,8 @@ function Register() {
             />
 
             <Step3
-              accountNumber={state.accountNumber}
-              branchCode={state.branchCode}
+              accountNumber={state.account_number}
+              branchCode={state.branch_code}
               type={state.type}
               currentStep={step}
               handleNextSubmit={handleNextSubmit}
@@ -162,17 +162,17 @@ function Register() {
           <>
             <Step2
               address={state.address}
-              productSold={state.productSold}
+              productSold={state.product_sold}
               contact={state.contact}
-              industryType={state.industryType}
+              industryType={state.industry_type}
               type={state.type}
               currentStep={step}
               handleNextSubmit={handleNextSubmit}
             />
 
             <Step3
-              accountNumber={state.accountNumber}
-              branchCode={state.branchCode}
+              accountNumber={state.account_number}
+              branchCode={state.branch_code}
               type={state.type}
               currentStep={step}
               handleNextSubmit={handleNextSubmit}
