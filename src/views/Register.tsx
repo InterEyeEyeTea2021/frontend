@@ -1,13 +1,13 @@
 import { AxiosResponse } from "axios";
 import React, { useState } from "react";
 import { useAuth, registerForm } from "../hooks/Auth";
-import StepOne from "../component/StepOne";
+import StepOne from "../component/signupForms/StepOne";
 import { stat } from "node:fs";
 import { useForm } from "react-hook-form";
-import StepTwo from "../component/StepTwo";
-import StepThree from "../component/StepThree";
-import Step2 from "../component/Step2";
-import Step3 from "../component/Step3";
+import StepTwo from "../component/signupForms/StepTwo";
+import StepThree from "../component/signupForms/StepThree";
+import Step2 from "../component/signupForms/Step2";
+import Step3 from "../component/signupForms/Step3";
 
 function Register() {
   let auth = useAuth();
@@ -17,27 +17,29 @@ function Register() {
   const [message, setMessage] = useState("");
 
   const [state, setState] = useState({
+    // non user specific
     name: "Name",
     username: "Username",
     phone: "+91 XXXX XX XXXX",
+    contact: "+91 XXXX XX XXXX", // for WhatsApp
     type: "SHG",
-    nameSHG: "Name of SHG",
-    productionCap: "Production Capacity",
-    orderSize: "Order Size",
-    contactSHG: "+91 XXXX XX XXXX",
-    industryTypeSHG: ["Agriculture", "Something", "Engineering"],
-    members: "No members added yet",
-    memberName: "Name",
-    memberAadhar: "Aadhar",
-    memberContact: "+91 XXXX XX XXXX",
-    skill: ["Agriculture", "Something", "Engineering"],
+    industry_type: "Agriculture, Something, Engineering",
+    account_number: "Account Number",
+    branch_code: "IFSC Code",
 
+    // for SHGs only
+    name_SHG: "Name of SHG",
+    production_cap: "Production Capacity",
+    order_size: "Order Size",
+    members: "No members added yet",
+    member_name: "Name",
+    member_aadhar: "Aadhar",
+    member_contact: "+91 XXXX XX XXXX",
+    skill: "Agriculture, Something, Engineering",
+
+    // for SMEs only
     address: "Address",
-    productSold: "Products Sold",
-    contactSME: "+91 XXXX XX XXXX",
-    industryTypeSME: ["Agriculture", "Something", "Engineering"],
-    accountNumber: "Account Number",
-    branchCode: "IFSC Code",
+    product_sold: "Products Sold",
   });
 
   const [step, setStep] = useState(1);
@@ -62,12 +64,21 @@ function Register() {
       name: string;
       username: string;
       phone: string;
+      contact: string;
       type: string;
-      nameSHG: string;
-      prodcutionCap: string;
+      industry_type: string;
+      account_number: string;
+      branch_code: string;
+
+      name_SHG: string;
+      production_cap: string;
       member_name: string;
       member_contact: string;
       member_aadhar: string;
+      skill: string;
+
+      address: string;
+      product_sold: string;
     }>
   ) => {
     setState({
@@ -114,11 +125,11 @@ function Register() {
         {state.type === "SHG" ? (
           <>
             <StepTwo
-              nameSHG={state.nameSHG}
-              productionCap={state.productionCap}
-              orderSize={state.orderSize}
-              contact={state.contactSHG}
-              industryType={state.industryTypeSHG}
+              nameSHG={state.name_SHG}
+              productionCap={state.production_cap}
+              orderSize={state.order_size}
+              contact={state.contact}
+              industryType={state.industry_type}
               type={state.type}
               currentStep={step}
               handleNextSubmit={handleNextSubmit}
@@ -126,10 +137,18 @@ function Register() {
 
             <StepThree
               members={state.members}
-              memberName={state.memberName}
-              memberAadhar={state.memberAadhar}
-              memberContact={state.memberContact}
+              memberName={state.member_name}
+              memberAadhar={state.member_aadhar}
+              memberContact={state.member_contact}
               skill={state.skill}
+              type={state.type}
+              currentStep={step}
+              handleNextSubmit={handleNextSubmit}
+            />
+
+            <Step3
+              accountNumber={state.account_number}
+              branchCode={state.branch_code}
               type={state.type}
               currentStep={step}
               handleNextSubmit={handleNextSubmit}
@@ -143,17 +162,17 @@ function Register() {
           <>
             <Step2
               address={state.address}
-              productSold={state.productSold}
-              contact={state.contactSME}
-              industryType={state.industryTypeSME}
+              productSold={state.product_sold}
+              contact={state.contact}
+              industryType={state.industry_type}
               type={state.type}
               currentStep={step}
               handleNextSubmit={handleNextSubmit}
             />
 
             <Step3
-              accountNumber={state.accountNumber}
-              branchCode={state.branchCode}
+              accountNumber={state.account_number}
+              branchCode={state.branch_code}
               type={state.type}
               currentStep={step}
               handleNextSubmit={handleNextSubmit}
@@ -164,7 +183,8 @@ function Register() {
         )}
         <form>
           <div className="buttons">
-            {step > 1 && step < 4 ? (
+            {(state.type === "SME" && step > 1 && step < 4) ||
+            (state.type === "SHG" && step > 1 && step < 5) ? (
               <input
                 type="button"
                 className="back"
@@ -175,7 +195,8 @@ function Register() {
               ""
             )}
 
-            {step === 4 ? (
+            {(state.type === "SME" && step === 4) ||
+            (state.type === "SHG" && step === 5) ? (
               <>
                 <h3> Verify the OTP sent to your mobile number </h3>
                 <span className="label"> OTP </span>
