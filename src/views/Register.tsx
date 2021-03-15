@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useAuth, registerForm } from "../hooks/Auth";
 import StepOne from "../component/StepOne";
 import { stat } from "node:fs";
+import { useForm } from "react-hook-form";
 import StepTwo from "../component/StepTwo";
 import StepThree from "../component/StepThree";
 import Step2 from "../component/Step2";
@@ -12,6 +13,7 @@ function Register() {
   let auth = useAuth();
   const [isRegistrered, setIsRegistered] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const { register, handleSubmit, errors } = useForm();
   const [message, setMessage] = useState("");
 
   const [state, setState] = useState({
@@ -174,7 +176,17 @@ function Register() {
             )}
 
             {step === 4 ? (
-              <input type="submit" value="Verify" onClick={handleNext} />
+              <>
+                <h3> Verify the OTP sent to your mobile number </h3>
+                <span className="label"> OTP </span>
+                <input
+                  name="otp"
+                  placeholder="OTP"
+                  ref={register({ required: true })}
+                />
+
+                <input type="submit" value="Verify" onClick={handleNext} />
+              </>
             ) : (
               ""
             )}

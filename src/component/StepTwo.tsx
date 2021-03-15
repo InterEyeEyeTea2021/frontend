@@ -1,7 +1,7 @@
-import { AxiosResponse } from 'axios';
-import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { useAuth, registerForm } from '../hooks/Auth';
+import { AxiosResponse } from "axios";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { useAuth, registerForm } from "../hooks/Auth";
 
 interface Props {
   nameSHG: string;
@@ -29,7 +29,7 @@ export default function StepTwo({
   const [isRegistrered, setIsRegistered] = useState(false);
   const { register, handleSubmit, errors } = useForm();
   const [isLoading, setIsLoading] = useState(false);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
 
   if (currentStep != 2) return null;
   // const onSubmit = (data: registerForm) => {
@@ -49,45 +49,47 @@ export default function StepTwo({
 
   return (
     <form onSubmit={handleSubmit(handleNextSubmit)}>
-      <span className='label'> Name of SHG </span>
+      <span className="label"> Name of SHG </span>
       <input
-        name='nameSHG'
+        name="nameSHG"
         placeholder={nameSHG}
         ref={register({ required: false })}
       />
 
-      <span className='label'> Prodcution Capacity </span>
+      <span className="label"> Prodcution Capacity </span>
       <input
-        name='productionCap'
+        name="productionCap"
         placeholder={productionCap}
         ref={register({ required: false })}
       />
 
-      <span className='label'> Order Size </span>
+      <span className="label"> Order Size </span>
       <input
-        name='orderSize'
+        name="orderSize"
         placeholder={orderSize}
         ref={register({ required: false })}
       />
 
-      <span className='label'> Contact Number (WhatsApp) </span>
+      <span className="label"> Contact Number (WhatsApp) </span>
       <input
-        name='contact'
+        name="contact"
         placeholder={contact}
         ref={register({ required: false })}
       />
 
-      <span className='label'> Industry Type </span>
+      <span className="label"> Industry Type </span>
       {
-        <select name='industryType' ref={register({ required: false })}>
+        <select name="industryType" ref={register({ required: false })}>
           {industryType.map((type) => (
             <option> {type} </option>
           ))}
         </select>
       }
 
-      <input type='submit' value='Next' />
-      <span> Steps: {currentStep}/3</span>
+      <div className="signup-btns">
+        <input type="submit" value="Next" />
+        <span> Steps: {currentStep}/3</span>
+      </div>
     </form>
   );
 }
