@@ -39,12 +39,19 @@ html {
     margin: 1rem 0 0rem;
   }
 
+  .no_style {
+    text-decoration: none;
+    color: inherit;
+  }
+
   ol,
   ul {
-    @include full_width(2rem);
-
+    @include full_width(4rem);
+    li {
+      @include full_width(4rem);
+    }
     li input {
-      max-width: 93%;
+      max-width: 90%;
     }
   }
 
@@ -244,6 +251,10 @@ input[type="checkbox"],
 input[type="radio"] {
   height: 1em;
   width: 1em;
+}
+
+input[type="file"] {
+  width: 80vw;
 }
 
 input[type="radio"] {
