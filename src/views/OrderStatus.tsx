@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as Icon from "react-feather";
 import TitleHeader from "../component/TitleHeader";
+import { Link } from "react-router-dom";
 export default function OrderStatus() {
   const { register, handleSubmit, errors } = useForm();
 
@@ -80,22 +81,24 @@ export default function OrderStatus() {
       <h2>Payments</h2>
 
       {data.payments.map((p, i) => (
-        <div className="payment">
-          <div className="details">
-            <h1 className="amount">
-              ₹{p.amount}
-              <span className="tag">
-                {p.status[0].toUpperCase() + p.status.slice(1)}
-              </span>
-            </h1>
-            <h1>{p.name}</h1>
+        <Link to="/order/1/payment/1" className="no_style">
+          <div className="payment">
+            <div className="details">
+              <h1 className="amount">
+                ₹{p.amount}
+                <span className="tag">
+                  {p.status[0].toUpperCase() + p.status.slice(1)}
+                </span>
+              </h1>
+              <h1>{p.name}</h1>
+            </div>
+            <button
+              className={"small" + (p.status == "pending" ? "" : " default")}
+            >
+              {p.status == "pending" ? "Pay" : "Details"}
+            </button>
           </div>
-          <button
-            className={"small" + (p.status == "pending" ? "" : " default")}
-          >
-            {p.status == "pending" ? "Pay" : "Details"}
-          </button>
-        </div>
+        </Link>
       ))}
 
       <button className="button">Request Payment</button>

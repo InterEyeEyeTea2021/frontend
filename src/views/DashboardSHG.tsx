@@ -4,6 +4,7 @@ import { BACKEND_URL } from "../constants/constants";
 import { useAuth } from "../hooks/Auth";
 import axios from "axios";
 import TitleHeader from "../component/TitleHeader";
+import { Link } from "react-router-dom";
 
 export default function DashboardSHG() {
   const auth = useAuth();
@@ -75,55 +76,63 @@ export default function DashboardSHG() {
 
       <h2>Ongoing Orders</h2>
       {data.ongoingOrder.map((order, id) => (
-        <div className="order">
-          <div className="image">
-            <img src={order.image} alt="" />
+        <Link to="/order/1" className="no_style">
+          <div className="order">
+            <div className="image">
+              <img src={order.image} alt="" />
+            </div>
+            <div className="details">
+              <h1>{order.nameSHG}</h1>
+              <p> COMPLETION: {order.completion} </p>
+            </div>
           </div>
-          <div className="details">
-            <h1>{order.nameSHG}</h1>
-            <p> COMPLETION: {order.completion} </p>
-          </div>
-        </div>
+        </Link>
       ))}
 
       <h2> Bids </h2>
       {data.tenders.map((tender, id) => (
-        <div className="bid">
-          <div className="image">
-            <img src={tender.image} alt="" />
+        <Link to="/bid/1" className="no_style">
+          <div className="bid">
+            <div className="image">
+              <img src={tender.image} alt="" />
+            </div>
+            <div className="details">
+              <h1>{tender.orderName}</h1>
+              <p> {tender.date} </p>
+              <p> {tender.bids} BIDS RECEIVED </p>
+            </div>
           </div>
-          <div className="details">
-            <h1>{tender.orderName}</h1>
-            <p> {tender.date} </p>
-            <p> {tender.bids} BIDS RECEIVED </p>
-          </div>
-        </div>
+        </Link>
       ))}
 
       <input type="submit" value="Create Bid" />
 
       <h2>Completed Orders</h2>
       {data.completedOrders.map((order, id) => (
-        <div className="order">
-          <div className="image">
-            <img src={order.image} alt="" />
+        <Link to="/order/1" className="no_style">
+          <div className="order">
+            <div className="image">
+              <img src={order.image} alt="" />
+            </div>
+            <div className="details">
+              <h1>{order.nameSHG}</h1>
+              <p> COMPLETION: {order.completion} </p>
+            </div>
           </div>
-          <div className="details">
-            <h1>{order.nameSHG}</h1>
-            <p> COMPLETION: {order.completion} </p>
-          </div>
-        </div>
+        </Link>
       ))}
 
       <h2> Payments </h2>
       {data.payments.map((payment, id) => (
-        <div className="payment lite">
-          <h1 className="amount">{payment.amount}</h1>
-          <div className="details">
-            <h1> {payment.projectName} </h1>
-            <p> {payment.nameSHG} </p>
+        <Link to="/order/1/payment/1" className="no_style">
+          <div className="payment lite">
+            <h1 className="amount">{payment.amount}</h1>
+            <div className="details">
+              <h1> {payment.projectName} </h1>
+              <p> {payment.nameSHG} </p>
+            </div>
           </div>
-        </div>
+        </Link>
       ))}
 
       <h2> Portfolio </h2>

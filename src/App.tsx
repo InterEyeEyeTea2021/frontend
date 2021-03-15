@@ -105,13 +105,16 @@ function App() {
 
 function OrderRouter() {
   let { path, url } = useRouteMatch();
+  let auth = useAuth();
+
   return (
     <Switch>
       <Route exact path={`${path}/:id`}>
         <OrderStatus />
       </Route>
       <Route path={`${path}/:id/payment/:pay_id`}>
-        <RequestPayment />
+        {auth?.user?.user_type === "sme" ? <SMEPayments /> : <SHGPayments />}
+        {/* <RequestPayment /> */}
       </Route>
     </Switch>
   );
