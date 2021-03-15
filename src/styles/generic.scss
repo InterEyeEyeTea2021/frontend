@@ -130,7 +130,7 @@ html {
   .milestones {
     .milestone {
       font-size: 1.3rem;
-      margin-bottom: 1rem;
+      margin-bottom: 1.5rem;
       display: flex;
       width: 100%;
 
@@ -142,6 +142,41 @@ html {
         font-weight: 600;
         flex-grow: 1;
         color: $heading-text;
+      }
+
+      .check {
+        font-size: 1.5rem;
+        position: relative;
+
+        input {
+          opacity: 0;
+          width: 1em;
+          height: 1em;
+          z-index: 1;
+          position: relative;
+          margin: 0;
+          &:checked + .checkbox__control svg {
+            transform: scale(1);
+          }
+        }
+        .checkbox__control {
+          display: inline-grid;
+          width: 1em;
+          margin: 0;
+          height: 1em;
+          border-radius: 0.25em;
+          border: 0.1em solid $background-alt;
+          position: absolute;
+          left: 0;
+          z-index: 0;
+          svg {
+            color: $primary;
+            stroke-width: 3px;
+            transition: transform 0.1s ease-in-out 100ms;
+            transform: scale(0);
+            transform-origin: bottom left;
+          }
+        }
       }
     }
   }
@@ -245,12 +280,6 @@ input[type="color"] {
   min-height: 2rem;
   padding: 8px;
   cursor: pointer;
-}
-
-input[type="checkbox"],
-input[type="radio"] {
-  height: 1em;
-  width: 1em;
 }
 
 input[type="file"] {
