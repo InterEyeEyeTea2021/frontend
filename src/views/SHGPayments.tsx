@@ -2,6 +2,7 @@ import { useAuth, loginForm } from "../hooks/Auth";
 import React, { useState } from "react";
 import * as Icon from "react-feather";
 import TitleHeader from "../component/TitleHeader";
+import { Link } from "react-router-dom";
 function SHGPayments() {
   const [isLoading, setIsLoading] = useState(false);
   let auth = useAuth();
@@ -39,21 +40,25 @@ function SHGPayments() {
     <div className="main_content">
       <TitleHeader title="Payment" user_type="SHG" />
 
-      <h2>
-        <div className="label">{currPayment.name}</div>
-        <div className="value">
-          {currPayment.status[0].toUpperCase() + currPayment.status.slice(1)}
-        </div>
-      </h2>
+      <div>
+        <h2>
+          {currPayment.name}
+          <span className="tag">
+            {currPayment.status[0].toUpperCase() + currPayment.status.slice(1)}
+          </span>
+        </h2>
+      </div>
 
       <h1>₹{currPayment.amount}</h1>
 
-      <div className="detail">
-        <div className="label">Order</div>
-        <div className="value">Order Name</div>
-      </div>
+      <Link to="/order/1" className="no_style">
+        <div className="detail">
+          <div className="label">Order</div>
+          <div className="value">Order Name</div>
+        </div>
+      </Link>
 
-      <h1>SME</h1>
+      <h2>SME</h2>
       <div className="sme-details call_box">
         <img src="https://i.imgur.com/khUO2T7.png" alt="" />
         <div className="details">
@@ -69,16 +74,24 @@ function SHGPayments() {
         <button>Get Bill</button>
       </div>
 
-      <h1>All payments</h1>
+      <hr />
+
+      <h2>All payments</h2>
       {paymentsList.map((p) => (
-        <div className="payment">
-          <h1 className="amount">₹{p.amount}</h1>
-          <div className="details">
-            <h1>{p.name}</h1>
-            <p>{p.status[0].toUpperCase() + p.status.slice(1)}</p>
+        <Link to="/order/1/payment/1" className="no_style">
+          <div className="payment">
+            <div className="details">
+              <h1 className="amount">
+                ₹{p.amount}
+                <span className="tag">
+                  {p.status[0].toUpperCase() + p.status.slice(1)}
+                </span>
+              </h1>
+              <h1>{p.name}</h1>
+            </div>
+            <button className="small default">Details</button>
           </div>
-          <button className="small default">Details</button>
-        </div>
+        </Link>
       ))}
     </div>
   );
