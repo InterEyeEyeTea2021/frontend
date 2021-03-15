@@ -1,5 +1,5 @@
 html {
-  scrollbar-color: var(--scrollbar-thumb) var(--background-body);
+  scrollbar-color: $primary $background-alt;
   scrollbar-width: thin;
 }
 
@@ -49,8 +49,9 @@ html {
   }
 
   h2 {
-    font-size: 1.75rem;
+    font-size: 1.5rem;
     margin-top: 3rem;
+    font-weight: 500;
     color: $heading-text;
   }
 
@@ -171,17 +172,6 @@ html {
     flex-wrap: wrap;
     justify-content: space-around;
   }
-}
-
-button,
-.button,
-input,
-textarea {
-  transition: background-color var(--animation-duration) linear,
-    border-color var(--animation-duration) linear,
-    color var(--animation-duration) linear,
-    box-shadow var(--animation-duration) linear,
-    transform var(--animation-duration) ease;
 }
 
 button,
@@ -325,7 +315,7 @@ button:hover,
 input[type="submit"]:hover,
 input[type="reset"]:hover,
 input[type="button"]:hover {
-  background: var(--button-hover);
+  background: $primary;
 }
 
 input:focus,
@@ -333,7 +323,7 @@ select:focus,
 button:focus,
 .button:focus,
 textarea:focus {
-  box-shadow: 0 0 0 2px var(--focus);
+  box-shadow: 0 0 0 4px darken($background-alt, 5%);
 }
 
 input[type="checkbox"]:active,
@@ -356,12 +346,8 @@ textarea:disabled {
   opacity: 0.5;
 }
 
-::placeholder {
-  color: var(--form-placeholder);
-}
-
 fieldset {
-  border: 1px var(--focus) solid;
+  border: 1px darken($background-alt, 5%) solid;
   border-radius: 6px;
   margin: 0;
   margin-bottom: 12px;
