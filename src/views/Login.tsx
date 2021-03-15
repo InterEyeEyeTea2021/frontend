@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 import { useAuth, loginForm } from "../hooks/Auth";
-import { EMAIL_VALIDATOR } from "../constants/constants";
 
 function Login() {
   const [isLoading, setIsLoading] = useState(false);
@@ -43,17 +42,15 @@ function Login() {
         <h1>Login</h1>
         <div className="error">{message}</div>
         <form onSubmit={handleSubmit(onSubmit)}>
+          <span className="label"> Username </span>
           <input
-            name="email"
-            placeholder="Email"
-            ref={register({
-              required: true,
-              pattern: EMAIL_VALIDATOR,
-            })}
+            name="username"
+            placeholder="Username"
+            ref={register({ required: true })}
           />
-          {errors.email?.type === "required" && <p>This field is required</p>}
-          {errors.email?.type === "pattern" && <p> email only</p>}
+          {errors.username && <p>This field is required</p>}
 
+          <span className="label"> Password </span>
           <input
             name="password"
             placeholder="Password"

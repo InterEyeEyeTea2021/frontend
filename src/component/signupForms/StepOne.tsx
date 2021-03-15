@@ -1,27 +1,27 @@
 import { AxiosResponse } from "axios";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useAuth, registerForm } from "../hooks/Auth";
+import { useAuth, registerForm } from "../../hooks/Auth";
 
 interface Props {
-  address: string;
-  productSold: string;
-  contact: string;
-  industryType: string[];
+  name: string;
+  username: string;
+  phone: string;
   type: string;
   currentStep: number;
 
   handleNextSubmit: (e: any) => void;
+  handleTypeChange: (s: string) => void;
 }
 
-export default function Step2({
-  address,
-  productSold,
-  contact,
-  industryType,
+export default function StepOne({
+  name,
+  username,
+  phone,
   type,
   currentStep,
   handleNextSubmit,
+  handleTypeChange,
 }: Props) {
   let auth = useAuth();
   const { register, handleSubmit, errors } = useForm();
@@ -29,7 +29,7 @@ export default function Step2({
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState("");
 
-  if (currentStep != 2) return null;
+  if (currentStep != 1) return null;
   // const onSubmit = (data: registerForm) => {
   //   setIsLoading(true);
   //   // console.log("Submitted Form Data: ", data);
@@ -47,39 +47,53 @@ export default function Step2({
 
   return (
     <form onSubmit={handleSubmit(handleNextSubmit)}>
-      <span className="label"> Address </span>
+      <span className="label"> Name </span>
       <input
-        name="address"
-        placeholder={address}
+        name="name"
+        placeholder={name}
         ref={register({ required: false })}
       />
 
-      <span className="label"> Product Sold </span>
+      <span className="label"> Username </span>
       <input
-        name="productSold"
-        placeholder={productSold}
+        name="username"
+        placeholder={username}
         ref={register({ required: false })}
       />
 
-      <span className="label"> Contact Number (WhatsApp) </span>
+      <span className="label"> Phone Number </span>
       <input
-        name="contact"
-        placeholder={contact}
+        name="phone"
+        placeholder={phone}
         ref={register({ required: false })}
       />
 
-      <span className="label"> Industry Type </span>
-      {
-        <select name="industryType" ref={register({ required: false })}>
-          {industryType.map((type) => (
-            <option> {type} </option>
-          ))}
-        </select>
-      }
+      <span className="label"> Type of User </span>
+      <div className="types">
+        <div
+          className={`type ${type == "SHG" && "current"}`}
+          onClick={() => handleTypeChange("SHG")}
+        >
+          SHG
+        </div>
+        <div
+          className={`type ${type == "SME" && "current"}`}
+          onClick={() => handleTypeChange("SME")}
+        >
+          SME
+        </div>
+      </div>
+      {/* <input
+        name='type'
+        placeholder={type}
+        ref={register({ required: false })}
+      /> */}
 
       <div className="signup-btns">
         <input type="submit" value="Next" />
-        <span> Steps: {currentStep}/3</span>
+        <span>
+          Steps: {type === "SHG" ? `${currentStep}/4` : `${currentStep}/3`}
+        </span>
       </div>
     </form>
   );
