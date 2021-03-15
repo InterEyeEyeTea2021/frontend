@@ -73,7 +73,7 @@ export default function DashboardSHG() {
     <div className="main_content dashboard dashboard_shg">
       <TitleHeader title="Dashboard" user_type="SHG" />
 
-      <h2> Ongoing Order </h2>
+      <h2>Ongoing Orders</h2>
       {data.ongoingOrder.map((order, id) => (
         <div className="order">
           <div className="image">
@@ -102,7 +102,7 @@ export default function DashboardSHG() {
 
       <input type="submit" value="Create Bid" />
 
-      <h2> Completed Orders </h2>
+      <h2>Completed Orders</h2>
       {data.completedOrders.map((order, id) => (
         <div className="order">
           <div className="image">
