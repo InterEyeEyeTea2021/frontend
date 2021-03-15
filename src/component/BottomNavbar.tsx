@@ -4,35 +4,33 @@ import { NavLink } from "react-router-dom";
 
 export default function BottomNavbar() {
   return (
-    <nav>
-      <div className="bottomNav">
-        <ul>
+    <nav className="bottomNav">
+      <ul>
+        <NavLink exact to="/dashboard">
           <li>
-            <NavLink exact to="/">
-              <Icon.Home />
-              <p>HOME</p>
-            </NavLink>
+            <Icon.Home />
+            <p>HOME</p>
           </li>
+        </NavLink>
+        <NavLink exact to="/order/1">
           <li>
-            <NavLink exact to="/order/1">
-              <Icon.File />
-              <p>ORDERS</p>
-            </NavLink>
+            <Icon.File />
+            <p>ORDERS</p>
           </li>
+        </NavLink>
+        <NavLink exact to="/something">
           <li>
-            <NavLink exact to="/something">
-              <Icon.Search />
-              <p>SEARCH</p>
-            </NavLink>
+            <Icon.Search />
+            <p>SEARCH</p>
           </li>
+        </NavLink>
+        <NavLink exact to="/portfolio">
           <li>
-            <NavLink exact to="/portfolio">
-              <Icon.User />
-              <p>PROFILE</p>
-            </NavLink>
+            <Icon.User />
+            <p>PROFILE</p>
           </li>
-        </ul>
-      </div>
+        </NavLink>
+      </ul>
     </nav>
   );
 }
