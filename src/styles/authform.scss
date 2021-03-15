@@ -28,6 +28,7 @@
     .buttons {
       display: flex;
       flex-wrap: wrap;
+      flex-direction: column;
 
       .back {
         background-color: #9ac2bc;
