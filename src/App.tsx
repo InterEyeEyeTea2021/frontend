@@ -47,13 +47,13 @@ function App() {
               <Register />
             </Route>
 
-            <Route exact path="/dashboard/">
+            <PrivateRoute exact path="/dashboard/">
               {auth?.user?.user_type === "sme" ? (
                 <DashboardSME />
               ) : (
                 <DashboardSHG />
               )}
-            </Route>
+            </PrivateRoute>
 
             {/* Tender */}
             <PrivateRoute path="/tender" user_type="sme">
@@ -97,7 +97,7 @@ function App() {
               <Home />
             </Route>
           </Switch>
-          {auth?.user ? <BottomNavbar /> : ""}
+          {auth?.user != null && <BottomNavbar />}
           <Footer />
         </div>
       </Router>
