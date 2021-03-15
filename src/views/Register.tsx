@@ -1,13 +1,13 @@
 import { AxiosResponse } from "axios";
 import React, { useState } from "react";
 import { useAuth, registerForm } from "../hooks/Auth";
-import StepOne from "../component/StepOne";
+import StepOne from "../component/signupForms/StepOne";
 import { stat } from "node:fs";
 import { useForm } from "react-hook-form";
-import StepTwo from "../component/StepTwo";
-import StepThree from "../component/StepThree";
-import Step2 from "../component/Step2";
-import Step3 from "../component/Step3";
+import StepTwo from "../component/signupForms/StepTwo";
+import StepThree from "../component/signupForms/StepThree";
+import Step2 from "../component/signupForms/Step2";
+import Step3 from "../component/signupForms/Step3";
 
 function Register() {
   let auth = useAuth();
@@ -17,27 +17,29 @@ function Register() {
   const [message, setMessage] = useState("");
 
   const [state, setState] = useState({
+    // non user specific
     name: "Name",
     username: "Username",
     phone: "+91 XXXX XX XXXX",
+    contact: "+91 XXXX XX XXXX", // for WhatsApp
     type: "SHG",
+    industryType: "Agriculture, Something, Engineering",
+    accountNumber: "Account Number",
+    branchCode: "IFSC Code",
+
+    // for SHGs only
     nameSHG: "Name of SHG",
     productionCap: "Production Capacity",
     orderSize: "Order Size",
-    contactSHG: "+91 XXXX XX XXXX",
-    industryTypeSHG: ["Agriculture", "Something", "Engineering"],
     members: "No members added yet",
     memberName: "Name",
     memberAadhar: "Aadhar",
     memberContact: "+91 XXXX XX XXXX",
-    skill: ["Agriculture", "Something", "Engineering"],
+    skill: "Agriculture, Something, Engineering",
 
+    // for SMEs only
     address: "Address",
     productSold: "Products Sold",
-    contactSME: "+91 XXXX XX XXXX",
-    industryTypeSME: ["Agriculture", "Something", "Engineering"],
-    accountNumber: "Account Number",
-    branchCode: "IFSC Code",
   });
 
   const [step, setStep] = useState(1);
@@ -62,12 +64,21 @@ function Register() {
       name: string;
       username: string;
       phone: string;
+      contact: string;
       type: string;
+      industryType: string;
+      accountNumber: string;
+      branchCode: string;
+
       nameSHG: string;
       prodcutionCap: string;
-      member_name: string;
-      member_contact: string;
-      member_aadhar: string;
+      memberName: string;
+      memberContact: string;
+      memberAadhar: string;
+      skill: string;
+
+      address: string;
+      productSold: string;
     }>
   ) => {
     setState({
@@ -117,8 +128,8 @@ function Register() {
               nameSHG={state.nameSHG}
               productionCap={state.productionCap}
               orderSize={state.orderSize}
-              contact={state.contactSHG}
-              industryType={state.industryTypeSHG}
+              contact={state.contact}
+              industryType={state.industryType}
               type={state.type}
               currentStep={step}
               handleNextSubmit={handleNextSubmit}
@@ -134,6 +145,14 @@ function Register() {
               currentStep={step}
               handleNextSubmit={handleNextSubmit}
             />
+
+            <Step3
+              accountNumber={state.accountNumber}
+              branchCode={state.branchCode}
+              type={state.type}
+              currentStep={step}
+              handleNextSubmit={handleNextSubmit}
+            />
           </>
         ) : (
           ""
@@ -144,8 +163,8 @@ function Register() {
             <Step2
               address={state.address}
               productSold={state.productSold}
-              contact={state.contactSME}
-              industryType={state.industryTypeSME}
+              contact={state.contact}
+              industryType={state.industryType}
               type={state.type}
               currentStep={step}
               handleNextSubmit={handleNextSubmit}
@@ -164,7 +183,8 @@ function Register() {
         )}
         <form>
           <div className="buttons">
-            {step > 1 && step < 4 ? (
+            {(state.type === "SME" && step > 1 && step < 4) ||
+            (state.type === "SHG" && step > 1 && step < 5) ? (
               <input
                 type="button"
                 className="back"
@@ -175,7 +195,8 @@ function Register() {
               ""
             )}
 
-            {step === 4 ? (
+            {(state.type === "SME" && step === 4) ||
+            (state.type === "SHG" && step === 5) ? (
               <>
                 <h3> Verify the OTP sent to your mobile number </h3>
                 <span className="label"> OTP </span>

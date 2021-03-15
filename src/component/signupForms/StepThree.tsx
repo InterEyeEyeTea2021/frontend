@@ -1,14 +1,14 @@
 import { AxiosResponse } from "axios";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useAuth, registerForm } from "../hooks/Auth";
+import { useAuth, registerForm } from "../../hooks/Auth";
 
 interface Props {
   members: string;
   memberName: string;
   memberContact: string;
   memberAadhar: string;
-  skill: string[];
+  skill: string;
   type: string;
   currentStep: number;
 
@@ -80,7 +80,7 @@ export default function StepThree({
       <span className="label"> Skill </span>
       {
         <select name="skill">
-          {skill.map((type) => (
+          {skill.split(",").map((type) => (
             <option> {type} </option>
           ))}
         </select>
@@ -89,7 +89,7 @@ export default function StepThree({
       <input type="submit" value="Add Member" />
       <div className="signup-btns">
         <input type="submit" value="Next" />
-        <span> Steps: {currentStep}/3</span>
+        <span> Steps: {currentStep}/4</span>
       </div>
     </form>
   );
