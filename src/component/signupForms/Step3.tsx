@@ -1,27 +1,23 @@
 import { AxiosResponse } from "axios";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useAuth, registerForm } from "../hooks/Auth";
+import { useAuth, registerForm } from "../../hooks/Auth";
 
 interface Props {
-  name: string;
-  username: string;
-  phone: string;
+  accountNumber: string;
+  branchCode: string;
   type: string;
   currentStep: number;
 
   handleNextSubmit: (e: any) => void;
-  handleTypeChange: (s: string) => void;
 }
 
-export default function StepOne({
-  name,
-  username,
-  phone,
+export default function Step3({
+  accountNumber,
+  branchCode,
   type,
   currentStep,
   handleNextSubmit,
-  handleTypeChange,
 }: Props) {
   let auth = useAuth();
   const { register, handleSubmit, errors } = useForm();
@@ -29,7 +25,11 @@ export default function StepOne({
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState("");
 
-  if (currentStep != 1) return null;
+  if (
+    (currentStep != 3 && type === "SME") ||
+    (currentStep != 4 && type === "SHG")
+  )
+    return null;
   // const onSubmit = (data: registerForm) => {
   //   setIsLoading(true);
   //   // console.log("Submitted Form Data: ", data);
@@ -47,51 +47,25 @@ export default function StepOne({
 
   return (
     <form onSubmit={handleSubmit(handleNextSubmit)}>
-      <span className="label"> Name </span>
+      <span className="label"> Account Number </span>
       <input
-        name="name"
-        placeholder={name}
+        name="accountNumber"
+        placeholder={accountNumber}
         ref={register({ required: false })}
       />
 
-      <span className="label"> Username </span>
+      <span className="label"> IFSC Code </span>
       <input
-        name="username"
-        placeholder={username}
+        name="branchCode"
+        placeholder={branchCode}
         ref={register({ required: false })}
       />
-
-      <span className="label"> Phone Number </span>
-      <input
-        name="phone"
-        placeholder={phone}
-        ref={register({ required: false })}
-      />
-
-      <span className="label"> Type of User </span>
-      <div className="types">
-        <div
-          className={`type ${type == "SHG" && "current"}`}
-          onClick={() => handleTypeChange("SHG")}
-        >
-          SHG
-        </div>
-        <div
-          className={`type ${type == "SME" && "current"}`}
-          onClick={() => handleTypeChange("SME")}
-        >
-          SME
-        </div>
-      </div>
-      {/* <input
-        name='type'
-        placeholder={type}
-        ref={register({ required: false })}
-      /> */}
 
       <div className="signup-btns">
         <input type="submit" value="Next" />
-        <span> Steps: {currentStep}/3</span>
+        <span>
+          Steps: {type === "SHG" ? `${currentStep}/4` : `${currentStep}/3`}
+        </span>
       </div>
     </form>
   );

@@ -1,7 +1,7 @@
 import { AxiosResponse } from "axios";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useAuth, registerForm } from "../hooks/Auth";
+import { useAuth, registerForm } from "../../hooks/Auth";
 
 interface Props {
   nameSHG: string;
@@ -9,7 +9,7 @@ interface Props {
   contact: string;
   type: string;
   orderSize: string;
-  industryType: string[];
+  industryType: string;
   currentStep: number;
 
   handleNextSubmit: (e: any) => void;
@@ -80,7 +80,7 @@ export default function StepTwo({
       <span className="label"> Industry Type </span>
       {
         <select name="industryType" ref={register({ required: false })}>
-          {industryType.map((type) => (
+          {industryType.split(",").map((type) => (
             <option> {type} </option>
           ))}
         </select>
@@ -88,7 +88,7 @@ export default function StepTwo({
 
       <div className="signup-btns">
         <input type="submit" value="Next" />
-        <span> Steps: {currentStep}/3</span>
+        <span> Steps: {currentStep}/4</span>
       </div>
     </form>
   );

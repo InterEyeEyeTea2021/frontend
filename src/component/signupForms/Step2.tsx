@@ -1,20 +1,24 @@
 import { AxiosResponse } from "axios";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useAuth, registerForm } from "../hooks/Auth";
+import { useAuth, registerForm } from "../../hooks/Auth";
 
 interface Props {
-  accountNumber: string;
-  branchCode: string;
+  address: string;
+  productSold: string;
+  contact: string;
+  industryType: string;
   type: string;
   currentStep: number;
 
   handleNextSubmit: (e: any) => void;
 }
 
-export default function Step3({
-  accountNumber,
-  branchCode,
+export default function Step2({
+  address,
+  productSold,
+  contact,
+  industryType,
   type,
   currentStep,
   handleNextSubmit,
@@ -25,7 +29,7 @@ export default function Step3({
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState("");
 
-  if (currentStep != 3) return null;
+  if (currentStep != 2) return null;
   // const onSubmit = (data: registerForm) => {
   //   setIsLoading(true);
   //   // console.log("Submitted Form Data: ", data);
@@ -43,19 +47,35 @@ export default function Step3({
 
   return (
     <form onSubmit={handleSubmit(handleNextSubmit)}>
-      <span className="label"> Account Number </span>
+      <span className="label"> Address </span>
       <input
-        name="accountNumber"
-        placeholder={accountNumber}
+        name="address"
+        placeholder={address}
         ref={register({ required: false })}
       />
 
-      <span className="label"> IFSC Code </span>
+      <span className="label"> Product Sold </span>
       <input
-        name="branchCode"
-        placeholder={branchCode}
+        name="productSold"
+        placeholder={productSold}
         ref={register({ required: false })}
       />
+
+      <span className="label"> Contact Number (WhatsApp) </span>
+      <input
+        name="contact"
+        placeholder={contact}
+        ref={register({ required: false })}
+      />
+
+      <span className="label"> Industry Type </span>
+      {
+        <select name="industryType" ref={register({ required: false })}>
+          {industryType.split(",").map((type) => (
+            <option> {type} </option>
+          ))}
+        </select>
+      }
 
       <div className="signup-btns">
         <input type="submit" value="Next" />
