@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { Link } from "react-feather";
+import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import TitleHeader from "../component/TitleHeader";
+import { prod_images } from "../constants/constants";
 import { useAuth } from "../hooks/Auth";
 import BidForm from "./BidForm";
 
@@ -17,10 +18,6 @@ export default function Product() {
     min_size: 10,
     price: 100,
     media: [
-      {
-        type: "image",
-        uri: "https://i.imgur.com/khUO2T7.png",
-      },
       {
         type: "image",
         uri: "https://i.imgur.com/khUO2T7.png",
@@ -54,9 +51,11 @@ export default function Product() {
         <div className="value">{data.description}</div>
       </div>
 
-      <div className="media_wrapper">
-        {data.media.map((i) => (
-          <img src={i.uri} alt="" />
+      <div className="cards">
+        {data.media.map((i, k) => (
+          <div className="card">
+            <img src={prod_images[k % 6]} alt="" />
+          </div>
         ))}
       </div>
 
@@ -70,7 +69,9 @@ export default function Product() {
         <div className="value">{data.price}</div>
       </div>
       {is_sme ? (
-        <Link to="/tender">Create Tender</Link>
+        <Link className="button" to="/tender">
+          Create Tender
+        </Link>
       ) : (
         <div className="edit">
           <button className="button primary">Edit Product</button>

@@ -200,12 +200,12 @@ html {
       }
     }
   }
-  .products {
+  .cards {
     display: flex;
     flex-wrap: wrap;
     @include full_width(2rem);
     justify-content: space-between;
-    .product {
+    .card {
       display: flex;
       flex-direction: column;
       margin: 1rem 0 2rem 0;
