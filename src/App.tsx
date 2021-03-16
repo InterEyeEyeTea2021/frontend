@@ -32,12 +32,14 @@ import BottomNavbar from "./component/BottomNavbar";
 import SearchSME from "./views/SearchSME";
 import SearchSHG from "./views/SearchSHG";
 import ProfileSME from "./views/ProfileSME";
+import ScrollToTop from "./component/ScrollToTop";
 
 function App() {
   let auth = useAuth();
 
   return (
     <Router>
+      <ScrollToTop />
       <div className="App">
         <Navbar />
         <Switch>
