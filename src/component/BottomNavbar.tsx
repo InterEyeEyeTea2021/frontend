@@ -18,7 +18,7 @@ export default function BottomNavbar() {
             <p>ORDERS</p>
           </li>
         </NavLink> */}
-        <NavLink exact to="/something">
+        <NavLink exact to="/search">
           <li>
             <Icon.Search />
             <p>SEARCH</p>

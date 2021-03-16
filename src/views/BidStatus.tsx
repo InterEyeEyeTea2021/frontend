@@ -20,7 +20,7 @@ export default function BidStatus() {
     location: "Location",
     payments: [
       { pay_name: "Order Completion", value: 2000, suggested_value: 1500 },
-      { pay_name: "Order Completion", value: null, suggested_value: null },
+      { pay_name: "Advanced", value: null, suggested_value: null },
     ],
     milestones: [
       { name: "Milestone 1" },
@@ -28,6 +28,10 @@ export default function BidStatus() {
       { name: "Milestone 3" },
       { name: "Milestone 4" },
     ],
+  };
+
+  const cancelBid = (e: React.MouseEvent) => {
+    console.log(e.target);
   };
 
   return (
@@ -103,7 +107,9 @@ export default function BidStatus() {
         </div>
       ))}
 
-      <button className="button"> Cancel Bid</button>
+      <button className="button" onClick={cancelBid}>
+        Cancel Bid
+      </button>
     </div>
   );
 }
