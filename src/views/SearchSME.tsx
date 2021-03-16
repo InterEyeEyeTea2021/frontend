@@ -31,6 +31,8 @@ export default function SearchSME() {
   return (
     <div className="main_content">
       <TitleHeader title="Search" user_type="SME"></TitleHeader>
+      <input type="text" name="search" id="search" placeholder="Search" />
+      <br />
       <div className="cards">
         {SHGs.map((s, i) => (
           <Link to={"/portfolio/" + s.sme_id} className="no_style">
