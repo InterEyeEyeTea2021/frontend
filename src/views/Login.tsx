@@ -13,6 +13,8 @@ function Login() {
   const [type, setType] = useState("SHG");
 
   const onSubmit = (data: loginForm) => {
+    data.user_type = type;
+    data.remember = "false";
     setIsLoading(true);
     console.log("Submitted Form Data: ", data);
 

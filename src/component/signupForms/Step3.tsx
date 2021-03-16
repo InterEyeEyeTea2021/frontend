@@ -49,14 +49,14 @@ export default function Step3({
     <form onSubmit={handleSubmit(handleNextSubmit)}>
       <span className="label"> Account Number </span>
       <input
-        name="accountNumber"
+        name="account_number"
         placeholder={accountNumber}
         ref={register({ required: false })}
       />
 
       <span className="label"> IFSC Code </span>
       <input
-        name="branchCode"
+        name="branch_code"
         placeholder={branchCode}
         ref={register({ required: false })}
       />
