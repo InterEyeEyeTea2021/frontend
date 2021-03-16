@@ -1,5 +1,7 @@
+import axios from "axios";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { API_IMGBB } from "../constants/constants";
 import TitleHeader from "../component/TitleHeader";
 
 export default function TenderForm() {
@@ -10,6 +12,29 @@ export default function TenderForm() {
   const onSubmit = (data: any) => {
     setIsLoading(true);
     console.log("Submitted Form Data: ", data);
+
+    if (data.media.length > 0) {
+      const e = data.media[0];
+      const d = new FormData();
+      let photograph;
+      console.log(e);
+      d.append("image", e);
+      axios
+        .post(
+          "https://api.imgbb.com/1/upload?expiration=600&key=" + API_IMGBB,
+          d
+        )
+        .then((resp) => {
+          photograph = resp.data.data.image.url;
+          // Post the image link to the backend
+          console.log(photograph);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    } else {
+      // Post to backend without image?
+    }
   };
 
   const milestones = [
@@ -86,8 +111,10 @@ export default function TenderForm() {
         <label htmlFor="media">Attach Media</label>
         <input
           type="file"
-          accept=" text/csv"
+          accept="image/png, image/jpeg"
           id="media"
+          name="media"
+          ref={register}
           // onChange={}
         />
 
@@ -111,7 +138,7 @@ export default function TenderForm() {
           id="advanced"
           placeholder="Price"
           ref={register({
-            required: false,
+            required: true,
           })}
         />
 
@@ -127,7 +154,7 @@ export default function TenderForm() {
                 id={"milestone" + index}
                 placeholder={m.name}
                 ref={register({
-                  required: false,
+                  required: true,
                 })}
               />
             </li>
@@ -135,8 +162,8 @@ export default function TenderForm() {
         </ol>
         <button className="button">Add Milestone</button>
 
-        <input type="submit" value="Create Tender" disabled={isLoading} />
-        <input type="submit" value="Invite SHGs" disabled={isLoading} />
+        <input type="submit" value="Create Tender" />
+        {/* <input type="submit" value="Invite SHGs" disabled={isLoading} /> */}
         <div className="error">{message}</div>
       </form>
     </div>
