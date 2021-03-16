@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router";
+import { Link } from "react-router-dom";
 import TitleHeader from "../component/TitleHeader";
+import { prod_images } from "../constants/constants";
 import { authContext, useAuth } from "../hooks/Auth";
 
 export default function Portfolio() {
@@ -95,15 +97,17 @@ export default function Portfolio() {
       <hr />
 
       <h2>Products</h2>
-      <div className="products">
+      <div className="cards products">
         {data.products.map((p, i) => (
-          <div className="product">
-            <img src={p.image} alt="" />
-            <div>
-              <h1>{p.name}</h1>
-              <p>{p.description}</p>
+          <Link to={"/product/" + i} className="no_style">
+            <div className="card product">
+              <img src={prod_images[i % 6]} alt="" />
+              <div>
+                <h1>{p.name}</h1>
+                <p>{p.description}</p>
+              </div>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </div>

@@ -58,7 +58,7 @@ function App() {
           </PrivateRoute>
 
           <PrivateRoute exact path="/search/">
-            {auth?.user?.user_type === "sme" ? <SearchSME /> : <SearchSHG />}
+            {auth?.user?.user_type === "SME" ? <SearchSME /> : <SearchSHG />}
           </PrivateRoute>
 
           {/* Tender */}
