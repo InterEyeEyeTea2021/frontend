@@ -31,6 +31,7 @@ import BidStatus from "./views/BidStatus";
 import BottomNavbar from "./component/BottomNavbar";
 import SearchSME from "./views/SearchSME";
 import SearchSHG from "./views/SearchSHG";
+import ProfileSME from "./views/ProfileSME";
 
 function App() {
   let auth = useAuth();
@@ -83,6 +84,10 @@ function App() {
           {/* product */}
           <Route exact path="/product/1">
             <Product />
+          </Route>
+
+          <Route exact path="/profile">
+            <ProfileSME />
           </Route>
 
           <Route exact path="/product/edit">

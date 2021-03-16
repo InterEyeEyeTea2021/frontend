@@ -1,8 +1,10 @@
 import React from "react";
 import * as Icon from "react-feather";
 import { NavLink } from "react-router-dom";
+import { useAuth } from "../hooks/Auth";
 
 export default function BottomNavbar() {
+  const auth = useAuth();
   return (
     <nav className="bottomNav">
       <ul>
@@ -24,7 +26,10 @@ export default function BottomNavbar() {
             <p>SEARCH</p>
           </li>
         </NavLink>
-        <NavLink exact to="/portfolio">
+        <NavLink
+          exact
+          to={auth?.user?.user_type === "SME" ? "/profile" : "/portfolio"}
+        >
           <li>
             <Icon.User />
             <p>PROFILE</p>
