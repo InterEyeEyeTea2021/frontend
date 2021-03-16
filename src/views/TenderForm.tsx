@@ -35,34 +35,6 @@ export default function TenderForm() {
     } else {
       // Post to backend without image?
     }
-
-    //   d.append('image', e);
-    //   axios
-    //     .post('https://api.imgur.com/3/image/', d, { headers: headers })
-    //     .then(resp => {
-    //       photograph = resp['data']['data']['link'];
-    //       axios
-    //         .post('/api/register', {
-    //           userType: values.userType,
-    //           username: values.username,
-    //           data: {
-    //             name: values.name,
-    //             daysOfDuty: daysOfDuty,
-    //             email: values.email,
-    //             workerID: values.workerID,
-    //             password: values.password,
-    //             photograph: photograph
-    //           }
-    //         })
-    //         .then(resp => {
-    //           if (resp.data.status == true) {
-    //             UserAdded = 'User has been added successfully!';
-    //           } else {
-    //             UserAdded = 'User could not be added. Please try again later.';
-    //           }
-    //         });
-    //     });
-    // };
   };
 
   const milestones = [
