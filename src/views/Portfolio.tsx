@@ -1,9 +1,15 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useHistory } from "react-router";
 import TitleHeader from "../component/TitleHeader";
+import { authContext, useAuth } from "../hooks/Auth";
 
 export default function Portfolio() {
   const { register, handleSubmit, errors } = useForm();
+
+  let history = useHistory();
+
+  const auth = useAuth();
 
   const data = {
     shg_name: "Name of SHG",
@@ -34,6 +40,16 @@ export default function Portfolio() {
   return (
     <div className="main_content">
       <TitleHeader title="Portfolio" user_type="SHG" />
+      <button
+        className="button"
+        onClick={(e) => {
+          auth?.signout(() => {
+            history.push("/");
+          });
+        }}
+      >
+        Signout
+      </button>
       <div className="detail">
         <div className="label">Name of SHG</div>
         <div className="value">{data.shg_name}</div>
