@@ -47,7 +47,7 @@ function App() {
           </Route>
 
           <PrivateRoute exact path="/dashboard/">
-            {auth?.user?.user_type === "sme" ? (
+            {auth?.user?.user_type === "SME" ? (
               <DashboardSME />
             ) : (
               <DashboardSHG />
@@ -55,7 +55,7 @@ function App() {
           </PrivateRoute>
 
           {/* Tender */}
-          <PrivateRoute path="/tender" user_type="sme">
+          <PrivateRoute path="/tender" user_type="SME">
             <TenderRouter />
           </PrivateRoute>
 
@@ -113,7 +113,7 @@ function OrderRouter() {
         <OrderStatus />
       </Route>
       <Route path={`${path}/:id/payment/:pay_id`}>
-        {auth?.user?.user_type === "sme" ? <SMEPayments /> : <SHGPayments />}
+        {auth?.user?.user_type === "SME" ? <SMEPayments /> : <SHGPayments />}
         {/* <RequestPayment /> */}
       </Route>
     </Switch>

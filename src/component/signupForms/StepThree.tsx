@@ -58,21 +58,21 @@ export default function StepThree({
 
       <span className="label"> Member Name </span>
       <input
-        name="memberName"
+        name="member_name"
         placeholder={memberName}
         ref={register({ required: false })}
       />
 
       <span className="label"> Member Aadhar </span>
       <input
-        name="memberAadhar"
+        name="member_aadhar"
         placeholder={memberAadhar}
         ref={register({ required: false })}
       />
 
       <span className="label"> Contact Number </span>
       <input
-        name="memberContact"
+        name="member_contact"
         placeholder={memberContact}
         ref={register({ required: false })}
       />

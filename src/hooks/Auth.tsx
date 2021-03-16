@@ -5,7 +5,7 @@ import { BACKEND_URL } from "../constants/constants";
 export type registerForm_SHG = {
   name: string;
   phone: string;
-  contact: string;
+  WAcontact: string;
   user_type: string;
   industry_type: string;
   account_number: string;
@@ -19,7 +19,7 @@ export type registerForm_SHG = {
 export type registerForm_SME = {
   name: string;
   phone: string;
-  contact: string;
+  WAcontact: string;
   user_type: string;
   industry_type: string;
   account_number: string;
@@ -33,6 +33,7 @@ export type loginForm = {
   username: string;
   user_type: string;
   password: string;
+  remember: string;
 };
 
 class SHGUser {
@@ -41,7 +42,7 @@ class SHGUser {
 
   name: string;
   phone: string;
-  contact: string;
+  WAcontact: string;
   user_type: string;
   industry_type: string;
   account_number: string;
@@ -57,7 +58,7 @@ class SHGUser {
 
     name: string,
     phone: string,
-    contact: string,
+    WAcontact: string,
     user_type: string,
     industry_type: string,
     account_number: string,
@@ -72,7 +73,7 @@ class SHGUser {
 
     this.name = name;
     this.phone = phone;
-    this.contact = contact;
+    this.WAcontact = WAcontact;
     this.user_type = user_type;
     this.industry_type = industry_type;
     this.account_number = account_number;
@@ -90,7 +91,7 @@ class SMEUser {
 
   name: string;
   phone: string;
-  contact: string;
+  WAcontact: string;
   user_type: string;
   industry_type: string;
   account_number: string;
@@ -105,7 +106,7 @@ class SMEUser {
 
     name: string,
     phone: string,
-    contact: string,
+    WAcontact: string,
     user_type: string,
     industry_type: string,
     account_number: string,
@@ -119,7 +120,7 @@ class SMEUser {
 
     this.name = name;
     this.phone = phone;
-    this.contact = contact;
+    this.WAcontact = WAcontact;
     this.user_type = user_type;
     this.industry_type = industry_type;
     this.account_number = account_number;
@@ -139,7 +140,7 @@ const authConnector = {
   ) {
     authConnector.isAuthenticated = true;
     axios
-      .post(`${BACKEND_URL}/login`, data)
+      .post(`${BACKEND_URL}/auth/login`, data)
       .then((response) => {
         // console.log(response);
         cb(response.data);
@@ -153,7 +154,7 @@ const authConnector = {
   registerSHG(data: registerForm_SHG, cb: (response: AxiosResponse) => void) {
     authConnector.isAuthenticated = false;
     axios
-      .post(`${BACKEND_URL}/signup/shg`, data)
+      .post(`${BACKEND_URL}/auth/signup/shg`, data)
       .then((response) => {
         // console.log(response);
         cb(response);
@@ -166,7 +167,7 @@ const authConnector = {
   registerSME(data: registerForm_SME, cb: (response: AxiosResponse) => void) {
     authConnector.isAuthenticated = false;
     axios
-      .post(`${BACKEND_URL}/signup/sme`, data)
+      .post(`${BACKEND_URL}/auth/signup/sme`, data)
       .then((response) => {
         // console.log(response);
         cb(response);
