@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { API_IMGBB, IMGUR_headers } from "../constants/constants";
+import { API_IMGBB } from "../constants/constants";
 import TitleHeader from "../component/TitleHeader";
 
 export default function TenderForm() {
