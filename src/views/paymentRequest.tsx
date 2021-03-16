@@ -13,7 +13,7 @@ function RequestPayment() {
 
   let urlParams: { pay_id: string; id: string } = useParams();
 
-  const { handleSubmit } = useForm();
+  const { handleSubmit, register } = useForm();
   const currSME = {
     name: "SME NAME",
     contact: "XXXX XX XXXX",
@@ -61,9 +61,9 @@ function RequestPayment() {
           id="reason"
           placeholder="Reason"
           // defaultValue={data.prod_name}
-          // ref={register({
-          //   required: true,
-          // })}
+          ref={register({
+            required: true,
+          })}
         />
 
         <label htmlFor="description">Description</label>
@@ -72,9 +72,9 @@ function RequestPayment() {
           id="description"
           placeholder="Description"
           // defaultValue={data.prod_name}
-          // ref={register({
-          //   required: true,
-          // })}
+          ref={register({
+            required: true,
+          })}
         />
 
         <h2>SME</h2>
@@ -90,7 +90,9 @@ function RequestPayment() {
         </div>
 
         <div>
-          <button>Request Payment</button>
+          <button type="submit" className="button">
+            Request Payment
+          </button>
         </div>
       </form>
 
