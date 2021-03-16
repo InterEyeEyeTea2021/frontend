@@ -53,14 +53,14 @@ export default function StepOne({
       <input
         name="name"
         placeholder={name}
-        ref={register({ required: false })}
+        ref={register({ required: true })}
       />
 
       <span className="label"> Username </span>
       <input
         name="username"
         placeholder={username}
-        ref={register({ required: false })}
+        ref={register({ required: true })}
       />
 
       <span className="label"> Password </span>
@@ -68,14 +68,14 @@ export default function StepOne({
         name="password"
         type="password"
         placeholder={password}
-        ref={register({ required: false })}
+        ref={register({ required: true })}
       />
 
       <span className="label"> Phone Number </span>
       <input
         name="phone"
         placeholder={phone}
-        ref={register({ required: false })}
+        ref={register({ required: true })}
       />
 
       <span className="label"> Type of User </span>

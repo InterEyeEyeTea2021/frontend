@@ -51,35 +51,35 @@ export default function StepTwo({
     <form onSubmit={handleSubmit(handleNextSubmit)}>
       <span className="label"> Name of SHG </span>
       <input
-        name="nameSHG"
+        name="name_SHG"
         placeholder={nameSHG}
         ref={register({ required: false })}
       />
 
       <span className="label"> Prodcution Capacity </span>
       <input
-        name="productionCap"
+        name="production_cap"
         placeholder={productionCap}
         ref={register({ required: false })}
       />
 
       <span className="label"> Order Size </span>
       <input
-        name="orderSize"
+        name="order_size"
         placeholder={orderSize}
         ref={register({ required: false })}
       />
 
       <span className="label"> Contact Number (WhatsApp) </span>
       <input
-        name="contact"
+        name="WAcontact"
         placeholder={contact}
         ref={register({ required: false })}
       />
 
       <span className="label"> Industry Type </span>
       {
-        <select name="industryType" ref={register({ required: false })}>
+        <select name="industry_type" ref={register({ required: false })}>
           {industryType.split(",").map((type) => (
             <option> {type} </option>
           ))}

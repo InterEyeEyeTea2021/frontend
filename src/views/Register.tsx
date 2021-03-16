@@ -22,7 +22,7 @@ function Register() {
     username: "Username",
     password: "Password",
     phone: "+91 XXXX XX XXXX",
-    contact: "+91 XXXX XX XXXX", // for WhatsApp
+    WAcontact: "+91 XXXX XX XXXX", // for WhatsApp
     user_type: "SHG",
     industry_type: "Agriculture, Something, Engineering",
     account_number: "Account Number",
@@ -94,7 +94,7 @@ function Register() {
       username: string;
       password: string;
       phone: string;
-      contact: string;
+      WAcontact: string;
       type: string;
       industry_type: string;
       account_number: string;
@@ -159,7 +159,7 @@ function Register() {
               nameSHG={state.name_SHG}
               productionCap={state.production_cap}
               orderSize={state.order_size}
-              contact={state.contact}
+              contact={state.WAcontact}
               industryType={state.industry_type}
               type={state.user_type}
               currentStep={step}
@@ -194,7 +194,7 @@ function Register() {
             <Step2
               address={state.address}
               productSold={state.product_sold}
-              contact={state.contact}
+              contact={state.WAcontact}
               industryType={state.industry_type}
               type={state.user_type}
               currentStep={step}
@@ -212,7 +212,7 @@ function Register() {
         ) : (
           ""
         )}
-        <form>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <div className="buttons">
             {(state.user_type === "SME" && step > 1 && step < 4) ||
             (state.user_type === "SHG" && step > 1 && step < 5) ? (
@@ -237,7 +237,7 @@ function Register() {
                   ref={register({ required: false })}
                 />
 
-                <input type="submit" value="Verify" onClick={onSubmit} />
+                <input type="submit" value="Verify" disabled={isLoading} />
               </>
             ) : (
               ""

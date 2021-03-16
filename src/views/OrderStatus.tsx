@@ -69,7 +69,7 @@ export default function OrderStatus() {
 
       <hr />
 
-      {auth?.user?.user_type === "sme" ? (
+      {auth?.user?.user_type === "SME" ? (
         <div className="call_box">
           <img src="https://i.imgur.com/khUO2T7.png" alt="" />
           <div className="details">
@@ -107,7 +107,7 @@ export default function OrderStatus() {
               </h1>
               <h1>{p.name}</h1>
             </div>
-            {auth?.user?.user_type === "sme" ? (
+            {auth?.user?.user_type === "SME" ? (
               <button
                 className={"small" + (p.status == "pending" ? "" : " default")}
               >
