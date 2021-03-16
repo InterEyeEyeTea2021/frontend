@@ -9,6 +9,7 @@ export default function OrderStatus() {
   const { register, handleSubmit, errors } = useForm();
   const auth = useAuth();
   let urlParams: { id: string } = useParams();
+  const is_sme = auth?.user && auth.user.user_type === "SME";
 
   const data = {
     order_name: "Order Name",
@@ -54,7 +55,10 @@ export default function OrderStatus() {
 
   return (
     <div className="main_content">
-      <TitleHeader title="Order Status" user_type="SHG" />
+      <TitleHeader
+        title="Order Status"
+        user_type={auth?.user?.user_type as string}
+      />
       <h2>Order Details</h2>
       <div className="detail">
         <div className="label">Tender Name</div>
@@ -120,7 +124,7 @@ export default function OrderStatus() {
               </h1>
               <h1>{p.name}</h1>
             </div>
-            {auth?.user?.user_type === "SME" ? (
+            {is_sme ? (
               <button
                 className={"small" + (p.status == "pending" ? "" : " default")}
               >
@@ -154,7 +158,9 @@ export default function OrderStatus() {
                 id={"mile_check" + m.name}
                 checked={m.status}
                 onClick={(e) => {
-                  updateMilestone(m.id);
+                  if (!is_sme) {
+                    updateMilestone(m.id);
+                  }
                 }}
               />
               <span className="checkbox__control">
