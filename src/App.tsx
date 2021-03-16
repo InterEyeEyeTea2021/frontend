@@ -63,6 +63,11 @@ function App() {
             {auth?.user?.user_type === "SME" ? <SearchSME /> : <SearchSHG />}
           </PrivateRoute>
 
+          {/* Bid form */}
+          <PrivateRoute path="/tender/:id/bid" user_type="SHG">
+            <BidForm />
+          </PrivateRoute>
+
           {/* Tender */}
           <PrivateRoute path="/tender" user_type="SME">
             <TenderRouter />
@@ -150,9 +155,6 @@ function BidRouter() {
   let { path, url } = useRouteMatch();
   return (
     <Switch>
-      <Route exact path={path}>
-        <BidForm />
-      </Route>
       <Route path={`${path}/:id`}>
         <BidStatus />
       </Route>
