@@ -1,10 +1,38 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as Icon from "react-feather";
 import TitleHeader from "../component/TitleHeader";
+import axios from "axios";
+import { BACKEND_URL } from "../constants/constants";
+import { useParams } from "react-router";
+
+interface tender {
+  id: number;
+  // tender_name: string;
+  state: string;
+  description: string;
+  media: {
+    uri: string;
+    type: string;
+  }[];
+  milestones: {
+    description: string;
+    media: {
+      uri: string;
+      type: string;
+    }[];
+  }[];
+  sme: {
+    id: number;
+    name: string;
+  };
+}
 
 export default function BidForm() {
   const { register, handleSubmit, errors } = useForm();
+  const [tender, setTender] = useState<tender>();
+  let { id }: { id: string } = useParams();
+
   const milestones = [
     { name: "Milestone 1" },
     { name: "Milestone 2" },
@@ -41,13 +69,29 @@ export default function BidForm() {
     console.log(data);
   };
 
+  useEffect(() => {
+    axios
+      .get(`${BACKEND_URL}/tender/id`, {
+        params: {
+          id: id,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        setTender(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   return (
     <div className="main_content">
       <TitleHeader title="Create Bid" user_type="SHG" />
       <div className="sme-details call_box">
         <img src="https://i.imgur.com/khUO2T7.png" alt="" />
         <div className="details">
-          <h1>SHG NAME</h1>
+          <h1>{tender?.sme.name}</h1>
           <p>XXXX XX XXXX</p>
         </div>
         <div className="call">
@@ -67,7 +111,7 @@ export default function BidForm() {
 
       <div className="detail">
         <div className="label">Description</div>
-        <div className="value">{data.description}</div>
+        <div className="value">{tender?.description}</div>
       </div>
 
       <div className="detail">
@@ -85,10 +129,10 @@ export default function BidForm() {
       <h2>Milestones</h2>
 
       <div className="milestones">
-        {data.milestones.map((m, index) => (
+        {tender?.milestones.map((m, index) => (
           <div className="milestone">
             <div className="index">{index + 1}.</div>
-            <div className="name">{m.name}</div>
+            <div className="name">{m.description}</div>
             {/* <div className="check">check</div> */}
           </div>
         ))}
