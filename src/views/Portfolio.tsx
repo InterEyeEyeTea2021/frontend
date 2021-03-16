@@ -41,7 +41,10 @@ export default function Portfolio() {
 
   return (
     <div className="main_content">
-      <TitleHeader title="Portfolio" user_type="SHG" />
+      <TitleHeader
+        title="Portfolio"
+        user_type={auth?.user?.user_type as string}
+      />
 
       {!is_sme && (
         <button
