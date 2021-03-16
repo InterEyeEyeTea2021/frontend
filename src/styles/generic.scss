@@ -10,6 +10,9 @@ html {
   }
 
   @include full_width(2rem);
+
+  min-height: calc(100vh - 13rem);
+
   .title_header {
     display: flex;
     align-items: center;
