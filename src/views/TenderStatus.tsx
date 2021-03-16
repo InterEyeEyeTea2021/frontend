@@ -3,13 +3,6 @@ import { useForm } from "react-hook-form";
 import TitleHeader from "../component/TitleHeader";
 
 export default function TenderStatus() {
-  const milestones = [
-    { name: "Milestone 1" },
-    { name: "Milestone 2" },
-    { name: "Milestone 3" },
-    { name: "Milestone 4" },
-  ];
-
   const data = {
     tender_name: "Tender Name",
     industry_type: "Agriculture",
