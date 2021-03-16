@@ -6,83 +6,121 @@ import axios from "axios";
 import TitleHeader from "../component/TitleHeader";
 import { Link } from "react-router-dom";
 
+interface data {
+  ongoing_orders: {
+    id: number;
+    image: string;
+    order_name: string;
+    name_SHG: string;
+    completion: string;
+  }[];
+
+  completed_orders: {
+    id: number;
+    image: string;
+    order_name: string;
+    name_SHG: string;
+  }[];
+
+  bids: {
+    id: number;
+    image: string;
+    order_name: string;
+    date: string;
+    bid: string;
+  }[];
+
+  payments: {
+    id: number;
+    amount: string;
+    project_name: string;
+    name_SHG: string;
+  }[];
+}
+
 export default function DashboardSHG() {
   const auth = useAuth();
   const { register, handleSubmit, errors } = useForm();
 
-  const data = {
-    ongoingOrder: [
+  const [data, setData] = useState<data>({
+    ongoing_orders: [
       {
+        id: 1,
         image: "https://i.imgur.com/khUO2T7.png",
-        orderName: "Order Name",
-        nameSHG: "Ram Setu SHG",
+        order_name: "Order Name",
+        name_SHG: "Ram Setu SHG",
         completion: "75%",
       },
       {
+        id: 3,
         image: "https://i.imgur.com/khUO2T7.png",
-        orderName: "Order Name",
-        nameSHG: "Not Ram Setu SHG",
+        order_name: "Order Name",
+        name_SHG: "Not Ram Setu SHG",
         completion: "50%",
       },
     ],
 
-    tenders: [
+    bids: [
       {
+        id: 1,
         image: "https://i.imgur.com/khUO2T7.png",
-        orderName: "Order Name",
+        order_name: "Order Name",
         date: "1st April 2021",
-        bids: "2",
+        bid: "2",
       },
       {
+        id: 2,
         image: "https://i.imgur.com/khUO2T7.png",
-        orderName: "Order Name",
+        order_name: "Order Name",
         date: "1st April 2021",
-        bids: "2",
+        bid: "2",
       },
     ],
 
-    completedOrders: [
+    completed_orders: [
       {
+        id: 2,
         image: "https://i.imgur.com/khUO2T7.png",
-        orderName: "Order Name",
-        nameSHG: "Ram Setu SHG",
-        completion: "75%",
+        order_name: "Order Name",
+        name_SHG: "Ram Setu SHG",
       },
       {
+        id: 4,
         image: "https://i.imgur.com/khUO2T7.png",
-        orderName: "Order Name",
-        nameSHG: "Not Ram Setu SHG",
-        completion: "50%",
+        order_name: "Order Name",
+        name_SHG: "Not Ram Setu SHG",
       },
     ],
 
     payments: [
       {
+        id: 2,
         amount: "2000",
-        projectName: "Project Impossible",
-        nameSHG: "Ram Setu again",
+        project_name: "Project Impossible",
+        name_SHG: "Ram Setu again",
       },
       {
+        id: 3,
         amount: "2000",
-        projectName: "Project Impossible",
-        nameSHG: "Ram Setu again",
+        project_name: "Project Impossible",
+        name_SHG: "Ram Setu again",
       },
     ],
-  };
+  });
 
   return (
     <div className="main_content dashboard dashboard_shg">
       <TitleHeader title="Dashboard" user_type="SHG" />
 
       <h2>Ongoing Orders</h2>
-      {data.ongoingOrder.map((order, id) => (
+      {data.ongoing_orders.map((order, id) => (
         <Link to="/order/1" className="no_style">
           <div className="order">
             <div className="image">
               <img src={order.image} alt="" />
             </div>
             <div className="details">
-              <h1>{order.nameSHG}</h1>
+              <h1>{order.name_SHG}</h1>
               <p> COMPLETION: {order.completion} </p>
             </div>
           </div>
@@ -90,16 +128,16 @@ export default function DashboardSHG() {
       ))}
 
       <h2> Bids </h2>
-      {data.tenders.map((tender, id) => (
+      {data.bids.map((tender, id) => (
         <Link to="/bid/1" className="no_style">
           <div className="bid">
             <div className="image">
               <img src={tender.image} alt="" />
             </div>
             <div className="details">
-              <h1>{tender.orderName}</h1>
+              <h1>{tender.order_name}</h1>
               <p> {tender.date} </p>
-              <p> {tender.bids} BIDS RECEIVED </p>
+              <p> {tender.bid} BIDS RECEIVED </p>
             </div>
           </div>
         </Link>
@@ -108,15 +146,14 @@ export default function DashboardSHG() {
       <input type="submit" value="Create Bid" />
 
       <h2>Completed Orders</h2>
-      {data.completedOrders.map((order, id) => (
+      {data.completed_orders.map((order, id) => (
         <Link to="/order/1" className="no_style">
           <div className="order">
             <div className="image">
               <img src={order.image} alt="" />
             </div>
             <div className="details">
-              <h1>{order.nameSHG}</h1>
-              <p> COMPLETION: {order.completion} </p>
+              <h1>{order.name_SHG}</h1>
             </div>
           </div>
         </Link>
@@ -128,8 +165,8 @@ export default function DashboardSHG() {
           <div className="payment lite">
             <h1 className="amount">{payment.amount}</h1>
             <div className="details">
-              <h1> {payment.projectName} </h1>
-              <p> {payment.nameSHG} </p>
+              <h1> {payment.project_name} </h1>
+              <p> {payment.name_SHG} </p>
             </div>
           </div>
         </Link>
