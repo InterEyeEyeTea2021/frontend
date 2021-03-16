@@ -17,7 +17,7 @@ export default function PrivateRoute(props: any) {
 
   if (auth !== null && auth.user) {
     if (user_type !== undefined) {
-      if (auth.user.user_type == user_type) {
+      if (auth.user.user_type === user_type) {
         render = props.children;
       } else {
         render = (

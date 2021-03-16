@@ -1,10 +1,14 @@
 import React, { useState } from "react";
+import { Link } from "react-feather";
 import { useForm } from "react-hook-form";
 import TitleHeader from "../component/TitleHeader";
+import { useAuth } from "../hooks/Auth";
 import BidForm from "./BidForm";
 
 export default function Product() {
   const { register, handleSubmit, errors } = useForm();
+  const auth = useAuth();
+  const is_sme = auth?.user && auth.user.user_type === "SME";
 
   const data = {
     image: "",
@@ -35,7 +39,10 @@ export default function Product() {
 
   return (
     <div className="main_content">
-      <TitleHeader title="Product" user_type="SHG" />
+      <TitleHeader
+        title="Product"
+        user_type={auth?.user?.user_type as string}
+      />
 
       <div className="detail">
         <div className="label">Name of Product</div>
@@ -62,9 +69,14 @@ export default function Product() {
         <div className="label">Price</div>
         <div className="value">{data.price}</div>
       </div>
-
-      <button className="button primary">Edit Product</button>
-      <button className="button">Delete</button>
+      {is_sme ? (
+        <Link to="/tender">Create Tender</Link>
+      ) : (
+        <div className="edit">
+          <button className="button primary">Edit Product</button>
+          <button className="button">Delete</button>
+        </div>
+      )}
     </div>
   );
 }
