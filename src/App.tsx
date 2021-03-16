@@ -29,6 +29,8 @@ import Product from "./views/Product";
 import ProductEdit from "./views/ProductEdit";
 import BidStatus from "./views/BidStatus";
 import BottomNavbar from "./component/BottomNavbar";
+import SearchSME from "./views/SearchSME";
+import SearchSHG from "./views/SearchSHG";
 
 function App() {
   let auth = useAuth();
@@ -52,6 +54,10 @@ function App() {
             ) : (
               <DashboardSHG />
             )}
+          </PrivateRoute>
+
+          <PrivateRoute exact path="/search/">
+            {auth?.user?.user_type === "sme" ? <SearchSME /> : <SearchSHG />}
           </PrivateRoute>
 
           {/* Tender */}
@@ -111,6 +117,9 @@ function OrderRouter() {
     <Switch>
       <Route exact path={`${path}/:id`}>
         <OrderStatus />
+      </Route>
+      <Route path={`${path}/:id/payment/`}>
+        <RequestPayment />
       </Route>
       <Route path={`${path}/:id/payment/:pay_id`}>
         {auth?.user?.user_type === "SME" ? <SMEPayments /> : <SHGPayments />}

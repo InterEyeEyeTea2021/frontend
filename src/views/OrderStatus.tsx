@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as Icon from "react-feather";
 import TitleHeader from "../component/TitleHeader";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useAuth } from "../hooks/Auth";
+
 export default function OrderStatus() {
   const { register, handleSubmit, errors } = useForm();
   const auth = useAuth();
+  let urlParams: { id: string } = useParams();
 
   const data = {
     order_name: "Order Name",
@@ -32,11 +34,22 @@ export default function OrderStatus() {
       },
     ],
     milestones: [
-      { name: "Milestone 1" },
-      { name: "Milestone 2" },
-      { name: "Milestone 3" },
-      { name: "Milestone 4" },
+      { id: 1, name: "Milestone 1", status: true },
+      { id: 2, name: "Milestone 2", status: true },
+      { id: 3, name: "Milestone 3", status: false },
+      { id: 4, name: "Milestone 4", status: false },
     ],
+  };
+
+  const updateMilestone = (id: number) => {
+    let m = data.milestones.filter((e) => {
+      return e.id == id;
+    });
+    console.log(m);
+    if (m.length > 0) {
+      let m1 = m[0];
+      console.log(!m[0].status);
+    }
   };
 
   return (
@@ -120,7 +133,10 @@ export default function OrderStatus() {
         </Link>
       ))}
 
-      <button className="button">Request Payment</button>
+      <Link className="button" to={"/order/" + urlParams.id + "/payment"}>
+        Request Payment
+      </Link>
+      {/* <button className="button">Request Payment</button> */}
 
       <hr />
 
@@ -132,7 +148,15 @@ export default function OrderStatus() {
             <div className="index">{index + 1}.</div>
             <div className="name">{m.name}</div>
             <div className="check">
-              <input type="checkbox" name={m.name} id={"mile_check" + m.name} />
+              <input
+                type="checkbox"
+                name={m.name}
+                id={"mile_check" + m.name}
+                checked={m.status}
+                onClick={(e) => {
+                  updateMilestone(m.id);
+                }}
+              />
               <span className="checkbox__control">
                 <Icon.Check></Icon.Check>
               </span>
