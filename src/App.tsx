@@ -77,21 +77,17 @@ function App() {
           </Route>
 
           {/* Portfolio */}
-          <Route exact path="/portfolio">
-            <Portfolio />
+          <Route path="/portfolio">
+            <PortfolioRouter />
           </Route>
 
           {/* product */}
-          <Route exact path="/product/1">
-            <Product />
+          <Route path="/product">
+            <ProductRouter />
           </Route>
 
           <Route exact path="/profile">
             <ProfileSME />
-          </Route>
-
-          <Route exact path="/product/edit">
-            <ProductEdit />
           </Route>
 
           <Route exact path="/smepayments">
@@ -158,6 +154,34 @@ function BidRouter() {
       <Route path={`${path}/:id`}>
         <BidStatus />
       </Route>
+    </Switch>
+  );
+}
+
+function PortfolioRouter() {
+  let { path, url } = useRouteMatch();
+  return (
+    <Switch>
+      <PrivateRoute user_type="SHG" exact path={path}>
+        <Portfolio />
+      </PrivateRoute>
+      <PrivateRoute user_type="SME" exact path={`${path}/:shg_id`}>
+        <Portfolio />
+      </PrivateRoute>
+    </Switch>
+  );
+}
+
+function ProductRouter() {
+  let { path, url } = useRouteMatch();
+  return (
+    <Switch>
+      <PrivateRoute exact path={`${path}/:id`}>
+        <Product />
+      </PrivateRoute>
+      <PrivateRoute user_type="SHG" exact path={`${path}/:id/edit`}>
+        <ProductEdit />
+      </PrivateRoute>
     </Switch>
   );
 }

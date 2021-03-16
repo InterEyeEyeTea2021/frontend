@@ -11,6 +11,8 @@ export default function Portfolio() {
 
   const auth = useAuth();
 
+  const is_sme = auth?.user && auth.user.user_type === "SME";
+
   const data = {
     shg_name: "Name of SHG",
     industry_type: "Agriculture",
@@ -40,16 +42,20 @@ export default function Portfolio() {
   return (
     <div className="main_content">
       <TitleHeader title="Portfolio" user_type="SHG" />
-      <button
-        className="button"
-        onClick={(e) => {
-          auth?.signout(() => {
-            history.push("/");
-          });
-        }}
-      >
-        Signout
-      </button>
+
+      {!is_sme && (
+        <button
+          className="button"
+          onClick={(e) => {
+            auth?.signout(() => {
+              history.push("/");
+            });
+          }}
+        >
+          Signout
+        </button>
+      )}
+
       <div className="detail">
         <div className="label">Name of SHG</div>
         <div className="value">{data.shg_name}</div>
