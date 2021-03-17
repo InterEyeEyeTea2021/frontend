@@ -180,11 +180,11 @@ function ProductRouter() {
   let { path, url } = useRouteMatch();
   return (
     <Switch>
+      <PrivateRoute user_type="SHG" exact path={`${path}/add`}>
+        <ProductEdit />
+      </PrivateRoute>
       <PrivateRoute exact path={`${path}/:id`}>
         <Product />
-      </PrivateRoute>
-      <PrivateRoute user_type="SHG" exact path={`${path}/:id/edit`}>
-        <ProductEdit />
       </PrivateRoute>
     </Switch>
   );
