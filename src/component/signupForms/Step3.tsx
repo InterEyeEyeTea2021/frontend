@@ -25,11 +25,7 @@ export default function Step3({
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState("");
 
-  if (
-    (currentStep != 3 && type === "SME") ||
-    (currentStep != 4 && type === "SHG")
-  )
-    return null;
+  if (currentStep != 3) return null;
   // const onSubmit = (data: registerForm) => {
   //   setIsLoading(true);
   //   // console.log("Submitted Form Data: ", data);
@@ -63,9 +59,7 @@ export default function Step3({
 
       <div className="signup-btns">
         <input type="submit" value="Next" />
-        <span>
-          Steps: {type === "SHG" ? `${currentStep}/4` : `${currentStep}/3`}
-        </span>
+        <span>Steps: {`${currentStep}/3`}</span>
       </div>
     </form>
   );

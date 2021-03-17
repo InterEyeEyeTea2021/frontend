@@ -1,8 +1,45 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useHistory, useParams } from "react-router";
 import TitleHeader from "../component/TitleHeader";
+import { BACKEND_URL, profile_pics } from "../constants/constants";
+
+interface Tender {
+  id: number;
+  // tender_name: string;
+  state: string;
+  description: string;
+  media: {
+    uri: string;
+    type: string;
+  }[];
+  milestones: {
+    description: string;
+    media: {
+      uri: string;
+      type: string;
+    }[];
+  }[];
+  sme: {
+    id: number;
+    name: string;
+  };
+}
+
+interface Bid {
+  amount: string;
+  shg_id: number;
+  tender_id: number;
+}
 
 export default function TenderStatus() {
+  const [tender, setTender] = useState<Tender>();
+  const [bids, setBids] = useState<Bid[]>([]);
+
+  let { id }: { id: string } = useParams();
+  let history = useHistory();
+
   const data = {
     tender_name: "Tender Name",
     industry_type: "Agriculture",
@@ -29,6 +66,34 @@ export default function TenderStatus() {
     ],
   };
 
+  useEffect(() => {
+    axios
+      .get(`${BACKEND_URL}/tender/id`, {
+        params: {
+          id,
+        },
+      })
+      .then((res) => {
+        setTender(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    axios
+      .get(`${BACKEND_URL}/bid/getTenderBids/`, {
+        params: {
+          id,
+        },
+      })
+      .then((res) => {
+        setBids(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   return (
     <div className="main_content tender_status">
       <TitleHeader title="Tender Status" user_type="SME" />
@@ -42,7 +107,7 @@ export default function TenderStatus() {
 
       <div className="detail">
         <div className="label">Description</div>
-        <div className="value">{data.description}</div>
+        <div className="value">{tender?.description}</div>
       </div>
 
       <div className="detail">
@@ -50,25 +115,22 @@ export default function TenderStatus() {
         <div className="value">{data.skills_req}</div>
       </div>
 
-      <div className="detail">
-        <div className="label">Location</div>
-        <div className="value">{data.location}</div>
-      </div>
-
-      <button className="button">Invite SHGs</button>
+      <button className="button" onClick={() => history.push("/search")}>
+        Invite SHGs
+      </button>
 
       <hr />
 
       <h2>Bids</h2>
 
-      {data.bids.map((b, i) => (
+      {bids.map((b, i) => (
         <div className="bid">
           <div className="image">
-            <img src={b.image} alt="" />
+            <img src={profile_pics[i % 2]} alt="" />
           </div>
           <div className="details">
-            <h1>{b.shg_name}</h1>
-            <p>Bid: {b.bid}</p>
+            <h1>SHG</h1>
+            <p>Bid: {b.amount}</p>
           </div>
         </div>
       ))}

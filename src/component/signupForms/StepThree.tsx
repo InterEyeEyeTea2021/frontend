@@ -89,7 +89,7 @@ export default function StepThree({
       <input type="submit" value="Add Member" />
       <div className="signup-btns">
         <input type="submit" value="Next" />
-        <span> Steps: {currentStep}/4</span>
+        <span> Steps: {currentStep}/3</span>
       </div>
     </form>
   );
