@@ -39,15 +39,15 @@ html {
 
   .types {
     display: flex;
+    background-color: $background-alt;
+    border-radius: 10px;
+    margin: 0.5rem 0 1rem;
 
     .type {
       min-width: 40%;
       text-align: center;
       padding: 0.5rem 1rem;
       border-radius: 10px;
-
-      background-color: $background-alt;
-
       cursor: pointer;
     }
 
