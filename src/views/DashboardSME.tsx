@@ -129,7 +129,7 @@ export default function DashboardSME() {
     axios
       .get(`${BACKEND_URL}/order/sme`, {
         headers: {
-          Authorization: `Bearer ${auth?.user?.jwt}`,
+          Authorization: `Bearer ${auth?.user?.access_token}`,
         },
         params: {
           id: auth?.user?.id,
@@ -160,7 +160,7 @@ export default function DashboardSME() {
     axios
       .get(`${BACKEND_URL}/tender/sme`, {
         headers: {
-          Authorization: `Bearer ${auth?.user?.jwt}`,
+          Authorization: `Bearer ${auth?.user?.access_token}`,
         },
         params: {
           id: auth?.user?.id,

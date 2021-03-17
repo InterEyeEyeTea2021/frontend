@@ -36,9 +36,9 @@ export type loginForm = {
   remember: string;
 };
 
-class SHGUser {
+export class SHGUser {
   id: string;
-  jwt: string;
+  access_token: string;
 
   name: string;
   phone: string;
@@ -54,7 +54,7 @@ class SHGUser {
 
   constructor(
     id: string,
-    jwt: string,
+    access_token: string,
 
     name: string,
     phone: string,
@@ -69,7 +69,7 @@ class SHGUser {
     order_size: string
   ) {
     this.id = id;
-    this.jwt = jwt;
+    this.access_token = access_token;
 
     this.name = name;
     this.phone = phone;
@@ -85,9 +85,9 @@ class SHGUser {
   }
 }
 
-class SMEUser {
+export class SMEUser {
   id: string;
-  jwt: string;
+  access_token: string;
 
   name: string;
   phone: string;
@@ -102,7 +102,7 @@ class SMEUser {
 
   constructor(
     id: string,
-    jwt: string,
+    access_token: string,
 
     name: string,
     phone: string,
@@ -116,7 +116,7 @@ class SMEUser {
     product_sold: string
   ) {
     this.id = id;
-    this.jwt = jwt;
+    this.access_token = access_token;
 
     this.name = name;
     this.phone = phone;
@@ -226,7 +226,7 @@ function useProvideAuth() {
       (user) => {
         setUser(user);
         localStorage.setItem("user", JSON.stringify(user));
-        localStorage.setItem("jwt", user.jwt);
+        localStorage.setItem("access_token", user.access_token);
         cb();
       },
       cbe
@@ -265,7 +265,7 @@ function useProvideAuth() {
     if (user !== null) {
       return {
         headers: {
-          Authorization: `Bearer ${user?.jwt}`,
+          Authorization: `Bearer ${user?.access_token}`,
         },
       };
     }

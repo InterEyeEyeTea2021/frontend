@@ -122,7 +122,7 @@ export default function DashboardSHG() {
     axios
       .get(`${BACKEND_URL}/order/shg`, {
         headers: {
-          Authorization: `Bearer ${auth?.user?.jwt}`,
+          Authorization: `Bearer ${auth?.user?.access_token}`,
         },
         params: {
           id: auth?.user?.id,
@@ -150,7 +150,7 @@ export default function DashboardSHG() {
     axios
       .get(`${BACKEND_URL}/bid/shg`, {
         headers: {
-          Authorization: `Bearer ${auth?.user?.jwt}`,
+          Authorization: `Bearer ${auth?.user?.access_token}`,
         },
         params: {
           id: auth?.user?.id,
