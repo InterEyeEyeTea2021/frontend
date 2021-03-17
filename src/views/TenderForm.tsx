@@ -1,13 +1,15 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { API_IMGBB } from "../constants/constants";
+import { API_IMGBB, BACKEND_URL } from "../constants/constants";
 import TitleHeader from "../component/TitleHeader";
+import { SMEUser, useAuth } from "../hooks/Auth";
 
 export default function TenderForm() {
   const [isLoading, setIsLoading] = useState(false);
   const { register, handleSubmit, errors } = useForm();
   const [message, setMessage] = useState("");
+  let auth = useAuth();
 
   const onSubmit = (data: any) => {
     setIsLoading(true);
@@ -35,6 +37,44 @@ export default function TenderForm() {
     } else {
       // Post to backend without image?
     }
+
+    const request_data = {
+      ...data,
+      sme_id: (auth?.user as SMEUser).sme_id,
+      milestones: [
+        {
+          description: data.milestone0,
+          media: [],
+        },
+        {
+          description: data.milestone1,
+          media: [],
+        },
+        {
+          description: data.milestone2,
+          media: [],
+        },
+        {
+          description: data.milestone3,
+          media: [],
+        },
+      ],
+      media: [
+        {
+          uri: "lol",
+          type: "nothing",
+        },
+      ],
+    };
+
+    axios
+      .post(`${BACKEND_URL}/tender/create`, request_data, auth?.authHeader())
+      .then((res) => {
+        console.log(res.data, "tender creation");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const milestones = [
@@ -72,7 +112,7 @@ export default function TenderForm() {
         <input
           name="industry_type"
           id="industry_type"
-          placeholder="Industry Type"
+          defaultValue={auth?.user?.industry_type}
           ref={register({
             required: true,
           })}
@@ -98,7 +138,7 @@ export default function TenderForm() {
           })}
         />
 
-        <label htmlFor="location">Location</label>
+        {/* <label htmlFor="location">Location</label>
         <input
           name="location"
           id="location"
@@ -106,7 +146,7 @@ export default function TenderForm() {
           ref={register({
             required: true,
           })}
-        />
+        /> */}
 
         <label htmlFor="media">Attach Media</label>
         <input
@@ -120,7 +160,7 @@ export default function TenderForm() {
 
         <hr />
 
-        <h2>Payments</h2>
+        {/* <h2>Payments</h2>
 
         <label htmlFor="order_completion">Order Completion</label>
         <input
@@ -142,7 +182,7 @@ export default function TenderForm() {
           })}
         />
 
-        <hr />
+        <hr /> */}
 
         <h2>Milestones</h2>
 
