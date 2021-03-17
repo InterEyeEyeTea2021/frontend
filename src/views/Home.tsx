@@ -3,14 +3,16 @@ import illus from "../images/illus.svg";
 
 function Home() {
   return (
-    <div className="home">
+    <div className="home main_content">
       <div className="content">
-        <h1>Hello People</h1>
+        <img src={illus} alt="" />
+        <h1>Grameen Setu</h1>
         <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aliquam
-          magni commodi suscipit atque sed fugit est? Consequatur eaque maiores
-          facilis tempora quisquam doloribus quod dolores, eum excepturi sunt
-          esse hic!
+          GrameenSetu is an e-Marketplace to link rural producers and bulk
+          buyers for unleashing the true potential which is lying in more than 6
+          Lakh villages of India. Our portal also connects different rural
+          producers in similar segments so that they could collaborate among
+          themselves, form micro-supply chains and benefit each other.
         </p>
       </div>
     </div>
