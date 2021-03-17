@@ -101,9 +101,7 @@ export default function StepOne({
 
       <div className="signup-btns">
         <input type="submit" value="Next" />
-        <span>
-          Steps: {type === "SHG" ? `${currentStep}/4` : `${currentStep}/3`}
-        </span>
+        <span>Steps: {`${currentStep}/3`}</span>
       </div>
     </form>
   );

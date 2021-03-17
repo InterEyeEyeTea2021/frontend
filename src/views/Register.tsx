@@ -8,6 +8,7 @@ import StepTwo from "../component/signupForms/StepTwo";
 import StepThree from "../component/signupForms/StepThree";
 import Step2 from "../component/signupForms/Step2";
 import Step3 from "../component/signupForms/Step3";
+import { useHistory } from "react-router";
 
 function Register() {
   let auth = useAuth();
@@ -16,6 +17,8 @@ function Register() {
   const { register, handleSubmit, errors } = useForm();
   const [message, setMessage] = useState("");
 
+  const [step, setStep] = useState(1);
+  let history = useHistory();
   const [state, setState] = useState({
     // non user specific
     name: "Name",
@@ -43,8 +46,6 @@ function Register() {
     product_sold: "Products Sold",
   });
 
-  const [step, setStep] = useState(1);
-
   const onSubmit = () => {
     setIsLoading(true);
 
@@ -55,6 +56,8 @@ function Register() {
       auth?.registerSHG(data, (response: AxiosResponse) => {
         // console.log("registration succex");
         setIsLoading(false);
+
+        history.push("/login");
 
         if (response === undefined || response.status === 500)
           setMessage("Server is down, please try again later");
@@ -166,17 +169,6 @@ function Register() {
               handleNextSubmit={handleNextSubmit}
             />
 
-            <StepThree
-              members={state.members}
-              memberName={state.member_name}
-              memberAadhar={state.member_aadhar}
-              memberContact={state.member_contact}
-              skill={state.skill}
-              type={state.user_type}
-              currentStep={step}
-              handleNextSubmit={handleNextSubmit}
-            />
-
             <Step3
               accountNumber={state.account_number}
               branchCode={state.branch_code}
@@ -214,8 +206,7 @@ function Register() {
         )}
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="buttons">
-            {(state.user_type === "SME" && step > 1 && step < 4) ||
-            (state.user_type === "SHG" && step > 1 && step < 5) ? (
+            {step > 1 && step < 4 ? (
               <input
                 type="button"
                 className="back"
@@ -226,18 +217,17 @@ function Register() {
               ""
             )}
 
-            {(state.user_type === "SME" && step === 4) ||
-            (state.user_type === "SHG" && step === 5) ? (
+            {step === 4 ? (
               <>
-                <h3> Verify the OTP sent to your mobile number </h3>
-                <span className="label"> OTP </span>
+                <h3> Your details won't be shared to any third party. </h3>
+                {/* <span className="label"> OTP </span>
                 <input
                   name="otp"
                   placeholder="OTP"
                   ref={register({ required: false })}
-                />
+                /> */}
 
-                <input type="submit" value="Verify" disabled={isLoading} />
+                <input type="submit" value="Accept" disabled={isLoading} />
               </>
             ) : (
               ""

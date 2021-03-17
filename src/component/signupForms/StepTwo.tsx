@@ -52,28 +52,28 @@ export default function StepTwo({
       <span className="label"> Name of SHG </span>
       <input
         name="name_SHG"
-        placeholder={nameSHG}
+        defaultValue={nameSHG}
         ref={register({ required: false })}
       />
 
       <span className="label"> Prodcution Capacity </span>
       <input
         name="production_cap"
-        placeholder={productionCap}
+        defaultValue={productionCap}
         ref={register({ required: false })}
       />
 
       <span className="label"> Order Size </span>
       <input
         name="order_size"
-        placeholder={orderSize}
+        defaultValue={orderSize}
         ref={register({ required: false })}
       />
 
       <span className="label"> Contact Number (WhatsApp) </span>
       <input
         name="WAcontact"
-        placeholder={contact}
+        defaultValue={contact}
         ref={register({ required: false })}
       />
 
@@ -88,7 +88,7 @@ export default function StepTwo({
 
       <div className="signup-btns">
         <input type="submit" value="Next" />
-        <span> Steps: {currentStep}/4</span>
+        <span> Steps: {currentStep}/3</span>
       </div>
     </form>
   );
