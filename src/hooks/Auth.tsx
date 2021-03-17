@@ -37,7 +37,7 @@ export type loginForm = {
 };
 
 export class SHGUser {
-  id: string;
+  shg_id: number;
   access_token: string;
 
   name: string;
@@ -53,7 +53,7 @@ export class SHGUser {
   order_size: string;
 
   constructor(
-    id: string,
+    shg_id: number,
     access_token: string,
 
     name: string,
@@ -68,7 +68,7 @@ export class SHGUser {
     production_cap: string,
     order_size: string
   ) {
-    this.id = id;
+    this.shg_id = shg_id;
     this.access_token = access_token;
 
     this.name = name;
@@ -86,7 +86,7 @@ export class SHGUser {
 }
 
 export class SMEUser {
-  id: string;
+  sme_id: number;
   access_token: string;
 
   name: string;
@@ -101,7 +101,7 @@ export class SMEUser {
   product_sold: string;
 
   constructor(
-    id: string,
+    sme_id: number,
     access_token: string,
 
     name: string,
@@ -115,7 +115,7 @@ export class SMEUser {
     address: string,
     product_sold: string
   ) {
-    this.id = id;
+    this.sme_id = sme_id;
     this.access_token = access_token;
 
     this.name = name;
