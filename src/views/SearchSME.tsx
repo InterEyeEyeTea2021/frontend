@@ -1,27 +1,30 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import TitleHeader from "../component/TitleHeader";
-import { BACKEND_URL, profile_pics } from "../constants/constants";
+import { BACKEND_URL, prod_images } from "../constants/constants";
 import { useAuth } from "../hooks/Auth";
 import { Link } from "react-router-dom";
-interface SHGuserData {
-  WAContact: string;
-  industry_type: string;
+
+interface Product {
+  product_id: number;
+  shg_id: number;
   name: string;
-  phone: string;
-  sme_id: number;
+  description: string;
+  image_uri: string;
+  min_size: string;
+  price: string;
 }
 
 export default function SearchSME() {
   const auth = useAuth();
-  const [SHGs, setSHGs] = useState<SHGuserData[]>([]);
+  const [products, setProducts] = useState<Product[]>([]);
 
   useEffect(() => {
     axios
-      .get(`${BACKEND_URL}/users/shg`)
+      .get(`${BACKEND_URL}/product/all`)
       .then((res) => {
-        console.log(res.data);
-        setSHGs(res.data);
+        console.log(res.data, "products");
+        setProducts(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -34,12 +37,12 @@ export default function SearchSME() {
       <input type="text" name="search" id="search" placeholder="Search" />
       <br />
       <div className="cards">
-        {SHGs.map((s, i) => (
-          <Link to={"/portfolio/" + s.sme_id} className="no_style">
+        {products.map((p, i) => (
+          <Link to={`/product/${p.product_id}`} className="no_style">
             <div className="shg card">
-              <img src={profile_pics[i % 2]} alt="" />
-              <h1>{s.name}</h1>
-              <p>{s.industry_type}</p>
+              <img src={prod_images[i % 6]} alt="" />
+              <h1>{p.name}</h1>
+              <p>{p.description}</p>
             </div>
           </Link>
         ))}
