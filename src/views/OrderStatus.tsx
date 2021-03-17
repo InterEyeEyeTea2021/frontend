@@ -1,15 +1,73 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as Icon from "react-feather";
 import TitleHeader from "../component/TitleHeader";
 import { Link, useParams } from "react-router-dom";
 import { useAuth } from "../hooks/Auth";
+import axios from "axios";
+import { BACKEND_URL } from "../constants/constants";
+import Modal from "react-modal";
+
+interface OrderData {
+  contract: string;
+  description: string;
+  milestones: [];
+  order_id: number;
+  shg_id: number;
+  sme_id: number;
+  state: string;
+}
+
+Modal.setAppElement("#root");
 
 export default function OrderStatus() {
   const { register, handleSubmit, errors } = useForm();
   const auth = useAuth();
   let urlParams: { id: string } = useParams();
   const is_sme = auth?.user && auth.user.user_type === "SME";
+  const [confirmCompleteOpen, setConfirmCompleteOpen] = useState(false);
+
+  const user_url_param = is_sme ? "sme" : "shg";
+
+  const [orderData, setOrderData] = useState<OrderData>();
+
+  useEffect(() => {
+    axios
+      .get(`${BACKEND_URL}/order/${user_url_param}?id=${auth?.user?.id}`)
+      .then((res) => {
+        console.log(res.data, "order");
+        let order: OrderData = res.data.filter((o: OrderData) => {
+          return o.order_id == Number(urlParams.id);
+        })[0];
+        if (order) {
+          setOrderData(order);
+          console.log(order);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  const closeCompleteModal = () => {
+    axios
+      .get(`${BACKEND_URL}/order/completeOrder?id=${orderData?.order_id}`)
+      .then(() => {
+        setConfirmCompleteOpen(false);
+      });
+  };
+
+  const completeOrder = (e: React.MouseEvent) => {
+    console.log("ORDER_COMPLETE");
+    let newMilestones = milestones.map((m) => {
+      return {
+        ...m,
+        status: true,
+      };
+    });
+    setMilestones(newMilestones);
+    setConfirmCompleteOpen(false);
+  };
 
   const data = {
     order_name: "Order Name",
@@ -42,14 +100,33 @@ export default function OrderStatus() {
     ],
   };
 
+  const [milestones, setMilestones] = useState([
+    { id: 1, name: "Milestone 1", status: true },
+    { id: 2, name: "Milestone 2", status: true },
+    { id: 3, name: "Milestone 3", status: false },
+    { id: 4, name: "Milestone 4", status: false },
+  ]);
+
   const updateMilestone = (id: number) => {
-    let m = data.milestones.filter((e) => {
-      return e.id == id;
+    let newMilestones = milestones.map((m) => {
+      if (m.id == id) {
+        return {
+          ...m,
+          status: !m.status,
+        };
+      }
+      return m;
     });
-    console.log(m);
-    if (m.length > 0) {
-      let m1 = m[0];
-      console.log(!m[0].status);
+    let completed = 0;
+    newMilestones.forEach((m) => {
+      if (m.status) {
+        completed++;
+      }
+    });
+    if (completed === milestones.length) {
+      setConfirmCompleteOpen(true);
+    } else {
+      setMilestones(newMilestones);
     }
   };
 
@@ -59,11 +136,13 @@ export default function OrderStatus() {
         title="Order Status"
         user_type={auth?.user?.user_type as string}
       />
-      <h2>Order Details</h2>
-      <div className="detail">
+      <h1>
+        Order <span className="tag">{orderData?.state}</span>
+      </h1>
+      {/* <div className="detail">
         <div className="label">Tender Name</div>
         <div className="value">{data.order_name}</div>
-      </div>
+      </div> */}
       <div className="detail">
         <div className="label">Industry Type</div>
         <div className="value">{data.industry_type}</div>
@@ -71,18 +150,20 @@ export default function OrderStatus() {
 
       <div className="detail">
         <div className="label">Description</div>
-        <div className="value">{data.description}</div>
+        <div className="value">{orderData?.description}</div>
       </div>
 
       <div className="detail">
-        <div className="label">Skills Required</div>
-        <div className="value">{data.skills_req}</div>
+        <div className="label">Order Contract</div>
+        <a href={orderData?.contract} className="no_style">
+          <div className="value">{orderData?.contract}</div>
+        </a>
       </div>
 
-      <div className="detail">
+      {/* <div className="detail">
         <div className="label">Location</div>
         <div className="value">{data.location}</div>
-      </div>
+      </div> */}
 
       <hr />
 
@@ -110,6 +191,9 @@ export default function OrderStatus() {
         </div>
       )}
 
+      <hr />
+
+      {/* 
       <h2>Payments</h2>
 
       {data.payments.map((p, i) => (
@@ -135,19 +219,17 @@ export default function OrderStatus() {
             )}
           </div>
         </Link>
-      ))}
-
+      ))} 
+      
       <Link className="button" to={"/order/" + urlParams.id + "/payment"}>
         Request Payment
       </Link>
-      {/* <button className="button">Request Payment</button> */}
-
-      <hr />
+      */}
 
       <h2>Milestones</h2>
 
       <div className="milestones">
-        {data.milestones.map((m, index) => (
+        {milestones.map((m, index) => (
           <div className="milestone">
             <div className="index">{index + 1}.</div>
             <div className="name">{m.name}</div>
@@ -170,6 +252,25 @@ export default function OrderStatus() {
           </div>
         ))}
       </div>
+
+      <Modal
+        isOpen={confirmCompleteOpen}
+        // onAfterOpen={afterOpenModal}
+        onRequestClose={closeCompleteModal}
+        // style={customStyles}
+        contentLabel="Confirm Complete Modal"
+      >
+        <h1>Confirm Completed</h1>
+        <p>
+          You are marking all milestones as complete, do you want to mark the
+          order completed?
+        </p>
+        <p>Canceling will not mark this milestone.</p>
+        <button onClick={completeOrder}>Complete Order</button>
+        <button onClick={closeCompleteModal} className="default">
+          Cancel
+        </button>
+      </Modal>
 
       <hr />
     </div>
