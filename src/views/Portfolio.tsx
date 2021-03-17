@@ -26,16 +26,15 @@ export default function Portfolio() {
   const auth = useAuth();
 
   const is_sme = auth?.user && auth.user.user_type === "SME";
-  let user_data;
+  let user_data: any;
   if (!is_sme) {
     user_data = auth?.user as SHGUser;
     console.log(auth?.user);
-    console.log(user_data);
   }
 
   useEffect(() => {
     axios
-      .get(`${BACKEND_URL}/product/shg/${auth?.user?.id}`)
+      .get(`${BACKEND_URL}/product/shg/${user_data.shg_id}`)
       .then((res) => {
         console.log(res.data, "shg products");
         setProducts(res.data);
@@ -95,7 +94,14 @@ export default function Portfolio() {
         <div className="value">{data.location}</div>
       </div> */}
 
-      <button className="button primary">Add Product</button>
+      <button
+        className="button primary"
+        onClick={(e) => {
+          history.push(`/product/add`);
+        }}
+      >
+        Add Product
+      </button>
 
       <hr />
 
