@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { BACKEND_URL } from "../constants/constants";
-import { useAuth } from "../hooks/Auth";
+import { SHGUser, useAuth } from "../hooks/Auth";
 import axios from "axios";
 import TitleHeader from "../component/TitleHeader";
 import { prod_images } from "../constants/constants";
@@ -118,6 +118,13 @@ export default function DashboardSHG() {
     ],
   });
 
+  const is_sme = auth?.user && auth.user.user_type === "SME";
+  let user_data: any;
+  if (!is_sme) {
+    user_data = auth?.user as SHGUser;
+    console.log(auth?.user);
+  }
+
   useEffect(() => {
     axios
       .get(`${BACKEND_URL}/order/shg`, {
@@ -125,7 +132,7 @@ export default function DashboardSHG() {
           Authorization: `Bearer ${auth?.user?.access_token}`,
         },
         params: {
-          id: auth?.user?.id,
+          id: user_data.shg_id,
         },
       })
       .then((res) => {
@@ -153,7 +160,7 @@ export default function DashboardSHG() {
           Authorization: `Bearer ${auth?.user?.access_token}`,
         },
         params: {
-          id: auth?.user?.id,
+          id: user_data.shg_id,
         },
       })
       .then((res) => {
