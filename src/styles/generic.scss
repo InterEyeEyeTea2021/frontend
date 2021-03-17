@@ -3,6 +3,10 @@ html {
   scrollbar-width: thin;
 }
 
+#root {
+  margin-bottom: 10rem;
+}
+
 .main_content {
   margin: 1rem auto;
   @include sm {
