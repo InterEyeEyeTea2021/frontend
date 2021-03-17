@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import TitleHeader from "../component/TitleHeader";
 import { BACKEND_URL, prod_images } from "../constants/constants";
@@ -19,9 +19,11 @@ interface Product {
 
 export default function Product() {
   const { register, handleSubmit, errors } = useForm();
-  let { id }: { id: string } = useParams();
   const [product, setProduct] = useState<Product>();
+
   const auth = useAuth();
+  let history = useHistory();
+  let { id }: { id: string } = useParams();
   const is_sme = auth?.user && auth.user.user_type === "SME";
 
   const data = {
@@ -59,6 +61,18 @@ export default function Product() {
     console.log("Submitted Form Data: ", data);
   };
 
+  const handleProductDelete = () => {
+    axios
+      .delete(`${BACKEND_URL}/product/${id}`, auth?.authHeader())
+      .then((res) => {
+        console.log(res.data, "product deleted");
+        history.push("/portfolio");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <div className="main_content">
       <TitleHeader
@@ -78,7 +92,7 @@ export default function Product() {
 
       <div className="cards">
         <div className="card">
-          <img src={prod_images[1 % 6]} alt="" />
+          <img src={prod_images[+id - 1]} alt="" />
         </div>
       </div>
 
@@ -97,8 +111,9 @@ export default function Product() {
         </Link>
       ) : (
         <div className="edit">
-          <button className="button primary">Edit Product</button>
-          <button className="button">Delete</button>
+          <button className="button" onClick={handleProductDelete}>
+            Delete
+          </button>
         </div>
       )}
     </div>

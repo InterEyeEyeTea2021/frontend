@@ -10,7 +10,7 @@ export default function ProfileSME() {
 
   return (
     <div className="main_content">
-      <TitleHeader title="Profile" user_type="SHG" />
+      <TitleHeader title="Profile" user_type="SME" />
       <button
         className="button"
         onClick={(e) => {
