@@ -1,45 +1,49 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
 import TitleHeader from "../component/TitleHeader";
-import { prod_images } from "../constants/constants";
-import { authContext, useAuth } from "../hooks/Auth";
+import { BACKEND_URL, prod_images } from "../constants/constants";
+import { authContext, useAuth, SMEUser, SHGUser } from "../hooks/Auth";
+
+interface Product {
+  product_id: number;
+  shg_id: number;
+  name: string;
+  description: string;
+  image_uri: string;
+  min_size: string;
+  price: string;
+}
 
 export default function Portfolio() {
   const { register, handleSubmit, errors } = useForm();
+  const [products, setProducts] = useState<Product[]>([]);
 
   let history = useHistory();
 
   const auth = useAuth();
 
   const is_sme = auth?.user && auth.user.user_type === "SME";
+  let user_data;
+  if (!is_sme) {
+    user_data = auth?.user as SHGUser;
+    console.log(auth?.user);
+    console.log(user_data);
+  }
 
-  const data = {
-    shg_name: "Name of SHG",
-    industry_type: "Agriculture",
-    description: "Description",
-    prod_cap: "Production Capacity",
-    order_sizes: "Order Sizes",
-    location: "Location",
-    products: [
-      {
-        image: "https://i.imgur.com/khUO2T7.png",
-        name: "Product X",
-        description: "Short detail of the prod",
-      },
-      {
-        image: "https://i.imgur.com/khUO2T7.png",
-        name: "Product X",
-        description: "Short detail of the prod",
-      },
-      {
-        image: "https://i.imgur.com/khUO2T7.png",
-        name: "Product X",
-        description: "Short detail of the prod",
-      },
-    ],
-  };
+  useEffect(() => {
+    axios
+      .get(`${BACKEND_URL}/product/shg/${auth?.user?.id}`)
+      .then((res) => {
+        console.log(res.data, "shg products");
+        setProducts(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   return (
     <div className="main_content">
@@ -63,43 +67,42 @@ export default function Portfolio() {
 
       <div className="detail">
         <div className="label">Name of SHG</div>
-        <div className="value">{data.shg_name}</div>
+        <div className="value">{user_data?.name_SHG}</div>
       </div>
 
       <div className="detail">
         <div className="label">Description</div>
-        <div className="value">{data.description}</div>
+        <div className="value"></div>
       </div>
 
       <div className="detail">
         <div className="label">Industry Type</div>
-        <div className="value">{data.industry_type}</div>
+        <div className="value">{user_data?.industry_type}</div>
       </div>
 
       <div className="detail">
         <div className="label">Production Capacity</div>
-        <div className="value">{data.prod_cap}</div>
+        <div className="value">{user_data?.production_cap}</div>
       </div>
 
       <div className="detail">
         <div className="label">Order Sizes</div>
-        <div className="value">{data.order_sizes}</div>
+        <div className="value">{user_data?.order_size}</div>
       </div>
 
-      <div className="detail">
+      {/* <div className="detail">
         <div className="label">Location</div>
         <div className="value">{data.location}</div>
-      </div>
+      </div> */}
 
       <button className="button primary">Add Product</button>
-      <button className="button">Edit</button>
 
       <hr />
 
       <h2>Products</h2>
       <div className="cards products">
-        {data.products.map((p, i) => (
-          <Link to={"/product/" + i} className="no_style">
+        {products.map((p, i) => (
+          <Link to={`/product/${p.product_id}`} className="no_style">
             <div className="card product">
               <img src={prod_images[i % 6]} alt="" />
               <div>
