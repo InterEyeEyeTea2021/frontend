@@ -1,14 +1,20 @@
+import axios from "axios";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useParams } from "react-router";
 import TitleHeader from "../component/TitleHeader";
+import { BACKEND_URL } from "../constants/constants";
+import { useAuth } from "../hooks/Auth";
 import BidForm from "./BidForm";
 
 export default function ProductEdit() {
   const { register, handleSubmit, errors } = useForm();
+  let { id }: { id: string } = useParams();
+  let auth = useAuth();
 
   const data = {
-    image: "",
-    prod_name: "Product X",
+    image_uri: "Image Link",
+    name: "Product X",
     description: "Short detail of the prod",
     min_size: 10,
     price: 100,
@@ -16,6 +22,14 @@ export default function ProductEdit() {
 
   const onSubmit = (data: any) => {
     // setIsLoading(true);
+    axios
+      .post(`${BACKEND_URL}/product/`, data, auth?.authHeader())
+      .then((res) => {
+        console.log(res.data, "product created");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     console.log("Submitted Form Data: ", data);
   };
 
@@ -26,10 +40,10 @@ export default function ProductEdit() {
       <form onSubmit={handleSubmit(onSubmit)}>
         <label htmlFor="prod_name">Name of Product</label>
         <input
-          name="prod_name"
+          name="name"
           id="prod_name"
           placeholder="Product Name"
-          defaultValue={data.prod_name}
+          defaultValue={data.name}
           ref={register({
             required: true,
           })}
@@ -46,12 +60,23 @@ export default function ProductEdit() {
           })}
         />
 
-        <label htmlFor="media">Attach Media</label>
+        {/* <label htmlFor="media">Attach Media</label>
         <input
           type="file"
           accept=" text/csv"
           id="media"
           // onChange={}
+        /> */}
+
+        <label htmlFor="description">Image Link</label>
+        <input
+          name="image_uri"
+          id="image_uri"
+          placeholder="Image Link"
+          defaultValue={data.image_uri}
+          ref={register({
+            required: true,
+          })}
         />
 
         <h2>Order Parameters</h2>
@@ -78,7 +103,9 @@ export default function ProductEdit() {
           })}
         />
 
-        <button className="button primary">Add Product</button>
+        <button type="submit" className="button primary">
+          Add Product
+        </button>
       </form>
     </div>
   );
