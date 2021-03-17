@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import * as Icon from "react-feather";
 import TitleHeader from "../component/TitleHeader";
 import { Link, useParams } from "react-router-dom";
-import { useAuth } from "../hooks/Auth";
+import { SHGUser, SMEUser, useAuth } from "../hooks/Auth";
 import axios from "axios";
 import { BACKEND_URL } from "../constants/constants";
 import Modal from "react-modal";
@@ -31,9 +31,16 @@ export default function OrderStatus() {
 
   const [orderData, setOrderData] = useState<OrderData>();
 
+  let id: any;
+  if (!is_sme) {
+    id = (auth?.user as SHGUser)?.shg_id || (auth?.user as SMEUser)?.sme_id;
+    console.log(auth?.user);
+  } else {
+  }
+
   useEffect(() => {
     axios
-      .get(`${BACKEND_URL}/order/${user_url_param}?id=${auth?.user?.id}`)
+      .get(`${BACKEND_URL}/order/${user_url_param}?id=${id}`)
       .then((res) => {
         console.log(res.data, "order");
         let order: OrderData = res.data.filter((o: OrderData) => {

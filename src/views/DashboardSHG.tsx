@@ -5,7 +5,7 @@ import { SHGUser, useAuth } from "../hooks/Auth";
 import axios from "axios";
 import TitleHeader from "../component/TitleHeader";
 import { prod_images } from "../constants/constants";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 interface data {
   ongoing_orders: {
@@ -45,6 +45,7 @@ interface data {
 export default function DashboardSHG() {
   const auth = useAuth();
   const { register, handleSubmit, errors } = useForm();
+  let history = useHistory();
 
   const [data, setData] = useState<data>({
     ongoing_orders: [
@@ -207,7 +208,14 @@ export default function DashboardSHG() {
         </Link>
       ))}
 
-      <input type="submit" value="Create Bid" />
+      <button
+        className="button primary"
+        onClick={(e) => {
+          history.push(`/search`);
+        }}
+      >
+        Create Bid
+      </button>
 
       <h2>Completed Orders</h2>
       {data?.completed_orders.map((order, i) => (
