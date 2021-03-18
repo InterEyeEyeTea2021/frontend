@@ -4,12 +4,15 @@ import { useForm } from "react-hook-form";
 import { API_IMGBB, BACKEND_URL } from "../constants/constants";
 import TitleHeader from "../component/TitleHeader";
 import { SMEUser, useAuth } from "../hooks/Auth";
+import toast from "react-hot-toast";
+import { useHistory } from "react-router-dom";
 
 export default function TenderForm() {
   const [isLoading, setIsLoading] = useState(false);
   const { register, handleSubmit, errors } = useForm();
   const [message, setMessage] = useState("");
   let auth = useAuth();
+  const history = useHistory();
 
   const onSubmit = (data: any) => {
     setIsLoading(true);
@@ -65,7 +68,8 @@ export default function TenderForm() {
               auth?.authHeader()
             )
             .then((res) => {
-              console.log(res.data, "tender creation");
+              toast.success("Tender Created");
+              history.push("/dashboard");
             })
             .catch((err) => {
               console.log(err);

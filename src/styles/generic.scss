@@ -256,6 +256,16 @@ html {
   }
 }
 
+.toast_with_icon {
+  display: flex;
+  align-items: center;
+  svg {
+    margin-right: 0.5rem;
+    margin-left: -0.5rem;
+    stroke: #ffb937;
+  }
+}
+
 button,
 .button,
 select,
