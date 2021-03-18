@@ -25,10 +25,7 @@ export default function TenderForm() {
       console.log(e);
       d.append("image", e);
       axios
-        .post(
-          "https://api.imgbb.com/1/upload?expiration=600&key=" + API_IMGBB,
-          d
-        )
+        .post("https://api.imgbb.com/1/upload?key=" + API_IMGBB, d)
         .then((resp) => {
           photograph = resp.data.data.image.url;
 
