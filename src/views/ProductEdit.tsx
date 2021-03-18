@@ -33,10 +33,7 @@ export default function ProductEdit() {
       console.log(e);
       d.append("image", e);
       axios
-        .post(
-          "https://api.imgbb.com/1/upload?expiration=600&key=" + API_IMGBB,
-          d
-        )
+        .post("https://api.imgbb.com/1/upload?key=" + API_IMGBB, d)
         .then((resp) => {
           photograph = resp.data.data.image.url;
           // Post the image link to the backend
