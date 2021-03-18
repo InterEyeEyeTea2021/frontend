@@ -9,6 +9,7 @@ import StepThree from "../component/signupForms/StepThree";
 import Step2 from "../component/signupForms/Step2";
 import Step3 from "../component/signupForms/Step3";
 import { useHistory } from "react-router";
+import toast from "react-hot-toast";
 
 function Register() {
   let auth = useAuth();
@@ -57,6 +58,8 @@ function Register() {
         // console.log("registration succex");
         setIsLoading(false);
 
+        toast.success("Successfully registered, Please login");
+
         history.push("/login");
 
         if (response === undefined || response.status === 500)
@@ -82,6 +85,10 @@ function Register() {
       auth?.registerSME(data, (response: AxiosResponse) => {
         // console.log("registration succex");
         setIsLoading(false);
+
+        toast.success("Successfully registered, Please login");
+
+        history.push("/login");
 
         if (response === undefined || response.status === 500)
           setMessage("Server is down, please try again later");
