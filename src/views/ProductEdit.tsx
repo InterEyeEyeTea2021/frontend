@@ -14,14 +14,6 @@ export default function ProductEdit() {
   let auth = useAuth();
   const history = useHistory();
 
-  const data = {
-    image_uri: "Image Link",
-    name: "Product X",
-    description: "Short detail of the prod",
-    min_size: 10,
-    price: 100,
-  };
-
   const onSubmit = (data: any) => {
     // setIsLoading(true);
     console.log("Submitted Form Data: ", data);
@@ -74,7 +66,6 @@ export default function ProductEdit() {
           name="name"
           id="prod_name"
           placeholder="Product Name"
-          defaultValue={data.name}
           ref={register({
             required: true,
           })}
@@ -85,7 +76,6 @@ export default function ProductEdit() {
           name="description"
           id="description"
           placeholder="Description"
-          defaultValue={data.description}
           ref={register({
             required: true,
           })}
@@ -104,8 +94,6 @@ export default function ProductEdit() {
           accept="image/png, image/jpeg"
           id="media"
           name="media"
-          ref={register}
-          // onChange={}
         />
 
         <h2>Order Parameters</h2>
@@ -115,7 +103,6 @@ export default function ProductEdit() {
           name="min_size"
           id="min_size"
           placeholder="Minimum Size"
-          defaultValue={data.min_size}
           ref={register({
             required: true,
           })}
@@ -126,7 +113,6 @@ export default function ProductEdit() {
           name="price"
           id="price"
           placeholder="Price"
-          defaultValue={data.price}
           ref={register({
             required: true,
           })}

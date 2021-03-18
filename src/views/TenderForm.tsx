@@ -1,18 +1,43 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { API_IMGBB, BACKEND_URL } from "../constants/constants";
 import TitleHeader from "../component/TitleHeader";
 import { SMEUser, useAuth } from "../hooks/Auth";
 import toast from "react-hot-toast";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
+
+interface Product {
+  product_id: number;
+  shg_id: number;
+  name: string;
+  description: string;
+  image_uri: string;
+  min_size: string;
+  price: string;
+}
 
 export default function TenderForm() {
   const [isLoading, setIsLoading] = useState(false);
+  const [product, setProduct] = useState<Product>();
   const { register, handleSubmit, errors } = useForm();
   const [message, setMessage] = useState("");
+
+  let { id }: { id: string } = useParams();
   let auth = useAuth();
   const history = useHistory();
+
+  useEffect(() => {
+    axios
+      .get(`${BACKEND_URL}/product/${id}`)
+      .then((res) => {
+        console.log(res.data, "product");
+        setProduct(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   const onSubmit = (data: any) => {
     setIsLoading(true);
@@ -105,6 +130,7 @@ export default function TenderForm() {
           name="tender_name"
           id="tender_name"
           placeholder="Tender Name"
+          defaultValue={`${product?.name} - order`}
           ref={register({
             required: true,
           })}
@@ -125,12 +151,13 @@ export default function TenderForm() {
           name="description"
           id="description"
           placeholder="Description"
+          defaultValue={`${product?.description}`}
           ref={register({
             required: true,
           })}
         />
 
-        <label htmlFor="skills_req">Skills Required</label>
+        {/* <label htmlFor="skills_req">Skills Required</label>
         <input
           name="skills_req"
           id="skills_req"
@@ -138,7 +165,7 @@ export default function TenderForm() {
           ref={register({
             required: true,
           })}
-        />
+        /> */}
 
         {/* <label htmlFor="location">Location</label>
         <input
@@ -202,7 +229,7 @@ export default function TenderForm() {
             </li>
           ))}
         </ol>
-        <button className="button">Add Milestone</button>
+        {/* <button className="button">Add Milestone</button> */}
 
         <input type="submit" value="Create Tender" />
         {/* <input type="submit" value="Invite SHGs" disabled={isLoading} /> */}

@@ -103,7 +103,7 @@ export default function Product() {
         <div className="value">{product?.price}</div>
       </div>
       {is_sme ? (
-        <Link className="button" to="/tender">
+        <Link className="button" to={`/tender/${product?.product_id}`}>
           Create Tender
         </Link>
       ) : (

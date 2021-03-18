@@ -145,20 +145,22 @@ export default function DashboardSME() {
       ))}
 
       <h2>Tenders</h2>
-      {data?.tenders.map((tender, i) => (
-        <Link to={`/tender/${tender.id}`} className="no_style">
-          <div className="tender">
-            <div className="image">
-              <img src={tender.media[0].uri} alt="" />
+      {data?.tenders
+        .map((tender, i) => (
+          <Link to={`/tender/${tender.id}`} className="no_style">
+            <div className="tender">
+              <div className="image">
+                <img src={tender.media[0].uri} alt="" />
+              </div>
+              <div className="details">
+                <h1>{tender.tender_name}</h1>
+                <p> {tender.description} </p>
+                {/* <p> {tender.bids} BIDS RECEIVED </p> */}
+              </div>
             </div>
-            <div className="details">
-              <h1>{tender.tender_name}</h1>
-              <p> {tender.description} </p>
-              {/* <p> {tender.bids} BIDS RECEIVED </p> */}
-            </div>
-          </div>
-        </Link>
-      ))}
+          </Link>
+        ))
+        .reverse()}
 
       <Link className="button" to="/tender">
         Create Tender
