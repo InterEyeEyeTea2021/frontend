@@ -79,6 +79,9 @@ export default function Product() {
         title="Product"
         user_type={auth?.user?.user_type as string}
       />
+      <div className="full_image">
+        <img src={product?.image_uri} alt="" />
+      </div>
 
       <div className="detail">
         <div className="label">Name of Product</div>
@@ -88,12 +91,6 @@ export default function Product() {
       <div className="detail">
         <div className="label">Description</div>
         <div className="value">{product?.description}</div>
-      </div>
-
-      <div className="cards">
-        <div className="card">
-          <img src={prod_images[+id - 1]} alt="" />
-        </div>
       </div>
 
       <div className="detail">
