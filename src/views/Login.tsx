@@ -31,12 +31,8 @@ function Login() {
       (e: AxiosError) => {
         setIsLoading(false);
         // console.log("Error", e);
-        if (e.response?.status === 401) {
-          setMessage("Email ID / Password are wrong.");
-        } else if (e.response?.status === 404) {
-          setMessage("Email not found, please register.");
-        } else {
-          setMessage("An internal error happened, try again later.");
+        if (e.response?.status != 200) {
+          setMessage("An error occured, try again later.");
         }
       }
     );
