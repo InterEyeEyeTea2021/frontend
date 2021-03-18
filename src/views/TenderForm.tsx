@@ -100,11 +100,11 @@ export default function TenderForm() {
 
       <h2>Tender Details</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <label htmlFor="order_name">Order Name</label>
+        <label htmlFor="tender_name">Tender Name</label>
         <input
-          name="order_name"
-          id="order_name"
-          placeholder="Order Name"
+          name="tender_name"
+          id="tender_name"
+          placeholder="Tender Name"
           ref={register({
             required: true,
           })}
