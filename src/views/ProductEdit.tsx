@@ -1,7 +1,8 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useParams } from "react-router";
+import toast from "react-hot-toast";
+import { useHistory, useParams } from "react-router";
 import TitleHeader from "../component/TitleHeader";
 import { API_IMGBB, BACKEND_URL } from "../constants/constants";
 import { useAuth } from "../hooks/Auth";
@@ -11,6 +12,7 @@ export default function ProductEdit() {
   const { register, handleSubmit, errors } = useForm();
   let { id }: { id: string } = useParams();
   let auth = useAuth();
+  const history = useHistory();
 
   const data = {
     image_uri: "Image Link",
@@ -49,7 +51,9 @@ export default function ProductEdit() {
               auth?.authHeader()
             )
             .then((res) => {
-              console.log(res.data, "product created");
+              // console.log(res.data, "product created");
+              toast.success("Product added successfully!");
+              history.push("/portfolio");
             })
             .catch((err) => {
               console.log(err);

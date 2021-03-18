@@ -71,10 +71,11 @@ export default function OrderStatus() {
             status: true,
           };
         });
-        toast.success("Order Marked as complete!");
+        toast.success("Order Completed Successfully!");
         setMilestones(newMilestones);
         setConfirmCompleteOpen(false);
-      });
+      })
+      .catch((e) => console.log(e));
   };
 
   const data = {

@@ -11,16 +11,25 @@ export default function ProfileSME() {
   return (
     <div className="main_content">
       <TitleHeader title="Profile" user_type="SME" />
-      <button
-        className="button"
-        onClick={(e) => {
-          auth?.signout(() => {
-            history.push("/");
-          });
-        }}
-      >
-        Signout
-      </button>
+      <div className="full_image">
+        <img
+          src="http://tinygraphs.com/isogrids/random?theme=seascape&numcolors=4"
+          alt=""
+        />
+      </div>
+      <div className="user_panel">
+        <div className="name">{auth?.user?.name}</div>
+        <button
+          className="button small default"
+          onClick={(e) => {
+            auth?.signout(() => {
+              history.push("/");
+            });
+          }}
+        >
+          Signout
+        </button>
+      </div>
     </div>
   );
 }
