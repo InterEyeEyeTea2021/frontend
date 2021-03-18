@@ -79,7 +79,7 @@ export default function DashboardSME() {
   let user_data: any;
   if (is_sme) {
     user_data = auth?.user as SMEUser;
-    console.log(auth?.user);
+    // console.log(auth?.user);
   }
 
   useEffect(() => {
