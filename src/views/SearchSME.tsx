@@ -40,7 +40,7 @@ export default function SearchSME() {
         {products.map((p, i) => (
           <Link to={`/product/${p.product_id}`} className="no_style">
             <div className="shg card">
-              <img src={prod_images[i % 6]} alt="" />
+              <img src={p.image_uri} alt="" />
               <h1>{p.name}</h1>
               <p>{p.description}</p>
             </div>
