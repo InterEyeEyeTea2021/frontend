@@ -39,13 +39,6 @@ export default function BidForm() {
   const auth = useAuth();
   let shg_id = (auth?.user as SHGUser).shg_id;
 
-  const milestones = [
-    { name: "Milestone 1" },
-    { name: "Milestone 2" },
-    { name: "Milestone 3" },
-    { name: "Milestone 4" },
-  ];
-
   const data = {
     tender_name: "Tender Name",
     industry_type: "Agriculture",
@@ -154,10 +147,10 @@ export default function BidForm() {
       <h2>Milestones</h2>
 
       <div className="milestones">
-        {tender?.milestones.map((m, index) => (
+        {data.milestones.map((m, index) => (
           <div className="milestone">
             <div className="index">{index + 1}.</div>
-            <div className="name">{m.description}</div>
+            <div className="name">{m.name}</div>
             {/* <div className="check">check</div> */}
           </div>
         ))}
