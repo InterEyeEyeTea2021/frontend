@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as Icon from "react-feather";
 import TitleHeader from "../component/TitleHeader";
-import { Link, useParams } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 import { SHGUser, SMEUser, useAuth } from "../hooks/Auth";
 import axios from "axios";
 import { BACKEND_URL } from "../constants/constants";
@@ -28,6 +28,8 @@ export default function OrderStatus() {
   const is_sme = auth?.user && auth.user.user_type === "SME";
   const [confirmCompleteOpen, setConfirmCompleteOpen] = useState(false);
 
+  const history = useHistory();
+
   const user_url_param = is_sme ? "sme" : "shg";
 
   const [orderData, setOrderData] = useState<OrderData>();
@@ -41,7 +43,7 @@ export default function OrderStatus() {
 
   useEffect(() => {
     axios
-      .get(`${BACKEND_URL}/order/${user_url_param}?id=${id}`)
+      .get(`${BACKEND_URL}/order/${user_url_param}?id=${urlParams.id}`)
       .then((res) => {
         console.log(res.data, "order");
         let order: OrderData = res.data.filter((o: OrderData) => {
@@ -63,7 +65,7 @@ export default function OrderStatus() {
 
   const completeOrder = (e: React.MouseEvent) => {
     axios
-      .get(`${BACKEND_URL}/order/completeOrder?id=${orderData?.order_id}`)
+      .get(`${BACKEND_URL}/order/completeOrder?id=${urlParams.id}`)
       .then(() => {
         let newMilestones = milestones.map((m) => {
           return {
@@ -74,6 +76,12 @@ export default function OrderStatus() {
         toast.success("Order Completed Successfully!");
         setMilestones(newMilestones);
         setConfirmCompleteOpen(false);
+
+        window.setTimeout(
+          () => toast.success("Redirecting to Dashboard"),
+          3000
+        );
+        window.setTimeout(() => history.push("/dashboard"), 5000);
       })
       .catch((e) => console.log(e));
   };
@@ -110,10 +118,10 @@ export default function OrderStatus() {
   };
 
   const [milestones, setMilestones] = useState([
-    { id: 1, name: "Milestone 1", status: true },
-    { id: 2, name: "Milestone 2", status: true },
-    { id: 3, name: "Milestone 3", status: false },
-    { id: 4, name: "Milestone 4", status: false },
+    { id: 1, name: "Acquire Materials", status: false },
+    { id: 2, name: "Start Production", status: false },
+    { id: 3, name: "Finish Production", status: false },
+    { id: 4, name: "Ship the Product", status: false },
   ]);
 
   const updateMilestone = (id: number) => {
@@ -140,11 +148,11 @@ export default function OrderStatus() {
         toast((t) => (
           <div className="toast_with_icon">
             <Icon.Info></Icon.Info>
-            {m.name + " marded as todo!"}
+            {m.name + " marked as todo!"}
           </div>
         ));
       } else {
-        toast.success(m.name + " marded as complete!");
+        toast.success(m.name + " marked as complete!");
       }
       // history.push("/dashboard");
       setMilestones(newMilestones);

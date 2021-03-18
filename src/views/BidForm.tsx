@@ -4,7 +4,7 @@ import * as Icon from "react-feather";
 import TitleHeader from "../component/TitleHeader";
 import axios from "axios";
 import { BACKEND_URL } from "../constants/constants";
-import { useParams } from "react-router";
+import { useHistory, useParams } from "react-router";
 import toast from "react-hot-toast";
 
 interface tender {
@@ -32,6 +32,7 @@ interface tender {
 export default function BidForm() {
   const { register, handleSubmit, errors } = useForm();
   const [tender, setTender] = useState<tender>();
+  const history = useHistory();
   let { id }: { id: string } = useParams();
 
   const milestones = [
@@ -56,10 +57,10 @@ export default function BidForm() {
       { keyname: "advanced", pay_name: "Advanced", suggested_value: null },
     ],
     milestones: [
-      { name: "Milestone 1" },
-      { name: "Milestone 2" },
-      { name: "Milestone 3" },
-      { name: "Milestone 4" },
+      { name: "Acquire Materials" },
+      { name: "Start Production" },
+      { name: "Finish Production" },
+      { name: "Ship the Product" },
     ],
   };
 
@@ -70,6 +71,9 @@ export default function BidForm() {
     console.log(data);
     // Put the toast inside the API Call
     toast.success("Bid created!");
+
+    window.setTimeout(() => toast.success("Redirecting to Dashboard"), 3000);
+    window.setTimeout(() => history.push("/dashboard"), 5000);
   };
 
   useEffect(() => {
