@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { BACKEND_URL } from "../constants/constants";
+import { BACKEND_URL, profile_pics } from "../constants/constants";
 import { SHGUser, useAuth } from "../hooks/Auth";
 import axios from "axios";
 import TitleHeader from "../component/TitleHeader";
@@ -14,6 +14,11 @@ interface data {
     order_name: string;
     name_SHG: string;
     completion: string;
+
+    media: {
+      uri: string;
+      type: string;
+    }[];
   }[];
 
   completed_orders: {
@@ -21,24 +26,17 @@ interface data {
     image: string;
     order_name: string;
     name_SHG: string;
+
+    media: {
+      uri: string;
+      type: string;
+    }[];
   }[];
 
   bids: {
-    id: number;
-    image: string;
     amount: number;
     shg_id: number;
     tender_id: number;
-    order_name: string;
-    date: string;
-    bid: string;
-  }[];
-
-  payments: {
-    id: number;
-    amount: string;
-    project_name: string;
-    name_SHG: string;
   }[];
 }
 
@@ -48,75 +46,11 @@ export default function DashboardSHG() {
   let history = useHistory();
 
   const [data, setData] = useState<data>({
-    ongoing_orders: [
-      {
-        id: 1,
-        image: "https://i.imgur.com/khUO2T7.png",
-        order_name: "Order Name",
-        name_SHG: "Ram Setu SHG",
-        completion: "75%",
-      },
-      {
-        id: 3,
-        image: "https://i.imgur.com/khUO2T7.png",
-        order_name: "Order Name",
-        name_SHG: "Not Ram Setu SHG",
-        completion: "50%",
-      },
-    ],
+    ongoing_orders: [],
 
-    bids: [
-      {
-        id: 1,
-        image: "https://i.imgur.com/khUO2T7.png",
-        order_name: "Order Name",
-        amount: 6969,
-        shg_id: 2,
-        tender_id: 1,
-        date: "1st April 2021",
-        bid: "2",
-      },
-      {
-        id: 2,
-        image: "https://i.imgur.com/khUO2T7.png",
-        order_name: "Order Name",
-        amount: 6969,
-        shg_id: 2,
-        tender_id: 1,
-        date: "1st April 2021",
-        bid: "2",
-      },
-    ],
+    bids: [],
 
-    completed_orders: [
-      {
-        id: 2,
-        image: "https://i.imgur.com/khUO2T7.png",
-        order_name: "Order Name",
-        name_SHG: "Ram Setu SHG",
-      },
-      {
-        id: 4,
-        image: "https://i.imgur.com/khUO2T7.png",
-        order_name: "Order Name",
-        name_SHG: "Not Ram Setu SHG",
-      },
-    ],
-
-    payments: [
-      {
-        id: 2,
-        amount: "2000",
-        project_name: "Project Impossible",
-        name_SHG: "Ram Setu again",
-      },
-      {
-        id: 3,
-        amount: "2000",
-        project_name: "Project Impossible",
-        name_SHG: "Ram Setu again",
-      },
-    ],
+    completed_orders: [],
   });
 
   const is_sme = auth?.user && auth.user.user_type === "SME";
@@ -182,7 +116,7 @@ export default function DashboardSHG() {
         <Link to={`/order/${order.id}`} className="no_style">
           <div className="order">
             <div className="image">
-              <img src={prod_images[i % 6]} alt="" />
+              <img src={order?.media[0].uri} alt="" />
             </div>
             <div className="details">
               <h1>{order.name_SHG}</h1>
@@ -192,7 +126,7 @@ export default function DashboardSHG() {
         </Link>
       ))}
 
-      <h2> Bids </h2>
+      {/* <h2> Bids </h2>
       {data?.bids.map((bid, i) => (
         <Link to={`/bid/${bid.id}`} className="no_style">
           <div className="bid">
@@ -206,7 +140,7 @@ export default function DashboardSHG() {
             </div>
           </div>
         </Link>
-      ))}
+      ))} */}
 
       <button
         className="button primary"
@@ -222,7 +156,7 @@ export default function DashboardSHG() {
         <Link to={`/order/${order.id}`} className="no_style">
           <div className="order">
             <div className="image">
-              <img src={prod_images[i % 6]} alt="" />
+              <img src={order?.media[0].uri} alt="" />
             </div>
             <div className="details">
               <h1>{order.name_SHG}</h1>
@@ -231,7 +165,7 @@ export default function DashboardSHG() {
         </Link>
       ))}
 
-      <h2> Payments </h2>
+      {/* <h2> Payments </h2>
       {data.payments.map((payment, id) => (
         <Link to="/order/1/payment/1" className="no_style">
           <div className="payment lite">
@@ -242,9 +176,27 @@ export default function DashboardSHG() {
             </div>
           </div>
         </Link>
-      ))}
+      ))} */}
 
       <h2> Portfolio </h2>
+      <div className="order">
+        <div className="image">
+          <img src={profile_pics[0]} alt="" />
+        </div>
+        <div className="details">
+          <h1>{user_data.name_SHG}</h1>
+          <p>Production Capacity: {user_data.production_cap}</p>
+          <p>Order Size: {user_data.order_size}</p>
+        </div>
+      </div>
+      <button
+        className="button primary"
+        onClick={(e) => {
+          history.push(`/portfolio`);
+        }}
+      >
+        Show Portfolio
+      </button>
     </div>
   );
 }

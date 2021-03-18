@@ -7,10 +7,32 @@ import TitleHeader from "../component/TitleHeader";
 import { prod_images } from "../constants/constants";
 import { Link } from "react-router-dom";
 
-interface data {
-  ongoing_orders: {
+interface Tender {
+  id: number;
+  // tender_name: string;
+  tender_name: string;
+  state: string;
+  description: string;
+  media: {
+    uri: string;
+    type: string;
+  }[];
+  milestones: {
+    description: string;
+    media: {
+      uri: string;
+      type: string;
+    }[];
+  }[];
+  sme: {
     id: number;
-    image: string;
+    name: string;
+  };
+}
+
+interface Data {
+  ongoing_orders: {
+    order_id: number;
     contract: string;
     description: string;
     shg_id: number;
@@ -18,10 +40,15 @@ interface data {
     order_name: string;
     name_SHG: string;
     completion: string;
+
+    media: {
+      uri: string;
+      type: string;
+    }[];
   }[];
 
   completed_orders: {
-    id: number;
+    order_id: number;
     image: string;
     contract: string;
     description: string;
@@ -29,100 +56,23 @@ interface data {
     sme_id: number;
     order_name: string;
     name_SHG: string;
+
+    media: {
+      uri: string;
+      type: string;
+    }[];
   }[];
 
-  tenders: {
-    id: number;
-    image: string;
-    order_name: string;
-    date: string;
-    bids: string;
-  }[];
-
-  payments: {
-    id: number;
-    amount: string;
-    project_name: string;
-    name_SHG: string;
-  }[];
+  tenders: Tender[];
 }
 
 export default function DashboardSME() {
   const auth = useAuth();
   const { register, handleSubmit, errors } = useForm();
-  const [data, setData] = useState<data>({
-    ongoing_orders: [
-      {
-        id: 1,
-        image: "https://i.imgur.com/khUO2T7.png",
-        contract: "",
-        description: "string",
-        shg_id: 2,
-        sme_id: 1,
-        order_name: "Order Name",
-        name_SHG: "Ram Setu SHG",
-        completion: "75%",
-      },
-      {
-        id: 3,
-        image: "https://i.imgur.com/khUO2T7.png",
-        contract: "",
-        description: "string",
-        shg_id: 2,
-        sme_id: 1,
-        order_name: "Order Name",
-        name_SHG: "Not Ram Setu SHG",
-        completion: "50%",
-      },
-    ],
-
-    tenders: [
-      {
-        id: 1,
-        image: "https://i.imgur.com/khUO2T7.png",
-        order_name: "Order Name",
-        date: "1st April 2021",
-        bids: "2",
-      },
-    ],
-
-    completed_orders: [
-      {
-        id: 2,
-        image: "https://i.imgur.com/khUO2T7.png",
-        contract: "",
-        description: "string",
-        shg_id: 2,
-        sme_id: 1,
-        order_name: "Order Name",
-        name_SHG: "Ram Setu SHG",
-      },
-      {
-        id: 4,
-        image: "https://i.imgur.com/khUO2T7.png",
-        contract: "",
-        description: "string",
-        shg_id: 2,
-        sme_id: 1,
-        order_name: "Order Name",
-        name_SHG: "Not Ram Setu SHG",
-      },
-    ],
-
-    payments: [
-      {
-        id: 2,
-        amount: "2000",
-        project_name: "Project Impossible",
-        name_SHG: "Ram Setu again",
-      },
-      {
-        id: 3,
-        amount: "3000",
-        project_name: "Project Impossible",
-        name_SHG: "Ram Setu again",
-      },
-    ],
+  const [data, setData] = useState<Data>({
+    ongoing_orders: [],
+    tenders: [],
+    completed_orders: [],
   });
 
   const is_sme = auth?.user && auth.user.user_type === "SME";
@@ -143,10 +93,7 @@ export default function DashboardSME() {
         },
       })
       .then((res) => {
-        console.log(
-          // res.data.filter((order: any) => order.state === "created"),
-          "orders"
-        );
+        console.log(res.data, "orders");
         setData({
           ...data,
           ongoing_orders: res.data.filter(
@@ -174,7 +121,7 @@ export default function DashboardSME() {
         },
       })
       .then((res) => {
-        // console.log(res.data, "tenders");
+        console.log(res.data, "tenders");
         setData({ ...data, tenders: res.data });
       })
       .catch((err) => {
@@ -187,10 +134,10 @@ export default function DashboardSME() {
       <TitleHeader title="Dashboard" user_type="SME" />
       <h2>Ongoing Orders</h2>
       {data?.ongoing_orders.map((order, i) => (
-        <Link to={`/order/${order.id}`} className="no_style">
+        <Link to={`/order/${order.order_id}`} className="no_style">
           <div className="order">
             <div className="image">
-              <img src={prod_images[i % 6]} alt="" />
+              <img src={order.media[0].uri} alt="" />
             </div>
             <div className="details">
               <h1>{order.name_SHG}</h1>
@@ -205,12 +152,12 @@ export default function DashboardSME() {
         <Link to={`/tender/${tender.id}`} className="no_style">
           <div className="tender">
             <div className="image">
-              <img src={prod_images[i % 6]} alt="" />
+              <img src={tender.media[0].uri} alt="" />
             </div>
             <div className="details">
-              <h1>{tender.order_name}</h1>
-              <p> {tender.date} </p>
-              <p> {tender.bids} BIDS RECEIVED </p>
+              <h1>{tender.tender_name}</h1>
+              <p> {tender.description} </p>
+              {/* <p> {tender.bids} BIDS RECEIVED </p> */}
             </div>
           </div>
         </Link>
@@ -222,10 +169,10 @@ export default function DashboardSME() {
 
       <h2>Completed Orders</h2>
       {data?.completed_orders.map((order, i) => (
-        <Link to={`/order/${order.id}`} className="no_style">
+        <Link to={`/order/${order.order_id}`} className="no_style">
           <div className="order">
             <div className="image">
-              <img src={prod_images[i % 6]} alt="" />
+              <img src={order.media[0].uri} alt="" />
             </div>
             <div className="details">
               <h1>{order.name_SHG}</h1>
@@ -234,7 +181,7 @@ export default function DashboardSME() {
         </Link>
       ))}
 
-      <h2> Payments </h2>
+      {/* <h2> Payments </h2>
       {data?.payments.map((payment, id) => (
         <Link to="/order/1/payment/1" className="no_style">
           <div className="payment lite">
@@ -245,7 +192,7 @@ export default function DashboardSME() {
             </div>
           </div>
         </Link>
-      ))}
+      ))} */}
     </div>
   );
 }

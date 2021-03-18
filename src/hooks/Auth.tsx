@@ -39,6 +39,7 @@ export type loginForm = {
 export class SHGUser {
   shg_id: number;
   access_token: string;
+  profile_image_uri: string;
 
   name: string;
   phone: string;
@@ -55,6 +56,7 @@ export class SHGUser {
   constructor(
     shg_id: number,
     access_token: string,
+    profile_image_uri: string,
 
     name: string,
     phone: string,
@@ -70,6 +72,7 @@ export class SHGUser {
   ) {
     this.shg_id = shg_id;
     this.access_token = access_token;
+    this.profile_image_uri = profile_image_uri;
 
     this.name = name;
     this.phone = phone;
@@ -88,6 +91,7 @@ export class SHGUser {
 export class SMEUser {
   sme_id: number;
   access_token: string;
+  profile_image_uri: string;
 
   name: string;
   phone: string;
@@ -103,6 +107,7 @@ export class SMEUser {
   constructor(
     sme_id: number,
     access_token: string,
+    profile_image_uri: string,
 
     name: string,
     phone: string,
@@ -117,6 +122,7 @@ export class SMEUser {
   ) {
     this.sme_id = sme_id;
     this.access_token = access_token;
+    this.profile_image_uri = profile_image_uri;
 
     this.name = name;
     this.phone = phone;
