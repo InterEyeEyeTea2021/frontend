@@ -8,9 +8,9 @@ import { useHistory, useParams } from "react-router";
 import toast from "react-hot-toast";
 import { authContext, SHGUser, useAuth } from "../hooks/Auth";
 
-interface tender {
+interface Tender {
   id: number;
-  // tender_name: string;
+  name: string;
   state: string;
   description: string;
   media: {
@@ -27,15 +27,22 @@ interface tender {
   sme: {
     id: number;
     name: string;
+    profile_image_uri: string;
+    phone: string;
   };
+  bids: {
+    amount: string;
+    shg_id: number;
+    tender_id: number;
+  }[];
 }
 
 export default function BidForm() {
   const { register, handleSubmit, errors } = useForm();
-  const [tender, setTender] = useState<tender>();
-  const history = useHistory();
-  let { id }: { id: string } = useParams();
+  const [tender, setTender] = useState<Tender>();
 
+  let history = useHistory();
+  let { id }: { id: string } = useParams();
   const auth = useAuth();
   let shg_id = (auth?.user as SHGUser).shg_id;
 
@@ -108,9 +115,12 @@ export default function BidForm() {
         <img src={tender?.media[0].uri} alt="" />
       </div>
       <div className="sme-details call_box">
+        <div className="image">
+          <img src={tender?.sme.profile_image_uri} alt="" />
+        </div>
         <div className="details">
           <h1>{tender?.sme.name}</h1>
-          <p>XXXX XX XXXX</p>
+          <p>{tender?.sme.phone}</p>
         </div>
         <div className="call">
           <Icon.PhoneCall></Icon.PhoneCall>
@@ -120,27 +130,28 @@ export default function BidForm() {
       <h2>Tender Details</h2>
       <div className="detail">
         <div className="label">Tender Name</div>
-        <div className="value">{data.tender_name}</div>
+        <div className="value">{tender?.name}</div>
       </div>
-      <div className="detail">
+
+      {/* <div className="detail">
         <div className="label">Industry Type</div>
         <div className="value">{data.industry_type}</div>
-      </div>
+      </div> */}
 
       <div className="detail">
         <div className="label">Description</div>
         <div className="value">{tender?.description}</div>
       </div>
 
-      <div className="detail">
+      {/* <div className="detail">
         <div className="label">Skills Required</div>
         <div className="value">{data.skills_req}</div>
-      </div>
+      </div> */}
 
-      <div className="detail">
+      {/* <div className="detail">
         <div className="label">Location</div>
         <div className="value">{data.location}</div>
-      </div>
+      </div> */}
 
       <hr />
 
