@@ -28,53 +28,54 @@ export default function TenderForm() {
         )
         .then((resp) => {
           photograph = resp.data.data.image.url;
-          // Post the image link to the backend
+
+          const request_data = {
+            ...data,
+            sme_id: (auth?.user as SMEUser).sme_id,
+            milestones: [
+              {
+                description: data.milestone0,
+                media: [],
+              },
+              {
+                description: data.milestone1,
+                media: [],
+              },
+              {
+                description: data.milestone2,
+                media: [],
+              },
+              {
+                description: data.milestone3,
+                media: [],
+              },
+            ],
+            media: [
+              {
+                uri: photograph,
+                type: "nothing",
+              },
+            ],
+          };
+
+          axios
+            .post(
+              `${BACKEND_URL}/tender/create`,
+              request_data,
+              auth?.authHeader()
+            )
+            .then((res) => {
+              console.log(res.data, "tender creation");
+            })
+            .catch((err) => {
+              console.log(err);
+            });
           console.log(photograph);
         })
         .catch((e) => {
           console.log(e);
         });
-    } else {
-      // Post to backend without image?
     }
-
-    const request_data = {
-      ...data,
-      sme_id: (auth?.user as SMEUser).sme_id,
-      milestones: [
-        {
-          description: data.milestone0,
-          media: [],
-        },
-        {
-          description: data.milestone1,
-          media: [],
-        },
-        {
-          description: data.milestone2,
-          media: [],
-        },
-        {
-          description: data.milestone3,
-          media: [],
-        },
-      ],
-      media: [
-        {
-          uri: "lol",
-          type: "nothing",
-        },
-      ],
-    };
-
-    axios
-      .post(`${BACKEND_URL}/tender/create`, request_data, auth?.authHeader())
-      .then((res) => {
-        console.log(res.data, "tender creation");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
   };
 
   const milestones = [
@@ -154,7 +155,7 @@ export default function TenderForm() {
           accept="image/png, image/jpeg"
           id="media"
           name="media"
-          ref={register}
+          ref={register({ required: true })}
           // onChange={}
         />
 
