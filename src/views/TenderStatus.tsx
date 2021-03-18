@@ -62,10 +62,10 @@ export default function TenderStatus() {
       },
     ],
     milestones: [
-      { name: "Milestone 1" },
-      { name: "Milestone 2" },
-      { name: "Milestone 3" },
-      { name: "Milestone 4" },
+      { name: "Acquire Materials" },
+      { name: "Start Production" },
+      { name: "Finish Production" },
+      { name: "Ship the Product" },
     ],
   };
 
