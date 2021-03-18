@@ -99,9 +99,6 @@ export default function DashboardSME() {
           ongoing_orders: res.data.filter(
             (order: any) => order.state === "created"
           ),
-        });
-        setData({
-          ...data,
           completed_orders: res.data.filter(
             (order: any) => order.state == "completed"
           ),
