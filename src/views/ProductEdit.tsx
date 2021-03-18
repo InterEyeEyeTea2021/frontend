@@ -40,7 +40,14 @@ export default function ProductEdit() {
           // Post the image link to the backend
           console.log(photograph);
           axios
-            .post(`${BACKEND_URL}/product/`, data, auth?.authHeader())
+            .post(
+              `${BACKEND_URL}/product/`,
+              {
+                ...data,
+                image_uri: photograph,
+              },
+              auth?.authHeader()
+            )
             .then((res) => {
               console.log(res.data, "product created");
             })

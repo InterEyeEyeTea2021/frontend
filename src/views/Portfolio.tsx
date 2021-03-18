@@ -89,11 +89,6 @@ export default function Portfolio() {
         <div className="value">{user_data?.order_size}</div>
       </div>
 
-      {/* <div className="detail">
-        <div className="label">Location</div>
-        <div className="value">{data.location}</div>
-      </div> */}
-
       <button
         className="button primary"
         onClick={(e) => {
@@ -110,7 +105,7 @@ export default function Portfolio() {
         {products.map((p, i) => (
           <Link to={`/product/${p.product_id}`} className="no_style">
             <div className="card product">
-              <img src={prod_images[i % 6]} alt="" />
+              <img src={p.image_uri} alt="" />
               <div>
                 <h1>{p.name}</h1>
                 <p>{p.description}</p>
