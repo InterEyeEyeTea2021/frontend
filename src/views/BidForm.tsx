@@ -5,6 +5,7 @@ import TitleHeader from "../component/TitleHeader";
 import axios from "axios";
 import { BACKEND_URL } from "../constants/constants";
 import { useParams } from "react-router";
+import toast from "react-hot-toast";
 
 interface tender {
   id: number;
@@ -67,6 +68,8 @@ export default function BidForm() {
     paymentadvanced: string;
   }) => {
     console.log(data);
+    // Put the toast inside the API Call
+    toast.success("Bid created!");
   };
 
   useEffect(() => {

@@ -7,6 +7,7 @@ import { SHGUser, SMEUser, useAuth } from "../hooks/Auth";
 import axios from "axios";
 import { BACKEND_URL } from "../constants/constants";
 import Modal from "react-modal";
+import toast from "react-hot-toast";
 
 interface OrderData {
   contract: string;
@@ -57,23 +58,24 @@ export default function OrderStatus() {
   }, []);
 
   const closeCompleteModal = () => {
-    axios
-      .get(`${BACKEND_URL}/order/completeOrder?id=${orderData?.order_id}`)
-      .then(() => {
-        setConfirmCompleteOpen(false);
-      });
+    setConfirmCompleteOpen(false);
   };
 
   const completeOrder = (e: React.MouseEvent) => {
-    console.log("ORDER_COMPLETE");
-    let newMilestones = milestones.map((m) => {
-      return {
-        ...m,
-        status: true,
-      };
-    });
-    setMilestones(newMilestones);
-    setConfirmCompleteOpen(false);
+    axios
+      .get(`${BACKEND_URL}/order/completeOrder?id=${orderData?.order_id}`)
+      .then(() => {
+        let newMilestones = milestones.map((m) => {
+          return {
+            ...m,
+            status: true,
+          };
+        });
+        toast.success("Order Completed Successfully!");
+        setMilestones(newMilestones);
+        setConfirmCompleteOpen(false);
+      })
+      .catch((e) => console.log(e));
   };
 
   const data = {
@@ -115,6 +117,7 @@ export default function OrderStatus() {
   ]);
 
   const updateMilestone = (id: number) => {
+    let m = milestones.filter((m) => m.id === id)[0];
     let newMilestones = milestones.map((m) => {
       if (m.id == id) {
         return {
@@ -133,6 +136,17 @@ export default function OrderStatus() {
     if (completed === milestones.length) {
       setConfirmCompleteOpen(true);
     } else {
+      if (m.status) {
+        toast((t) => (
+          <div className="toast_with_icon">
+            <Icon.Info></Icon.Info>
+            {m.name + " marded as todo!"}
+          </div>
+        ));
+      } else {
+        toast.success(m.name + " marded as complete!");
+      }
+      // history.push("/dashboard");
       setMilestones(newMilestones);
     }
   };

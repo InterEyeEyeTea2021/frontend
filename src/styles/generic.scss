@@ -254,6 +254,28 @@ html {
     flex-wrap: wrap;
     justify-content: space-around;
   }
+
+  .user_panel {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .name {
+      // margin-left: 1rem;
+      flex-grow: 1;
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+  }
+}
+
+.toast_with_icon {
+  display: flex;
+  align-items: center;
+  svg {
+    margin-right: 0.5rem;
+    margin-left: -0.5rem;
+    stroke: #ffb937;
+  }
 }
 
 button,

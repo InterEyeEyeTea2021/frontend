@@ -1,6 +1,7 @@
 import { AxiosError } from "axios";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { useHistory } from "react-router-dom";
 import { useAuth, loginForm } from "../hooks/Auth";
 
@@ -23,6 +24,8 @@ function Login() {
       () => {
         setIsLoading(false);
         // console.log("login succex");
+        toast.success("Welcome!");
+
         history.push("/dashboard");
       },
       (e: AxiosError) => {

@@ -33,6 +33,7 @@ import SearchSME from "./views/SearchSME";
 import SearchSHG from "./views/SearchSHG";
 import ProfileSME from "./views/ProfileSME";
 import ScrollToTop from "./component/ScrollToTop";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   let auth = useAuth();
@@ -40,6 +41,15 @@ function App() {
   return (
     <Router>
       <ScrollToTop />
+      <Toaster
+        position="bottom-center"
+        reverseOrder={false}
+        toastOptions={{
+          style: {
+            marginBottom: "100px",
+          },
+        }}
+      />
       <div className="App">
         <Navbar />
         <Switch>
