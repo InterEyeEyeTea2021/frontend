@@ -46,14 +46,16 @@ export default function Portfolio() {
 
   return (
     <div className="main_content">
-      <TitleHeader
-        title="Portfolio"
-        user_type={auth?.user?.user_type as string}
-      />
-
-      {!is_sme && (
+      <div className="full_image">
+        <img
+          src="http://tinygraphs.com/isogrids/random?theme=seascape&numcolors=4"
+          alt=""
+        />
+      </div>
+      <div className="user_panel">
+        <div className="name">{user_data.name}</div>
         <button
-          className="button"
+          className="button small default"
           onClick={(e) => {
             auth?.signout(() => {
               history.push("/");
@@ -62,8 +64,13 @@ export default function Portfolio() {
         >
           Signout
         </button>
-      )}
+      </div>
 
+      <hr />
+      <TitleHeader
+        title="Portfolio"
+        user_type={auth?.user?.user_type as string}
+      />
       <div className="detail">
         <div className="label">Name of SHG</div>
         <div className="value">{user_data?.name_SHG}</div>
