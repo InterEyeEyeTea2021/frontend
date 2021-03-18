@@ -6,6 +6,7 @@ import axios from "axios";
 import { BACKEND_URL } from "../constants/constants";
 import { useHistory, useParams } from "react-router";
 import toast from "react-hot-toast";
+import { authContext, SHGUser, useAuth } from "../hooks/Auth";
 
 interface tender {
   id: number;
@@ -34,6 +35,9 @@ export default function BidForm() {
   const [tender, setTender] = useState<tender>();
   const history = useHistory();
   let { id }: { id: string } = useParams();
+
+  const auth = useAuth();
+  let shg_id = (auth?.user as SHGUser).shg_id;
 
   const milestones = [
     { name: "Milestone 1" },
@@ -70,10 +74,22 @@ export default function BidForm() {
   }) => {
     console.log(data);
     // Put the toast inside the API Call
-    toast.success("Bid created!");
+    axios
+      .post("/bid/create", {
+        shg_id: shg_id,
+        amount: data.paymentcompletion,
+        tender_id: id,
+      })
+      .then((res) => {
+        console.log(res.data);
+        toast.success("Bid created!");
 
-    window.setTimeout(() => toast.success("Redirecting to Dashboard"), 3000);
-    window.setTimeout(() => history.push("/dashboard"), 5000);
+        window.setTimeout(
+          () => toast.success("Redirecting to Dashboard"),
+          3000
+        );
+        window.setTimeout(() => history.push("/dashboard"), 5000);
+      });
   };
 
   useEffect(() => {
