@@ -5,6 +5,7 @@ import { useAuth } from "../../hooks/Auth";
 
 interface Props {
   nameSHG: string;
+  media: string;
   productionCap: string;
   contact: string;
   type: string;
@@ -17,6 +18,7 @@ interface Props {
 
 export default function StepTwo({
   nameSHG,
+  media,
   productionCap,
   orderSize,
   contact,
@@ -71,6 +73,14 @@ export default function StepTwo({
           ))}
         </select>
       }
+
+      <label htmlFor="media"> Upload Profile Image </label>
+      <input
+        type="file"
+        accept="image/png, image/jpeg"
+        name="media"
+        ref={register({ required: false })}
+      />
 
       <div className="signup-btns">
         <input type="submit" value="Next" />
