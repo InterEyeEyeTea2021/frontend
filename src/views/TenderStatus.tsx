@@ -2,12 +2,13 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router";
+import { isConstructSignatureDeclaration } from "typescript";
 import TitleHeader from "../component/TitleHeader";
 import { BACKEND_URL, profile_pics } from "../constants/constants";
 
 interface Tender {
   id: number;
-  // tender_name: string;
+  name: string;
   state: string;
   description: string;
   media: {
@@ -24,6 +25,8 @@ interface Tender {
   sme: {
     id: number;
     name: string;
+    profile_image_uri: string;
+    phone: string;
   };
 }
 
@@ -34,7 +37,7 @@ interface Bid {
 }
 
 export default function TenderStatus() {
-  const [tender, setTender] = useState<Tender>();
+  const [tender, setTender] = useState<any>();
   const [bids, setBids] = useState<Bid[]>([]);
 
   let { id }: { id: string } = useParams();
@@ -74,7 +77,7 @@ export default function TenderStatus() {
         },
       })
       .then((res) => {
-        setTender(res.data);
+        setTender(res.data.data);
       })
       .catch((err) => {
         console.log(err);
@@ -98,7 +101,9 @@ export default function TenderStatus() {
     <div className="main_content tender_status">
       <TitleHeader title="Tender Status" user_type="SME" />
 
-      <h2>{data.tender_name}</h2>
+      <div className="full_image">
+        <img src={tender?.media && tender?.media[0].uri} alt="" />
+      </div>
 
       <div className="detail">
         <div className="label">Industry Type</div>
@@ -115,9 +120,9 @@ export default function TenderStatus() {
         <div className="value">{data.skills_req}</div>
       </div>
 
-      <button className="button" onClick={() => history.push("/search")}>
+      {/* <button className="button" onClick={() => history.push("/search")}>
         Invite SHGs
-      </button>
+      </button> */}
 
       <hr />
 

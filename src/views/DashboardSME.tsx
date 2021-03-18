@@ -79,7 +79,7 @@ export default function DashboardSME() {
   let user_data: any;
   if (is_sme) {
     user_data = auth?.user as SMEUser;
-    console.log(auth?.user);
+    // console.log(auth?.user);
   }
 
   useEffect(() => {
@@ -99,9 +99,6 @@ export default function DashboardSME() {
           ongoing_orders: res.data.filter(
             (order: any) => order.state === "created"
           ),
-        });
-        setData({
-          ...data,
           completed_orders: res.data.filter(
             (order: any) => order.state == "completed"
           ),
