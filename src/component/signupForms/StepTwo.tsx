@@ -1,4 +1,4 @@
-import { AxiosResponse } from "axios";
+import axios, { AxiosResponse } from "axios";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useAuth } from "../../hooks/Auth";
@@ -32,48 +32,34 @@ export default function StepTwo({
   const [message, setMessage] = useState("");
 
   if (currentStep != 2) return null;
-  // const onSubmit = (data: registerForm) => {
-  //   setIsLoading(true);
-  //   // console.log("Submitted Form Data: ", data);
-
-  //   auth?.register(data, (response: AxiosResponse) => {
-  //     // console.log("registration succex");
-  //     setIsLoading(false);
-
-  //     if (response === undefined || response.status === 500)
-  //       setMessage('Server is down, please try again later');
-  //     else if (response.status === 200) setIsRegistered(true);
-  //     else setMessage(response.data.message);
-  //   });
-  // };
 
   return (
     <form onSubmit={handleSubmit(handleNextSubmit)}>
       <span className="label"> Name of SHG </span>
       <input
         name="name_SHG"
-        defaultValue={nameSHG}
+        placeholder={nameSHG}
         ref={register({ required: false })}
       />
 
       <span className="label"> Prodcution Capacity </span>
       <input
         name="production_cap"
-        defaultValue={productionCap}
+        placeholder={productionCap}
         ref={register({ required: false })}
       />
 
       <span className="label"> Order Size </span>
       <input
         name="order_size"
-        defaultValue={orderSize}
+        placeholder={orderSize}
         ref={register({ required: false })}
       />
 
       <span className="label"> Contact Number (WhatsApp) </span>
       <input
         name="WAcontact"
-        defaultValue={contact}
+        placeholder={contact}
         ref={register({ required: false })}
       />
 

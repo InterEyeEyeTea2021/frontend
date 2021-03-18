@@ -58,14 +58,13 @@ function Register() {
         // console.log("registration succex");
         setIsLoading(false);
 
-        toast.success("Successfully registered, Please login");
+        if (response.status === 200) {
+          toast.success("Successfully registered, Please login");
 
-        history.push("/login");
-
-        if (response === undefined || response.status === 500)
-          setMessage("Server is down, please try again later");
-        else if (response.status === 200) setIsRegistered(true);
-        else setMessage(response.data.message);
+          history.push("/login");
+        } else {
+          setMessage("An error occured, try again later.");
+        }
       });
     } else {
       const {
