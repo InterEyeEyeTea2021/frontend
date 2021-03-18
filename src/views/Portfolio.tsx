@@ -48,7 +48,10 @@ export default function Portfolio() {
     <div className="main_content">
       <div className="full_image">
         <img
-          src="http://tinygraphs.com/isogrids/random?theme=seascape&numcolors=4"
+          src={
+            auth?.user?.profile_image_uri ??
+            `http://tinygraphs.com/isogrids/${auth?.user?.name}?theme=seascape&numcolors=4`
+          }
           alt=""
         />
       </div>

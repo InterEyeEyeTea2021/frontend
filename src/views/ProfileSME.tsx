@@ -11,12 +11,13 @@ export default function ProfileSME() {
   return (
     <div className="main_content">
       <TitleHeader title="Profile" user_type="SME" />
-      <div className="full_image">
-        <img
-          src="http://tinygraphs.com/isogrids/random?theme=seascape&numcolors=4"
-          alt=""
-        />
-      </div>
+      <img
+        src={
+          auth?.user?.profile_image_uri ??
+          `http://tinygraphs.com/isogrids/${auth?.user?.name}?theme=seascape&numcolors=4`
+        }
+        alt=""
+      />
       <div className="user_panel">
         <div className="name">{auth?.user?.name}</div>
         <button

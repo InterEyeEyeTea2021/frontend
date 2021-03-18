@@ -1,4 +1,4 @@
-import { AxiosResponse } from "axios";
+import axios, { AxiosResponse } from "axios";
 import React, { useState } from "react";
 import { useAuth, registerForm_SHG, registerForm_SME } from "../hooks/Auth";
 import StepOne from "../component/signupForms/StepOne";
@@ -10,6 +10,7 @@ import Step2 from "../component/signupForms/Step2";
 import Step3 from "../component/signupForms/Step3";
 import { useHistory } from "react-router";
 import toast from "react-hot-toast";
+import { API_IMGBB } from "../constants/constants";
 
 function Register() {
   let auth = useAuth();
@@ -25,6 +26,8 @@ function Register() {
     name: "Name",
     username: "Username",
     password: "Password",
+    profile_image_uri: "",
+    media: "",
     phone: "+91 XXXX XX XXXX",
     WAcontact: "+91 XXXX XX XXXX", // for WhatsApp
     user_type: "SHG",
@@ -49,6 +52,27 @@ function Register() {
 
   const onSubmit = () => {
     setIsLoading(true);
+
+    if (state.media.length > 0) {
+      const e = state.media[0];
+      const d = new FormData();
+      let photograph;
+      console.log(e);
+      d.append("image", e);
+      axios
+        .post("https://api.imgbb.com/1/upload?key=" + API_IMGBB, d)
+        .then((resp) => {
+          photograph = resp.data.data.image.url;
+          console.log(photograph);
+
+          state.profile_image_uri = photograph;
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    } else {
+      state.profile_image_uri = `http://tinygraphs.com/isogrids/${state.name}?theme=seascape&numcolors=4`;
+    }
 
     if (state.user_type === "SHG") {
       const { address, product_sold, ...data } = state;
@@ -166,6 +190,7 @@ function Register() {
           <>
             <StepTwo
               nameSHG={state.name_SHG}
+              media={state.media}
               productionCap={state.production_cap}
               orderSize={state.order_size}
               contact={state.WAcontact}
@@ -191,6 +216,7 @@ function Register() {
           <>
             <Step2
               address={state.address}
+              media={state.media}
               productSold={state.product_sold}
               contact={state.WAcontact}
               industryType={state.industry_type}

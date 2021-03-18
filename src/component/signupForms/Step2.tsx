@@ -5,6 +5,7 @@ import { useAuth } from "../../hooks/Auth";
 
 interface Props {
   address: string;
+  media: string;
   productSold: string;
   contact: string;
   industryType: string;
@@ -16,6 +17,7 @@ interface Props {
 
 export default function Step2({
   address,
+  media,
   productSold,
   contact,
   industryType,
@@ -30,20 +32,6 @@ export default function Step2({
   const [message, setMessage] = useState("");
 
   if (currentStep != 2) return null;
-  // const onSubmit = (data: registerForm) => {
-  //   setIsLoading(true);
-  //   // console.log("Submitted Form Data: ", data);
-
-  //   auth?.register(data, (response: AxiosResponse) => {
-  //     // console.log("registration succex");
-  //     setIsLoading(false);
-
-  //     if (response === undefined || response.status === 500)
-  //       setMessage('Server is down, please try again later');
-  //     else if (response.status === 200) setIsRegistered(true);
-  //     else setMessage(response.data.message);
-  //   });
-  // };
 
   return (
     <form onSubmit={handleSubmit(handleNextSubmit)}>
@@ -76,6 +64,14 @@ export default function Step2({
           ))}
         </select>
       }
+
+      <label htmlFor="media"> Upload Profile Image </label>
+      <input
+        type="file"
+        accept="image/png, image/jpeg"
+        name="media"
+        ref={register({ required: false })}
+      />
 
       <div className="signup-btns">
         <input type="submit" value="Next" />
