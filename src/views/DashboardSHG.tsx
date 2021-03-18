@@ -32,9 +32,32 @@ interface data {
       type: string;
     }[];
   }[];
+}
 
+interface Tender {
+  id: number;
+  name: string;
+  state: string;
+  description: string;
+  media: {
+    uri: string;
+    type: string;
+  }[];
+  milestones: {
+    description: string;
+    media: {
+      uri: string;
+      type: string;
+    }[];
+  }[];
+  sme: {
+    id: number;
+    name: string;
+    profile_image_uri: string;
+    phone: string;
+  };
   bids: {
-    amount: number;
+    amount: string;
     shg_id: number;
     tender_id: number;
   }[];
@@ -43,15 +66,13 @@ interface data {
 export default function DashboardSHG() {
   const auth = useAuth();
   const { register, handleSubmit, errors } = useForm();
-  let history = useHistory();
-
+  const [tenders, setTenders] = useState<Tender[]>([]);
   const [data, setData] = useState<data>({
     ongoing_orders: [],
-
-    bids: [],
-
     completed_orders: [],
   });
+
+  let history = useHistory();
 
   const is_sme = auth?.user && auth.user.user_type === "SME";
   let user_data: any;
@@ -90,17 +111,21 @@ export default function DashboardSHG() {
       });
 
     axios
-      .get(`${BACKEND_URL}/bid/shg`, {
+      .get(`${BACKEND_URL}/tender/all`, {
         headers: {
           Authorization: `Bearer ${auth?.user?.access_token}`,
         },
-        params: {
-          id: user_data.shg_id,
-        },
       })
       .then((res) => {
-        console.log(res.data, "bids");
-        // setData({ ...data, bids: res.data });
+        for (var t of res.data) {
+          for (var bid of t.bids) {
+            if (bid.shg_id == user_data.shg_id) {
+              setTenders((prev) => [...prev, t]);
+              console.log(t);
+              break;
+            }
+          }
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -126,21 +151,20 @@ export default function DashboardSHG() {
         </Link>
       ))}
 
-      {/* <h2> Bids </h2>
-      {data?.bids.map((bid, i) => (
-        <Link to={`/bid/${bid.id}`} className="no_style">
+      <h2> Bids </h2>
+      {tenders.map((tender, i) => (
+        <Link to={`/bid/${tender.id}`} className="no_style">
           <div className="bid">
             <div className="image">
-              <img src={prod_images[i % 6]} alt="" />
+              <img src={tender.sme.profile_image_uri} alt="" />
             </div>
             <div className="details">
-              <h1>{bid.order_name}</h1>
-              <p> {bid.date} </p>
-              <p> {bid.bid} BIDS RECEIVED </p>
+              <h1>{tender.name}</h1>
+              <p> {tender.bids.length} BIDS RECEIVED </p>
             </div>
           </div>
         </Link>
-      ))} */}
+      ))}
 
       <button
         className="button primary"
