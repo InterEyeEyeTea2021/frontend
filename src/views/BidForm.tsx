@@ -68,7 +68,7 @@ export default function BidForm() {
     console.log(data);
     // Put the toast inside the API Call
     axios
-      .post("/bid/create", {
+      .post(`${BACKEND_URL}/bid/create`, {
         shg_id: shg_id,
         amount: data.paymentcompletion,
         tender_id: id,
