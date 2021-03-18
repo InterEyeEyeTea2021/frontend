@@ -254,6 +254,18 @@ html {
     flex-wrap: wrap;
     justify-content: space-around;
   }
+
+  .user_panel {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .name {
+      // margin-left: 1rem;
+      flex-grow: 1;
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+  }
 }
 
 .toast_with_icon {
