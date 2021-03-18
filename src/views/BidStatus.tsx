@@ -5,12 +5,6 @@ import TitleHeader from "../component/TitleHeader";
 
 export default function BidStatus() {
   const { register, handleSubmit, errors } = useForm();
-  const milestones = [
-    { name: "Milestone 1" },
-    { name: "Milestone 2" },
-    { name: "Milestone 3" },
-    { name: "Milestone 4" },
-  ];
 
   const data = {
     tender_name: "Tender Name",
@@ -23,10 +17,10 @@ export default function BidStatus() {
       { pay_name: "Advanced", value: null, suggested_value: null },
     ],
     milestones: [
-      { name: "Milestone 1" },
-      { name: "Milestone 2" },
-      { name: "Milestone 3" },
-      { name: "Milestone 4" },
+      { name: "Acquire Materials" },
+      { name: "Start Production" },
+      { name: "Finish Production" },
+      { name: "Ship the Product" },
     ],
   };
 
