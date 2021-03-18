@@ -4,8 +4,9 @@ import * as Icon from "react-feather";
 import TitleHeader from "../component/TitleHeader";
 import axios from "axios";
 import { BACKEND_URL } from "../constants/constants";
-import { useParams } from "react-router";
+import { useHistory, useParams } from "react-router";
 import toast from "react-hot-toast";
+import { authContext, SHGUser, useAuth } from "../hooks/Auth";
 
 interface tender {
   id: number;
@@ -32,14 +33,11 @@ interface tender {
 export default function BidForm() {
   const { register, handleSubmit, errors } = useForm();
   const [tender, setTender] = useState<tender>();
+  const history = useHistory();
   let { id }: { id: string } = useParams();
 
-  const milestones = [
-    { name: "Milestone 1" },
-    { name: "Milestone 2" },
-    { name: "Milestone 3" },
-    { name: "Milestone 4" },
-  ];
+  const auth = useAuth();
+  let shg_id = (auth?.user as SHGUser).shg_id;
 
   const data = {
     tender_name: "Tender Name",
@@ -56,10 +54,10 @@ export default function BidForm() {
       { keyname: "advanced", pay_name: "Advanced", suggested_value: null },
     ],
     milestones: [
-      { name: "Milestone 1" },
-      { name: "Milestone 2" },
-      { name: "Milestone 3" },
-      { name: "Milestone 4" },
+      { name: "Acquire Materials" },
+      { name: "Start Production" },
+      { name: "Finish Production" },
+      { name: "Ship the Product" },
     ],
   };
 
@@ -69,7 +67,22 @@ export default function BidForm() {
   }) => {
     console.log(data);
     // Put the toast inside the API Call
-    toast.success("Bid created!");
+    axios
+      .post(`${BACKEND_URL}/bid/create`, {
+        shg_id: shg_id,
+        amount: data.paymentcompletion,
+        tender_id: id,
+      })
+      .then((res) => {
+        console.log(res.data);
+        toast.success("Bid created!");
+
+        window.setTimeout(
+          () => toast.success("Redirecting to Dashboard"),
+          3000
+        );
+        window.setTimeout(() => history.push("/dashboard"), 5000);
+      });
   };
 
   useEffect(() => {
@@ -134,10 +147,10 @@ export default function BidForm() {
       <h2>Milestones</h2>
 
       <div className="milestones">
-        {tender?.milestones.map((m, index) => (
+        {data.milestones.map((m, index) => (
           <div className="milestone">
             <div className="index">{index + 1}.</div>
-            <div className="name">{m.description}</div>
+            <div className="name">{m.name}</div>
             {/* <div className="check">check</div> */}
           </div>
         ))}
