@@ -53,7 +53,7 @@ export default function TenderForm() {
             media: [
               {
                 uri: photograph,
-                type: "nothing",
+                type: "image",
               },
             ],
           };

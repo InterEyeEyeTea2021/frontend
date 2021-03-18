@@ -88,8 +88,10 @@ export default function BidForm() {
   return (
     <div className="main_content">
       <TitleHeader title="Create Bid" user_type="SHG" />
+      <div className="full_image">
+        <img src={tender?.media[0].uri} alt="" />
+      </div>
       <div className="sme-details call_box">
-        <img src="https://i.imgur.com/khUO2T7.png" alt="" />
         <div className="details">
           <h1>{tender?.sme.name}</h1>
           <p>XXXX XX XXXX</p>
