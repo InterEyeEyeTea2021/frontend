@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useParams } from "react-router";
 import TitleHeader from "../component/TitleHeader";
-import { BACKEND_URL } from "../constants/constants";
+import { API_IMGBB, BACKEND_URL } from "../constants/constants";
 import { useAuth } from "../hooks/Auth";
 import BidForm from "./BidForm";
 
@@ -22,15 +22,38 @@ export default function ProductEdit() {
 
   const onSubmit = (data: any) => {
     // setIsLoading(true);
-    axios
-      .post(`${BACKEND_URL}/product/`, data, auth?.authHeader())
-      .then((res) => {
-        console.log(res.data, "product created");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
     console.log("Submitted Form Data: ", data);
+
+    if (data.media.length > 0) {
+      const e = data.media[0];
+      const d = new FormData();
+      let photograph;
+      console.log(e);
+      d.append("image", e);
+      axios
+        .post(
+          "https://api.imgbb.com/1/upload?expiration=600&key=" + API_IMGBB,
+          d
+        )
+        .then((resp) => {
+          photograph = resp.data.data.image.url;
+          // Post the image link to the backend
+          console.log(photograph);
+          axios
+            .post(`${BACKEND_URL}/product/`, data, auth?.authHeader())
+            .then((res) => {
+              console.log(res.data, "product created");
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    } else {
+      // Post to backend without image?
+    }
   };
 
   return (
@@ -67,16 +90,14 @@ export default function ProductEdit() {
           id="media"
           // onChange={}
         /> */}
-
-        <label htmlFor="description">Image Link</label>
+        <label htmlFor="media">Attach Media</label>
         <input
-          name="image_uri"
-          id="image_uri"
-          placeholder="Image Link"
-          defaultValue={data.image_uri}
-          ref={register({
-            required: true,
-          })}
+          type="file"
+          accept="image/png, image/jpeg"
+          id="media"
+          name="media"
+          ref={register}
+          // onChange={}
         />
 
         <h2>Order Parameters</h2>
