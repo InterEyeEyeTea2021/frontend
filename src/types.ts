@@ -23,6 +23,7 @@ export interface Tender {
 }
 
 export interface Bid {
+  id: number;
   amount: number;
   shg_id: number;
   tender_id: number;

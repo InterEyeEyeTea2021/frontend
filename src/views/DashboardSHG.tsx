@@ -156,19 +156,20 @@ export default function DashboardSHG() {
       )}
 
       <h2> Bids </h2>
-      {tenders.map((tender, i) => (
-        <Link to={`/bid/${tender.id}`} className="no_style">
-          <div className="bid">
-            <div className="image">
-              <img src={tender.media[0].uri} alt="" />
+      {tenders.reverse() &&
+        tenders.map((tender, i) => (
+          <Link to={`/bid/${tender.id}`} className="no_style">
+            <div className="bid">
+              <div className="image">
+                <img src={tender.media[0].uri} alt="" />
+              </div>
+              <div className="details">
+                <h1>{tender.name}</h1>
+                <p> {tender.bids.length} Bid </p>
+              </div>
             </div>
-            <div className="details">
-              <h1>{tender.name}</h1>
-              <p> {tender.bids.length} Bid </p>
-            </div>
-          </div>
-        </Link>
-      ))}
+          </Link>
+        ))}
 
       <button
         className="button primary"

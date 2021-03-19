@@ -37,6 +37,7 @@ export default function Portfolio() {
       .get(`${BACKEND_URL}/product/shg/${user_data.shg_id}`)
       .then((res) => {
         console.log(res.data, "shg products");
+        res.data.reverse();
         setProducts(res.data);
       })
       .catch((err) => {
