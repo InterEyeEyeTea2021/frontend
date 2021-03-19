@@ -6,6 +6,7 @@ import TitleHeader from "../component/TitleHeader";
 import { SMEUser, useAuth } from "../hooks/Auth";
 import toast from "react-hot-toast";
 import { useHistory, useParams } from "react-router-dom";
+import * as Icon from "react-feather";
 
 interface Product {
   product_id: number;
@@ -90,6 +91,7 @@ export default function TenderForm() {
               auth?.authHeader()
             )
             .then((res) => {
+              setIsLoading(false);
               toast.success("Tender Created");
               history.push("/dashboard");
             })
@@ -231,7 +233,9 @@ export default function TenderForm() {
         </ol>
         {/* <button className="button">Add Milestone</button> */}
 
-        <input type="submit" value="Create Tender" />
+        <button type="submit" disabled={isLoading}>
+          {isLoading ? <Icon.Loader className="loader" /> : "Create Tender"}
+        </button>
         {/* <input type="submit" value="Invite SHGs" disabled={isLoading} /> */}
         <div className="error">{message}</div>
       </form>
