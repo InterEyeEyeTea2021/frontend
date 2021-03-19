@@ -160,11 +160,11 @@ export default function DashboardSHG() {
         <Link to={`/bid/${tender.id}`} className="no_style">
           <div className="bid">
             <div className="image">
-              <img src={tender.sme.profile_image_uri} alt="" />
+              <img src={tender.media[0].uri} alt="" />
             </div>
             <div className="details">
               <h1>{tender.name}</h1>
-              <p> {tender.bids.length} BIDS RECEIVED </p>
+              <p> {tender.bids.length} Bid </p>
             </div>
           </div>
         </Link>

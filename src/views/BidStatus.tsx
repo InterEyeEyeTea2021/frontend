@@ -1,10 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as Icon from "react-feather";
 import TitleHeader from "../component/TitleHeader";
+import { useParams } from "react-router";
+import axios from "axios";
+import { BACKEND_URL } from "../constants/constants";
+import { SHGUser, useAuth } from "../hooks/Auth";
+import { Bid, Tender } from "../types";
 
 export default function BidStatus() {
   const { register, handleSubmit, errors } = useForm();
+  const [tender, setTender] = useState<Tender>();
+  const [bid, setBid] = useState<Bid>();
+  const auth = useAuth();
+  const urlParams: { id: string } = useParams();
+  console.log(urlParams);
 
   const data = {
     tender_name: "Tender Name",
@@ -23,6 +33,34 @@ export default function BidStatus() {
       { name: "Ship the Product" },
     ],
   };
+  useEffect(() => {
+    axios
+      .get(`${BACKEND_URL}/tender/id`, {
+        params: {
+          id: urlParams.id,
+        },
+      })
+      .then((res) => {
+        let bid = res.data.data.bids.filter((b: Bid) => {
+          return b.shg_id === (auth?.user as SHGUser).shg_id;
+        })[0];
+
+        console.log(res.data.data);
+        setBid(bid);
+        setTender(res.data.data);
+
+        // window.setTimeout(() => {
+        //   axios.get(`${BACKEND_URL}/bid/acceptBid`, {
+        //     params: {
+        //       id: bid.id,
+        //     },
+        //   });
+        // });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   const cancelBid = (e: React.MouseEvent) => {
     console.log(e.target);
@@ -32,40 +70,31 @@ export default function BidStatus() {
     <div className="main_content">
       <TitleHeader title="Bid Status" user_type="SHG" />
 
+      <div className="full_image">
+        <img src={tender?.media[0].uri} alt="" />
+      </div>
+
       <div className="sme-details call_box">
-        <img src="https://i.imgur.com/khUO2T7.png" alt="" />
+        <img src={tender?.sme.profile_image_uri} alt="" />
         <div className="details">
-          <h1>SHG NAME</h1>
-          <p>XXXX XX XXXX</p>
-        </div>
-        <div className="call">
-          <Icon.PhoneCall></Icon.PhoneCall>
+          <h1>{tender?.sme.name}</h1>
+          {/* <p>XXXX XX XXXX</p> */}
         </div>
       </div>
 
       <h2>Tender Details</h2>
       <div className="detail">
         <div className="label">Tender Name</div>
-        <div className="value">{data.tender_name}</div>
+        <div className="value">{tender?.name}</div>
       </div>
       <div className="detail">
         <div className="label">Industry Type</div>
-        <div className="value">{data.industry_type}</div>
+        <div className="value">{auth?.user?.industry_type}</div>
       </div>
 
       <div className="detail">
         <div className="label">Description</div>
-        <div className="value">{data.description}</div>
-      </div>
-
-      <div className="detail">
-        <div className="label">Skills Required</div>
-        <div className="value">{data.skills_req}</div>
-      </div>
-
-      <div className="detail">
-        <div className="label">Location</div>
-        <div className="value">{data.location}</div>
+        <div className="value">{tender?.description}</div>
       </div>
 
       <hr />
@@ -101,7 +130,7 @@ export default function BidStatus() {
         </div>
       ))}
 
-      <button className="button" onClick={cancelBid}>
+      <button className="button default" onClick={cancelBid}>
         Cancel Bid
       </button>
     </div>

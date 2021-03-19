@@ -7,6 +7,7 @@ import { BACKEND_URL } from "../constants/constants";
 import { useHistory, useParams } from "react-router";
 import toast from "react-hot-toast";
 import { authContext, SHGUser, useAuth } from "../hooks/Auth";
+import { Bid } from "../types";
 
 interface Tender {
   id: number;
@@ -101,6 +102,20 @@ export default function BidForm() {
       })
       .then((res) => {
         console.log(res);
+        let bids = res.data.data.bids.filter((b: Bid) => {
+          return b.shg_id === (auth?.user as SHGUser).shg_id;
+        });
+
+        if (bids.length > 0) {
+          window.setTimeout(
+            () => toast.success("Bid exists, Showing bid!"),
+            1000
+          );
+          window.setTimeout(
+            () => history.push("/bid/" + res.data.data.id),
+            3000
+          );
+        }
         setTender(res.data.data);
       })
       .catch((err) => {
@@ -120,10 +135,7 @@ export default function BidForm() {
         </div>
         <div className="details">
           <h1>{tender?.sme.name}</h1>
-          <p>{tender?.sme.phone}</p>
-        </div>
-        <div className="call">
-          <Icon.PhoneCall></Icon.PhoneCall>
+          {/* <p>{tender?.sme.phone}</p> */}
         </div>
       </div>
 
