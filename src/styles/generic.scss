@@ -322,6 +322,19 @@ input[type="submit"] {
   background: linear-gradient(277.15deg, #45988e 37.28%, #82d0aa 100%);
 }
 
+//for button loader
+.loader {
+  animation: spin 2s linear infinite;
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+}
 input:not([type="checkbox"]):not([type="radio"]),
 select {
   display: block;

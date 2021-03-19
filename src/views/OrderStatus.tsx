@@ -23,6 +23,7 @@ Modal.setAppElement("#root");
 
 export default function OrderStatus() {
   const { register, handleSubmit, errors } = useForm();
+  const [isLoading, setIsLoading] = useState(false);
   const auth = useAuth();
   let urlParams: { id: string } = useParams();
   const is_sme = auth?.user && auth.user.user_type === "SME";
@@ -64,6 +65,7 @@ export default function OrderStatus() {
   };
 
   const completeOrder = (e: React.MouseEvent) => {
+    setIsLoading(true);
     axios
       .get(`${BACKEND_URL}/order/completeOrder?id=${urlParams.id}`)
       .then(() => {
@@ -73,6 +75,7 @@ export default function OrderStatus() {
             status: true,
           };
         });
+        setIsLoading(false);
         toast.success("Order Completed Successfully!");
         setMilestones(newMilestones);
         setConfirmCompleteOpen(false);
@@ -295,7 +298,9 @@ export default function OrderStatus() {
           order completed?
         </p>
         <p>Canceling will not mark this milestone.</p>
-        <button onClick={completeOrder}>Complete Order</button>
+        <button onClick={completeOrder} disabled={isLoading}>
+          {isLoading ? <Icon.Loader className="loader" /> : "Complete Order"}
+        </button>
         <button onClick={closeCompleteModal} className="default">
           Cancel
         </button>
