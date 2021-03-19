@@ -151,7 +151,7 @@ function TenderRouter() {
   let { path, url } = useRouteMatch();
   return (
     <Switch>
-      <Route exact path={`${path}/:id`}>
+      <Route exact path={path}>
         <TenderForm />
       </Route>
       <Route path={`${path}/status/:id`}>
@@ -195,6 +195,9 @@ function ProductRouter() {
       </PrivateRoute>
       <PrivateRoute exact path={`${path}/:id`}>
         <Product />
+      </PrivateRoute>
+      <PrivateRoute exact path={`${path}/:id/tender`}>
+        <TenderForm />
       </PrivateRoute>
     </Switch>
   );
