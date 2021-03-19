@@ -8,17 +8,13 @@ export default function ProfileSME() {
 
   const auth = useAuth();
 
+  console.log(auth?.user);
+
   return (
     <div className="main_content">
       <TitleHeader title="Profile" user_type="SME" />
       <div className="full_image">
-        <img
-          src={
-            auth?.user?.profile_image_uri ??
-            `http://tinygraphs.com/isogrids/${auth?.user?.name}?theme=seascape&numcolors=4`
-          }
-          alt=""
-        />
+        <img src={auth?.user?.profile_image_uri} alt="" />
       </div>
       <div className="user_panel">
         <div className="name">{auth?.user?.name}</div>
