@@ -6,8 +6,9 @@ import TitleHeader from "../component/TitleHeader";
 import { BACKEND_URL, prod_images } from "../constants/constants";
 import { useAuth } from "../hooks/Auth";
 
-interface tender {
+interface Tender {
   id: number;
+  name: string;
   state: string;
   description: string;
   media: {
@@ -24,12 +25,14 @@ interface tender {
   sme: {
     id: number;
     name: string;
+    profile_image_uri: string;
+    phone: string;
   };
 }
 
 export default function SearchSHG() {
   const auth = useAuth();
-  const [tenders, setTenders] = useState<tender[]>([]);
+  const [tenders, setTenders] = useState<Tender[]>([]);
 
   useEffect(() => {
     axios
@@ -66,7 +69,7 @@ export default function SearchSHG() {
           <Link to={`/tender/${t.id}/bid`} className="no_style">
             <div className="shg card">
               <img src={t.media[0].uri} alt="" />
-              <h1>Tender</h1>
+              <h1>{t.name}</h1>
               <p>{t.sme.name}</p>
               <p>{t.description}</p>
             </div>
