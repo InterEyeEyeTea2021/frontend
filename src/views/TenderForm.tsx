@@ -130,7 +130,7 @@ export default function TenderForm() {
           name="tender_name"
           id="tender_name"
           placeholder="Tender Name"
-          defaultValue={`${product?.name} - order`}
+          defaultValue={product != undefined ? `${product?.name} - order` : ""}
           ref={register({
             required: true,
           })}
@@ -151,7 +151,7 @@ export default function TenderForm() {
           name="description"
           id="description"
           placeholder="Description"
-          defaultValue={`${product?.description}`}
+          defaultValue={product != undefined ? `${product?.description}` : ""}
           ref={register({
             required: true,
           })}
