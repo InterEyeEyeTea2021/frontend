@@ -87,8 +87,8 @@ export default function TenderForm() {
           axios
             .post(
               `${BACKEND_URL}/tender/create`,
-              request_data,
-              auth?.authHeader()
+              request_data
+              // auth?.authHeader()
             )
             .then((res) => {
               setIsLoading(false);
@@ -107,18 +107,10 @@ export default function TenderForm() {
   };
 
   const milestones = [
-    {
-      name: "Milestone 1",
-    },
-    {
-      name: "Milestone 2",
-    },
-    {
-      name: "Milestone 3",
-    },
-    {
-      name: "Milestone 4",
-    },
+    { name: "Acquire Materials" },
+    { name: "Start Production" },
+    { name: "Finish Production" },
+    { name: "Ship the Product" },
   ];
 
   return (
@@ -223,7 +215,7 @@ export default function TenderForm() {
               <input
                 name={"milestone" + index}
                 id={"milestone" + index}
-                placeholder={m.name}
+                defaultValue={m.name}
                 ref={register({
                   required: true,
                 })}

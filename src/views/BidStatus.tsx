@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as Icon from "react-feather";
 import TitleHeader from "../component/TitleHeader";
-import { useParams } from "react-router";
+import { useHistory, useParams } from "react-router";
 import axios from "axios";
 import { BACKEND_URL } from "../constants/constants";
 import { SHGUser, useAuth } from "../hooks/Auth";
 import { Bid, Tender } from "../types";
+import toast from "react-hot-toast";
 
 export default function BidStatus() {
   const { register, handleSubmit, errors } = useForm();
@@ -14,6 +15,7 @@ export default function BidStatus() {
   const [bid, setBid] = useState<Bid>();
   const auth = useAuth();
   const urlParams: { id: string } = useParams();
+  const history = useHistory();
   console.log(urlParams);
 
   const data = {
@@ -51,15 +53,21 @@ export default function BidStatus() {
 
         window.setTimeout(() => {
           axios
-            .get(`${BACKEND_URL}/bid/acceptBid`, {
-              params: {
-                id: bid.id,
-              },
+            .post(`${BACKEND_URL}/bid/acceptBid`, {
+              id: bid.id,
+              contract_uri: "https://google.com",
             })
             .then((res) => {
+              toast.success("Your Bid has been Accepted!");
+
+              window.setTimeout(
+                () => toast.success("Redirecting to Dashboard"),
+                3000
+              );
+              window.setTimeout(() => history.push("/dashboard"), 5000);
               console.log(res.data);
             });
-        });
+        }, 3000);
       })
       .catch((err) => {
         console.log(err);
