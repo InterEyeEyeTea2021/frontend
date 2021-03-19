@@ -10,13 +10,40 @@ import Modal from "react-modal";
 import toast from "react-hot-toast";
 
 interface OrderData {
-  contract: string;
-  description: string;
-  milestones: [];
   order_id: number;
-  shg_id: number;
-  sme_id: number;
   state: string;
+  description: string;
+  contract: string;
+  order_name: string;
+  name_SHG: string;
+  completion: string;
+
+  media: {
+    uri: string;
+    type: string;
+  }[];
+
+  sme: {
+    id: number;
+    name: string;
+    phone: string;
+    profile_image_uri: string;
+  };
+
+  shg: {
+    id: number;
+    name: string;
+    phone: string;
+    profile_image_uri: string;
+  };
+
+  milestones: {
+    description: string;
+    media: {
+      uri: string;
+      type: string;
+    }[];
+  }[];
 }
 
 Modal.setAppElement("#root");
@@ -44,7 +71,7 @@ export default function OrderStatus() {
 
   useEffect(() => {
     axios
-      .get(`${BACKEND_URL}/order/${user_url_param}?id=${urlParams.id}`)
+      .get(`${BACKEND_URL}/order/${user_url_param}?id=${id}`)
       .then((res) => {
         console.log(res.data, "order");
         let order: OrderData = res.data.filter((o: OrderData) => {
@@ -52,7 +79,7 @@ export default function OrderStatus() {
         })[0];
         if (order) {
           setOrderData(order);
-          console.log(order);
+          console.log(order, "this order");
         }
       })
       .catch((err) => {
@@ -168,6 +195,9 @@ export default function OrderStatus() {
         title="Order Status"
         user_type={auth?.user?.user_type as string}
       />
+      <div className="full_image">
+        <img src={orderData?.media[0].uri} alt="" />
+      </div>
       <h1>
         Order <span className="tag">{orderData?.state}</span>
       </h1>
@@ -185,12 +215,12 @@ export default function OrderStatus() {
         <div className="value">{orderData?.description}</div>
       </div>
 
-      <div className="detail">
+      {/* <div className="detail">
         <div className="label">Order Contract</div>
         <a href={orderData?.contract} className="no_style">
           <div className="value">{orderData?.contract}</div>
         </a>
-      </div>
+      </div> */}
 
       {/* <div className="detail">
         <div className="label">Location</div>
@@ -201,10 +231,16 @@ export default function OrderStatus() {
 
       {auth?.user?.user_type === "SME" ? (
         <div className="call_box">
-          <img src="https://i.imgur.com/khUO2T7.png" alt="" />
+          <img
+            src={
+              orderData?.shg.profile_image_uri ??
+              `http://tinygraphs.com/isogrids/${orderData?.shg.name}?theme=seascape&numcolors=4`
+            }
+            alt=""
+          />
           <div className="details">
-            <h1>SHG NAME</h1>
-            <p>XXXX XX XXXX</p>
+            <h1>{orderData?.shg.name}</h1>
+            <p>{orderData?.shg.phone}</p>
           </div>
           <div className="call">
             <Icon.PhoneCall></Icon.PhoneCall>
@@ -212,10 +248,16 @@ export default function OrderStatus() {
         </div>
       ) : (
         <div className="call_box">
-          <img src="https://i.imgur.com/khUO2T7.png" alt="" />
+          <img
+            src={
+              orderData?.sme.profile_image_uri ??
+              `http://tinygraphs.com/isogrids/${orderData?.sme.name}?theme=seascape&numcolors=4`
+            }
+            alt=""
+          />
           <div className="details">
-            <h1>SME NAME</h1>
-            <p>XXXX XX XXXX</p>
+            <h1>{orderData?.sme.name}</h1>
+            <p>{orderData?.sme.phone}</p>
           </div>
           <div className="call">
             <Icon.PhoneCall></Icon.PhoneCall>
