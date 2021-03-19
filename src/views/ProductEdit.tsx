@@ -6,10 +6,11 @@ import { useHistory, useParams } from "react-router";
 import TitleHeader from "../component/TitleHeader";
 import { API_IMGBB, BACKEND_URL } from "../constants/constants";
 import { useAuth } from "../hooks/Auth";
-import BidForm from "./BidForm";
+import * as Icon from "react-feather";
 
 export default function ProductEdit() {
   const { register, handleSubmit, errors } = useForm();
+  const [isLoading, setIsLoading] = useState(false);
   let { id }: { id: string } = useParams();
   let auth = useAuth();
   const history = useHistory();
@@ -17,6 +18,7 @@ export default function ProductEdit() {
   const onSubmit = (data: any) => {
     // setIsLoading(true);
     console.log("Submitted Form Data: ", data);
+    setIsLoading(true);
 
     if (data.media.length > 0) {
       const e = data.media[0];
@@ -41,6 +43,7 @@ export default function ProductEdit() {
             )
             .then((res) => {
               // console.log(res.data, "product created");
+              setIsLoading(false);
               toast.success("Product added successfully!");
               history.push("/portfolio");
             })
@@ -119,8 +122,8 @@ export default function ProductEdit() {
           })}
         />
 
-        <button type="submit" className="button primary">
-          Add Product
+        <button type="submit" disabled={isLoading}>
+          {isLoading ? <Icon.Loader className="loader" /> : "Add Product"}
         </button>
       </form>
     </div>

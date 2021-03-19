@@ -11,6 +11,7 @@ import Step3 from "../component/signupForms/Step3";
 import { useHistory } from "react-router";
 import toast from "react-hot-toast";
 import { API_IMGBB } from "../constants/constants";
+import * as Icon from "react-feather";
 
 function Register() {
   let auth = useAuth();
@@ -259,7 +260,9 @@ function Register() {
                   ref={register({ required: false })}
                 /> */}
 
-                <input type="submit" value="Accept" disabled={isLoading} />
+                <button type="submit" disabled={isLoading}>
+                  {isLoading ? <Icon.Loader className="loader" /> : "Accept"}
+                </button>
               </>
             ) : (
               ""
