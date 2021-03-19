@@ -45,17 +45,21 @@ export default function BidStatus() {
           return b.shg_id === (auth?.user as SHGUser).shg_id;
         })[0];
 
-        console.log(res.data.data);
+        console.log(bid);
         setBid(bid);
         setTender(res.data.data);
 
-        // window.setTimeout(() => {
-        //   axios.get(`${BACKEND_URL}/bid/acceptBid`, {
-        //     params: {
-        //       id: bid.id,
-        //     },
-        //   });
-        // });
+        window.setTimeout(() => {
+          axios
+            .get(`${BACKEND_URL}/bid/acceptBid`, {
+              params: {
+                id: bid.id,
+              },
+            })
+            .then((res) => {
+              console.log(res.data);
+            });
+        });
       })
       .catch((err) => {
         console.log(err);

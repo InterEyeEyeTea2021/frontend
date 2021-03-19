@@ -4,6 +4,7 @@ import TitleHeader from "../component/TitleHeader";
 import { BACKEND_URL, prod_images } from "../constants/constants";
 import { useAuth } from "../hooks/Auth";
 import { Link } from "react-router-dom";
+import { ChevronDown, Search } from "react-feather";
 
 interface Product {
   product_id: number;
@@ -34,7 +35,19 @@ export default function SearchSME() {
   return (
     <div className="main_content">
       <TitleHeader title="Search" user_type="SME"></TitleHeader>
-      <input type="text" name="search" id="search" placeholder="Search" />
+      <div className="right_aligned">
+        <p>Products</p>
+        <button className="default small">
+          Filters
+          <ChevronDown></ChevronDown>
+        </button>
+      </div>
+      <div className="search_bar">
+        <input type="text" name="search" id="search" placeholder="Search" />
+        <button className="button small">
+          <Search></Search>
+        </button>
+      </div>
       <br />
       <div className="cards">
         {products.map((p, i) => (

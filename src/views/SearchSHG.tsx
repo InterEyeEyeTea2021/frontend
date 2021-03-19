@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { ChevronDown, Search } from "react-feather";
 import { Link } from "react-router-dom";
 import TitleHeader from "../component/TitleHeader";
 import { BACKEND_URL, prod_images } from "../constants/constants";
@@ -35,6 +36,7 @@ export default function SearchSHG() {
       .get(`${BACKEND_URL}/tender/all`)
       .then((res) => {
         // console.log(res);
+        res.data.reverse();
         setTenders(res.data);
       })
       .catch((err) => {
@@ -45,7 +47,19 @@ export default function SearchSHG() {
   return (
     <div className="main_content">
       <TitleHeader title="Search" user_type="SHG"></TitleHeader>
-      <input type="text" name="search" id="search" placeholder="Search" />
+      <div className="right_aligned">
+        <p>Tenders</p>
+        <button className="default small">
+          Filters
+          <ChevronDown></ChevronDown>
+        </button>
+      </div>
+      <div className="search_bar">
+        <input type="text" name="search" id="search" placeholder="Search" />
+        <button className="button small">
+          <Search></Search>
+        </button>
+      </div>
       <br />
       <div className="cards">
         {tenders?.map((t, i) => (
