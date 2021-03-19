@@ -79,7 +79,7 @@ export default function StepTwo({
         type="file"
         accept="image/png, image/jpeg"
         name="media"
-        ref={register({ required: false })}
+        ref={register({ required: true })}
       />
 
       <div className="signup-btns">

@@ -67,58 +67,56 @@ function Register() {
           console.log(photograph);
 
           state.profile_image_uri = photograph;
+
+          if (state.user_type === "SHG") {
+            const { address, product_sold, ...data } = state;
+            console.log(data);
+
+            auth?.registerSHG(data, (response: AxiosResponse) => {
+              // console.log("registration succex");
+              setIsLoading(false);
+
+              if (response.status === 200) {
+                toast.success("Successfully registered, Please login");
+
+                history.push("/login");
+              } else {
+                setMessage("An error occured, try again later.");
+              }
+            });
+          } else {
+            const {
+              name_SHG,
+              production_cap,
+              order_size,
+              members,
+              member_name,
+              member_aadhar,
+              member_contact,
+              skill,
+              ...data
+            } = state;
+
+            console.log(data);
+
+            auth?.registerSME(data, (response: AxiosResponse) => {
+              // console.log("registration succex");
+              setIsLoading(false);
+
+              toast.success("Successfully registered, Please login");
+
+              history.push("/login");
+
+              if (response === undefined || response.status === 500)
+                setMessage("Server is down, please try again later");
+              else if (response.status === 200) setIsRegistered(true);
+              else setMessage(response.data.message);
+            });
+          }
         })
         .catch((e) => {
           console.log(e);
         });
-    } else {
-      state.profile_image_uri = `http://tinygraphs.com/isogrids/${state.name}?theme=seascape&numcolors=4`;
-    }
-
-    if (state.user_type === "SHG") {
-      const { address, product_sold, ...data } = state;
-      console.log(data);
-
-      auth?.registerSHG(data, (response: AxiosResponse) => {
-        // console.log("registration succex");
-        setIsLoading(false);
-
-        if (response.status === 200) {
-          toast.success("Successfully registered, Please login");
-
-          history.push("/login");
-        } else {
-          setMessage("An error occured, try again later.");
-        }
-      });
-    } else {
-      const {
-        name_SHG,
-        production_cap,
-        order_size,
-        members,
-        member_name,
-        member_aadhar,
-        member_contact,
-        skill,
-        ...data
-      } = state;
-
-      console.log(data);
-
-      auth?.registerSME(data, (response: AxiosResponse) => {
-        // console.log("registration succex");
-        setIsLoading(false);
-
-        toast.success("Successfully registered, Please login");
-
-        history.push("/login");
-
-        if (response === undefined || response.status === 500)
-          setMessage("Server is down, please try again later");
-        else if (response.status === 200) setIsRegistered(true);
-        else setMessage(response.data.message);
-      });
     }
   };
 
