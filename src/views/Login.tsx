@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useHistory } from "react-router-dom";
 import { useAuth, loginForm } from "../hooks/Auth";
+import * as Icon from "react-feather";
 
 function Login() {
   const [isLoading, setIsLoading] = useState(false);
@@ -80,7 +81,9 @@ function Login() {
               SME
             </div>
           </div>
-          <input type="submit" value="Login" disabled={isLoading} />
+          <button type="submit" disabled={isLoading}>
+            {isLoading ? <Icon.Loader className="loader" /> : "Login"}
+          </button>
         </form>
       </div>
     </div>

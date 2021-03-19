@@ -40,6 +40,7 @@ interface Tender {
 
 export default function BidForm() {
   const { register, handleSubmit, errors } = useForm();
+  const [isLoading, setIsLoading] = useState(false);
   const [tender, setTender] = useState<Tender>();
 
   let history = useHistory();
@@ -73,6 +74,7 @@ export default function BidForm() {
     paymentcompletion: string;
     paymentadvanced: string;
   }) => {
+    setIsLoading(true);
     console.log(data);
     // Put the toast inside the API Call
     axios
@@ -82,6 +84,7 @@ export default function BidForm() {
         tender_id: id,
       })
       .then((res) => {
+        setIsLoading(false);
         console.log(res.data);
         toast.success("Bid created!");
 
@@ -205,8 +208,8 @@ export default function BidForm() {
             <br />
           </div>
         ))}
-        <button className="button" type="submit">
-          Bid for Order
+        <button type="submit" disabled={isLoading}>
+          {isLoading ? <Icon.Loader className="loader" /> : "Bid for Order"}
         </button>
       </form>
     </div>
