@@ -232,7 +232,9 @@ html {
         margin: 0;
       }
       img {
-        width: 100%;
+        width: calc(50vw - 2rem);
+        height: calc(50vw - 2rem);
+        object-fit: cover;
         // height: 64px;
         margin-bottom: 0.5rem;
         border-radius: 12px;
@@ -264,6 +266,31 @@ html {
       flex-grow: 1;
       font-size: 1.5rem;
       font-weight: 600;
+    }
+  }
+
+  .search_bar {
+    display: flex;
+    margin: 0 0 1rem;
+    #search {
+      width: 100%;
+      flex-shrink: 1;
+    }
+  }
+
+  .right_aligned {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: -1rem 0 0;
+    p {
+      margin: 0;
+      font-size: 1.5rem;
+      font-weight: 500;
+    }
+    button {
+      display: flex;
+      align-items: center;
     }
   }
 }
@@ -425,7 +452,7 @@ select:focus,
 button:focus,
 .button:focus,
 textarea:focus {
-  box-shadow: 0 0 0 4px darken($background-alt, 5%);
+  box-shadow: 0 2px 8px $grey;
 }
 
 input[type="checkbox"]:active,
