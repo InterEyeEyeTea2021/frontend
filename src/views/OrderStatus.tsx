@@ -232,10 +232,11 @@ export default function OrderStatus() {
       {auth?.user?.user_type === "SME" ? (
         <div className="call_box">
           <img
-            src={
-              orderData?.shg.profile_image_uri ??
-              `http://tinygraphs.com/isogrids/${orderData?.shg.name}?theme=seascape&numcolors=4`
-            }
+            // src={
+            //   orderData?.shg.profile_image_uri ??
+            //   `http://tinygraphs.com/isogrids/${orderData?.shg.name}?theme=seascape&numcolors=4`
+            // }
+            src="https://i.imgur.com/JhrA6LS.png"
             alt=""
           />
           <div className="details">
@@ -249,10 +250,11 @@ export default function OrderStatus() {
       ) : (
         <div className="call_box">
           <img
-            src={
-              orderData?.sme.profile_image_uri ??
-              `http://tinygraphs.com/isogrids/${orderData?.sme.name}?theme=seascape&numcolors=4`
-            }
+            // src={
+            //   orderData?.sme.profile_image_uri ??
+            //   `http://tinygraphs.com/isogrids/${orderData?.sme.name}?theme=seascape&numcolors=4`
+            // }
+            src="https://i.imgur.com/JhrA6LS.png"
             alt=""
           />
           <div className="details">
