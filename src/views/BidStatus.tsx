@@ -130,7 +130,7 @@ export default function BidStatus() {
         </div>
       ))}
 
-      <button className="button" onClick={cancelBid}>
+      <button className="button default" onClick={cancelBid}>
         Cancel Bid
       </button>
     </div>
