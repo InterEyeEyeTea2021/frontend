@@ -130,19 +130,23 @@ export default function DashboardSME() {
     <div className="main_content dashboard dashboard_shg">
       <TitleHeader title="Dashboard" user_type="SME" />
       <h2>Ongoing Orders</h2>
-      {data?.ongoing_orders.map((order, i) => (
-        <Link to={`/order/${order.order_id}`} className="no_style">
-          <div className="order">
-            <div className="image">
-              <img src={order.media[0].uri} alt="" />
+      {data?.ongoing_orders.length > 0 ? (
+        data?.ongoing_orders.map((order, i) => (
+          <Link to={`/order/${order.order_id}`} className="no_style">
+            <div className="order">
+              <div className="image">
+                <img src={order.media[0].uri} alt="" />
+              </div>
+              <div className="details">
+                <h1>{order.name_SHG}</h1>
+                <p> COMPLETION: {order.completion} </p>
+              </div>
             </div>
-            <div className="details">
-              <h1>{order.name_SHG}</h1>
-              <p> COMPLETION: {order.completion} </p>
-            </div>
-          </div>
-        </Link>
-      ))}
+          </Link>
+        ))
+      ) : (
+        <p> No orders yet</p>
+      )}
 
       <h2>Tenders</h2>
       {data?.tenders
@@ -167,18 +171,22 @@ export default function DashboardSME() {
       </Link>
 
       <h2>Completed Orders</h2>
-      {data?.completed_orders.map((order, i) => (
-        <Link to={`/order/${order.order_id}`} className="no_style">
-          <div className="order">
-            <div className="image">
-              <img src={order.media[0].uri} alt="" />
+      {data?.completed_orders.length > 0 ? (
+        data?.completed_orders.map((order, i) => (
+          <Link to={`/order/${order.order_id}`} className="no_style">
+            <div className="order">
+              <div className="image">
+                <img src={order.media[0].uri} alt="" />
+              </div>
+              <div className="details">
+                <h1>{order.name_SHG}</h1>
+              </div>
             </div>
-            <div className="details">
-              <h1>{order.name_SHG}</h1>
-            </div>
-          </div>
-        </Link>
-      ))}
+          </Link>
+        ))
+      ) : (
+        <p> No orders yet </p>
+      )}
 
       {/* <h2> Payments </h2>
       {data?.payments.map((payment, id) => (
