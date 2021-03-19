@@ -261,7 +261,13 @@ export default function DashboardSHG() {
       <h2> Portfolio </h2>
       <div className="order">
         <div className="image">
-          <img src={profile_pics[0]} alt="" />
+          <img
+            src={
+              auth?.user?.profile_image_uri ??
+              `http://tinygraphs.com/isogrids/${auth?.user?.name}?theme=seascape&numcolors=4`
+            }
+            alt=""
+          />
         </div>
         <div className="details">
           <h1>{user_data.name_SHG}</h1>
