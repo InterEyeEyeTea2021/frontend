@@ -201,7 +201,7 @@ export default function OrderStatus() {
 
       {auth?.user?.user_type === "SME" ? (
         <div className="call_box">
-          <img src="https://i.imgur.com/khUO2T7.png" alt="" />
+          <img src="https://i.imgur.com/JhrA6LS.png" alt="" />
           <div className="details">
             <h1>SHG NAME</h1>
             <p>XXXX XX XXXX</p>
@@ -212,7 +212,7 @@ export default function OrderStatus() {
         </div>
       ) : (
         <div className="call_box">
-          <img src="https://i.imgur.com/khUO2T7.png" alt="" />
+          <img src="https://i.imgur.com/JhrA6LS.png" alt="" />
           <div className="details">
             <h1>SME NAME</h1>
             <p>XXXX XX XXXX</p>
