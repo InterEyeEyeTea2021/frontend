@@ -94,6 +94,7 @@ export default function ProductEdit() {
           accept="image/png, image/jpeg"
           id="media"
           name="media"
+          ref={register}
         />
 
         <h2>Order Parameters</h2>
