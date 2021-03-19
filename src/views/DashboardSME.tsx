@@ -33,10 +33,8 @@ interface Tender {
 interface Data {
   ongoing_orders: {
     order_id: number;
-    contract: string;
     description: string;
-    shg_id: number;
-    sme_id: number;
+    contract: string;
     order_name: string;
     name_SHG: string;
     completion: string;
@@ -45,21 +43,62 @@ interface Data {
       uri: string;
       type: string;
     }[];
+
+    sme: {
+      id: number;
+      name: string;
+      phone: string;
+      profile_image_uri: string;
+    };
+
+    shg: {
+      id: number;
+      name: string;
+      phone: string;
+      profile_image_uri: string;
+    };
+
+    milestones: {
+      description: string;
+      media: {
+        uri: string;
+        type: string;
+      }[];
+    }[];
   }[];
 
   completed_orders: {
     order_id: number;
-    image: string;
-    contract: string;
     description: string;
-    shg_id: number;
-    sme_id: number;
+    contract: string;
     order_name: string;
     name_SHG: string;
 
     media: {
       uri: string;
       type: string;
+    }[];
+
+    sme: {
+      id: number;
+      name: string;
+      phone: string;
+      profile_image_uri: string;
+    };
+
+    shg: {
+      id: number;
+      name: string;
+      phone: string;
+      profile_image_uri: string;
+    };
+
+    milestones: {
+      description: string;
+      media: {
+        uri: string;
+        type: string;
+      }[];
     }[];
   }[];
 
@@ -138,8 +177,8 @@ export default function DashboardSME() {
                 <img src={order.media[0].uri} alt="" />
               </div>
               <div className="details">
-                <h1>{order.name_SHG}</h1>
-                <p> COMPLETION: {order.completion} </p>
+                <h1>{order.order_name}</h1>
+                <p> {order.description} </p>
               </div>
             </div>
           </Link>
@@ -151,7 +190,7 @@ export default function DashboardSME() {
       <h2>Tenders</h2>
       {data?.tenders
         .map((tender, i) => (
-          <Link to={`/tender/${tender.id}`} className="no_style">
+          <Link to={`/tender/status/${tender.id}`} className="no_style">
             <div className="tender">
               <div className="image">
                 <img src={tender.media[0].uri} alt="" />
@@ -179,7 +218,8 @@ export default function DashboardSME() {
                 <img src={order.media[0].uri} alt="" />
               </div>
               <div className="details">
-                <h1>{order.name_SHG}</h1>
+                <h1>{order.order_name}</h1>
+                <p> {order.description} </p>
               </div>
             </div>
           </Link>

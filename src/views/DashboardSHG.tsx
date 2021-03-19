@@ -9,8 +9,9 @@ import { Link, useHistory } from "react-router-dom";
 
 interface data {
   ongoing_orders: {
-    id: number;
-    image: string;
+    order_id: number;
+    description: string;
+    contract: string;
     order_name: string;
     name_SHG: string;
     completion: string;
@@ -19,17 +20,62 @@ interface data {
       uri: string;
       type: string;
     }[];
+
+    sme: {
+      id: number;
+      name: string;
+      phone: string;
+      profile_image_uri: string;
+    };
+
+    shg: {
+      id: number;
+      name: string;
+      phone: string;
+      profile_image_uri: string;
+    };
+
+    milestones: {
+      description: string;
+      media: {
+        uri: string;
+        type: string;
+      }[];
+    }[];
   }[];
 
   completed_orders: {
-    id: number;
-    image: string;
+    order_id: number;
+    description: string;
+    contract: string;
     order_name: string;
     name_SHG: string;
 
     media: {
       uri: string;
       type: string;
+    }[];
+
+    sme: {
+      id: number;
+      name: string;
+      phone: string;
+      profile_image_uri: string;
+    };
+
+    shg: {
+      id: number;
+      name: string;
+      phone: string;
+      profile_image_uri: string;
+    };
+
+    milestones: {
+      description: string;
+      media: {
+        uri: string;
+        type: string;
+      }[];
     }[];
   }[];
 }
@@ -92,15 +138,15 @@ export default function DashboardSHG() {
         },
       })
       .then((res) => {
-        console.log(res.data, "orders");
+        console.log(
+          res.data.filter((o: any) => o.state === "created"),
+          "ongoing orders"
+        );
         setData({
           ...data,
           ongoing_orders: res.data.filter(
             (order: any) => order.state === "created"
           ),
-        });
-        setData({
-          ...data,
           completed_orders: res.data.filter(
             (order: any) => order.state == "completed"
           ),
@@ -121,7 +167,7 @@ export default function DashboardSHG() {
           for (var bid of t.bids) {
             if (bid.shg_id == user_data.shg_id) {
               setTenders((prev) => [...prev, t]);
-              console.log(t);
+              // console.log(t);
               break;
             }
           }
@@ -139,14 +185,14 @@ export default function DashboardSHG() {
       <h2>Ongoing Orders</h2>
       {data?.ongoing_orders.length > 0 ? (
         data?.ongoing_orders.map((order, i) => (
-          <Link to={`/order/${order.id}`} className="no_style">
+          <Link to={`/order/${order.order_id}`} className="no_style">
             <div className="order">
               <div className="image">
                 <img src={order?.media[0].uri} alt="" />
               </div>
               <div className="details">
-                <h1>{order.name_SHG}</h1>
-                <p> COMPLETION: {order.completion} </p>
+                <h1>{order.order_name}</h1>
+                <p> {order.description} </p>
               </div>
             </div>
           </Link>
@@ -183,13 +229,14 @@ export default function DashboardSHG() {
       <h2>Completed Orders</h2>
       {data?.completed_orders.length > 0 ? (
         data?.completed_orders.map((order, i) => (
-          <Link to={`/order/${order.id}`} className="no_style">
+          <Link to={`/order/${order.order_id}`} className="no_style">
             <div className="order">
               <div className="image">
                 <img src={order?.media[0].uri} alt="" />
               </div>
               <div className="details">
-                <h1>{order.name_SHG}</h1>
+                <h1>{order.order_name}</h1>
+                <p> {order.description} </p>
               </div>
             </div>
           </Link>
