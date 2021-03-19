@@ -87,7 +87,7 @@ export default function BidStatus() {
       </div>
 
       <div className="sme-details call_box">
-        <img src={tender?.sme.profile_image_uri} alt="" />
+        <img src="https://i.imgur.com/JhrA6LS.png" alt="" />
         <div className="details">
           <h1>{tender?.sme.name}</h1>
           {/* <p>XXXX XX XXXX</p> */}
