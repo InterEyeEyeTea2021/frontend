@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { useAuth } from "../hooks/Auth";
 
 import logo from "../images/logo.svg";
@@ -10,10 +10,12 @@ export default function Navbar() {
   return (
     <nav>
       <div className="wrapper">
-        <header>
-          <img src={logo} alt="Logo" />
-          <h1>GrameenSetu</h1>
-        </header>
+        <Link className="no_style" to="/dashboard">
+          <header>
+            <img src={logo} alt="Logo" />
+            <h1>GrameenSetu</h1>
+          </header>
+        </Link>
         {auth?.user == null && (
           <ul>
             <li>
