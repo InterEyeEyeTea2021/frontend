@@ -28,3 +28,14 @@ export interface Bid {
   shg_id: number;
   tender_id: number;
 }
+
+export interface SHGprofileData {
+  shg_id: number;
+  name: string;
+  phone: string;
+  WAContact: string;
+  industry_type: string;
+  image_uri: string;
+  order_size: string;
+  prod_capacity: string;
+}
