@@ -1,11 +1,13 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useHistory } from "react-router";
+import { useHistory, useParams } from "react-router";
 import { Link } from "react-router-dom";
 import TitleHeader from "../component/TitleHeader";
 import { BACKEND_URL, prod_images } from "../constants/constants";
+import { getPlaceholderImage } from "../helpers";
 import { authContext, useAuth, SMEUser, SHGUser } from "../hooks/Auth";
+import { SHGprofileData } from "../types";
 
 interface Product {
   product_id: number;
@@ -23,18 +25,49 @@ export default function Portfolio() {
 
   let history = useHistory();
 
+  let urlParams: { shg_id: string } = useParams();
+
   const auth = useAuth();
 
   const is_sme = auth?.user && auth.user.user_type === "SME";
-  let user_data: any;
-  if (!is_sme) {
-    user_data = auth?.user as SHGUser;
-    console.log(auth?.user);
-  }
+  const url_set = urlParams.shg_id != undefined;
+  let [shg_id, setSHG_id] = useState<number>();
+  let [user_data, setUserData] = useState<any>();
+
+  useEffect(() => {
+    console.log(urlParams.shg_id);
+    if (!url_set) {
+      setUserData(auth?.user as SHGUser);
+      setSHG_id((auth?.user as SHGUser).shg_id);
+      // console.log(auth?.user);
+    } else {
+      setSHG_id(Number(urlParams.shg_id));
+      axios
+        .get(`${BACKEND_URL}/users/shg`)
+        .then((res) => {
+          // console.log(res.data);
+          let shg: SHGprofileData = res.data.filter((u: SHGprofileData) => {
+            return u.shg_id === Number(urlParams.shg_id);
+          })[0];
+          if (shg) {
+            setUserData({
+              ...shg,
+              name_SHG: shg.name,
+              industry_type: shg.industry_type,
+              profile_image_uri: shg.image_uri,
+              production_cap: shg.prod_capacity,
+            });
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, []);
 
   useEffect(() => {
     axios
-      .get(`${BACKEND_URL}/product/shg/${user_data.shg_id}`)
+      .get(`${BACKEND_URL}/product/shg/${shg_id}`)
       .then((res) => {
         console.log(res.data, "shg products");
         res.data.reverse();
@@ -43,21 +76,20 @@ export default function Portfolio() {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [shg_id]);
 
   return (
     <div className="main_content">
       <div className="full_image">
         <img
           src={
-            auth?.user?.profile_image_uri ??
-            `http://tinygraphs.com/isogrids/${auth?.user?.name}?theme=seascape&numcolors=4`
+            user_data?.profile_image_uri ?? getPlaceholderImage(user_data?.name)
           }
           alt=""
         />
       </div>
       <div className="user_panel">
-        <div className="name">{user_data.name}</div>
+        <div className="name">{user_data?.name}</div>
         <button
           className="button small default"
           onClick={(e) => {
@@ -80,10 +112,10 @@ export default function Portfolio() {
         <div className="value">{user_data?.name_SHG}</div>
       </div>
 
-      <div className="detail">
+      {/* <div className="detail">
         <div className="label">Description</div>
         <div className="value"></div>
-      </div>
+      </div> */}
 
       <div className="detail">
         <div className="label">Industry Type</div>
