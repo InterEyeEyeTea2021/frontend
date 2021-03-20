@@ -51,23 +51,23 @@ export default function BidStatus() {
         setBid(bid);
         setTender(res.data.data);
 
-        window.setTimeout(() => {
-          axios
-            .post(`${BACKEND_URL}/bid/acceptBid`, {
-              id: bid.id,
-              contract_uri: "https://google.com",
-            })
-            .then((res) => {
-              toast.success("Your Bid has been Accepted!");
+        // window.setTimeout(() => {
+        //   axios
+        //     .post(`${BACKEND_URL}/bid/acceptBid`, {
+        //       id: bid.id,
+        //       contract_uri: "https://google.com",
+        //     })
+        //     .then((res) => {
+        //       toast.success("Your Bid has been Accepted!");
 
-              window.setTimeout(
-                () => toast.success("Redirecting to Dashboard"),
-                3000
-              );
-              window.setTimeout(() => history.push("/dashboard"), 5000);
-              console.log(res.data);
-            });
-        }, 3000);
+        //       window.setTimeout(
+        //         () => toast.success("Redirecting to Dashboard"),
+        //         3000
+        //       );
+        //       window.setTimeout(() => history.push("/dashboard"), 5000);
+        //       console.log(res.data);
+        //     });
+        // }, 3000);
       })
       .catch((err) => {
         console.log(err);
