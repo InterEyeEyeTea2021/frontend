@@ -1,12 +1,11 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router";
 import { Link } from "react-router-dom";
 import TitleHeader from "../component/TitleHeader";
-import { BACKEND_URL, prod_images } from "../constants/constants";
+import { BACKEND_URL } from "../constants/constants";
 import { getPlaceholderImage } from "../helpers";
-import { authContext, useAuth, SMEUser, SHGUser } from "../hooks/Auth";
+import { useAuth, SHGUser } from "../hooks/Auth";
 import { SHGprofileData } from "../types";
 
 interface Product {
@@ -20,7 +19,6 @@ interface Product {
 }
 
 export default function Portfolio() {
-  const { register, handleSubmit, errors } = useForm();
   const [products, setProducts] = useState<Product[]>([]);
 
   let history = useHistory();
@@ -63,7 +61,7 @@ export default function Portfolio() {
           console.log(err);
         });
     }
-  }, []);
+  }, [urlParams]);
 
   useEffect(() => {
     axios
@@ -132,14 +130,16 @@ export default function Portfolio() {
         <div className="value">{user_data?.order_size}</div>
       </div>
 
-      <button
-        className="button primary"
-        onClick={(e) => {
-          history.push(`/product/add`);
-        }}
-      >
-        Add Product
-      </button>
+      {!is_sme && !url_set && (
+        <button
+          className="button primary"
+          onClick={(e) => {
+            history.push(`/product/add`);
+          }}
+        >
+          Add Product
+        </button>
+      )}
 
       <hr />
 
