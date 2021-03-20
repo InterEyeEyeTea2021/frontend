@@ -4,7 +4,7 @@ import { ChevronDown, Search } from "react-feather";
 import { Link } from "react-router-dom";
 import TitleHeader from "../component/TitleHeader";
 import { BACKEND_URL, prod_images } from "../constants/constants";
-import { useAuth } from "../hooks/Auth";
+import { SHGUser, useAuth } from "../hooks/Auth";
 import { SHGprofileData } from "../types";
 
 export default function NetworkSHG() {
@@ -17,7 +17,10 @@ export default function NetworkSHG() {
       .then((res) => {
         console.log(res.data);
         res.data.reverse();
-        setSHG_data(res.data);
+        let fshg: SHGprofileData[] = res.data.filter((s: SHGprofileData) => {
+          return s.shg_id != (auth?.user as SHGUser).shg_id;
+        });
+        setSHG_data(fshg);
       })
       .catch((err) => {
         console.log(err);
@@ -41,7 +44,6 @@ export default function NetworkSHG() {
         </button>
       </div>
       <p>Connect with SHGs near you!</p>
-      <br />
       <div className="cards">
         {shg_data?.map((t, i) => (
           <Link to={`/portfolio/${t.shg_id}`} className="no_style">

@@ -66,11 +66,6 @@ html {
     margin: 1rem 0 0rem;
   }
 
-  .no_style {
-    text-decoration: none;
-    color: inherit;
-  }
-
   ol,
   ul {
     @include full_width(4rem);
@@ -293,6 +288,11 @@ html {
       align-items: center;
     }
   }
+}
+
+.no_style {
+  text-decoration: none;
+  color: inherit;
 }
 
 .toast_with_icon {
