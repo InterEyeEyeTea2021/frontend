@@ -35,6 +35,7 @@ import ProfileSME from "./views/ProfileSME";
 import ScrollToTop from "./component/ScrollToTop";
 import { Toaster } from "react-hot-toast";
 import NetworkSHG from "./views/NetworkSHG";
+import Mela from "./views/Mela";
 
 function App() {
   let auth = useAuth();
@@ -111,6 +112,10 @@ function App() {
 
           <Route exact path="/profile">
             <ProfileSME />
+          </Route>
+
+          <Route exact path="/mela">
+            <Mela />
           </Route>
 
           <Route exact path="/smepayments">
