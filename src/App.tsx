@@ -34,6 +34,7 @@ import SearchSHG from "./views/SearchSHG";
 import ProfileSME from "./views/ProfileSME";
 import ScrollToTop from "./component/ScrollToTop";
 import { Toaster } from "react-hot-toast";
+import NetworkSHG from "./views/NetworkSHG";
 
 function App() {
   let auth = useAuth();
@@ -71,6 +72,11 @@ function App() {
 
           <PrivateRoute exact path="/search/">
             {auth?.user?.user_type === "SME" ? <SearchSME /> : <SearchSHG />}
+          </PrivateRoute>
+
+          {/* Network for SHG */}
+          <PrivateRoute exact path="/network">
+            <NetworkSHG />
           </PrivateRoute>
 
           {/* Bid form */}
@@ -179,7 +185,7 @@ function PortfolioRouter() {
       <PrivateRoute user_type="SHG" exact path={path}>
         <Portfolio />
       </PrivateRoute>
-      <PrivateRoute user_type="SME" exact path={`${path}/:shg_id`}>
+      <PrivateRoute exact path={`${path}/:shg_id`}>
         <Portfolio />
       </PrivateRoute>
     </Switch>
