@@ -22,6 +22,20 @@ export interface Tender {
   };
 }
 
+export interface Fair {
+  id: number;
+  name: string;
+  description: string;
+  industry_type: string;
+  media: {
+    uri: string;
+    type: string;
+  }[];
+  location: string;
+  date: string;
+  fee: string;
+}
+
 export interface Bid {
   id: number;
   amount: number;
