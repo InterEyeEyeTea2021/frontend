@@ -80,7 +80,8 @@ nav.bottomNav {
   }
 
   a {
-    padding: 0.5rem 1rem 0rem;
+    padding: 0.5rem 0rem 0rem;
+    width: calc(25vw - 1rem);
     border-radius: 1rem;
     text-decoration: none;
     color: $text;
