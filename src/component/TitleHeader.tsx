@@ -7,7 +7,9 @@ export default function TitleHeader(props: {
   return (
     <div className="title_header">
       <h1>{props.title}</h1>
-      <div className="user_type">{props.user_type}</div>
+      <div className="user_type">
+        {props.user_type === "SHG" ? "Producer" : "Buyer"}
+      </div>
       <div className="icon">
         <Icon.Bell></Icon.Bell>
       </div>

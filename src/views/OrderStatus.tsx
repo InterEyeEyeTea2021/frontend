@@ -210,7 +210,7 @@ export default function OrderStatus() {
         <div className="value">{data.industry_type}</div>
       </div>
 
-      <div className="detail">
+      <div className="detail description">
         <div className="label">Description</div>
         <div className="value">{orderData?.description}</div>
       </div>
