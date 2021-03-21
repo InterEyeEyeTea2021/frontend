@@ -314,9 +314,9 @@ export default function OrderStatus() {
                 type="checkbox"
                 name={m.name}
                 id={"mile_check" + m.name}
-                checked={m.status}
+                checked={orderData?.state == "completed" || m.status}
                 onClick={(e) => {
-                  if (!is_sme) {
+                  if (!is_sme && orderData?.state != "completed") {
                     updateMilestone(m.id);
                   }
                 }}
