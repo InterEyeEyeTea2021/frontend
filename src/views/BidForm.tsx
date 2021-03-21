@@ -61,7 +61,11 @@ export default function BidForm() {
         pay_name: "Total Value",
         suggested_value: 2000,
       },
-      { keyname: "advanced", pay_name: "Advanced", suggested_value: 200 },
+      {
+        keyname: "advanced",
+        pay_name: "Advanced(Min 10%)",
+        suggested_value: 200,
+      },
     ],
     milestones: [
       { name: "Acquire Materials" },
@@ -135,7 +139,7 @@ export default function BidForm() {
       </div>
       <div className="sme-details call_box">
         <div className="image">
-          <img src="https://i.imgur.com/JhrA6LS.png" alt="" />
+          <img src="https://i.imgur.com/0AJf1LN.png" alt="" />
         </div>
         <div className="details">
           <h1>{tender?.sme.name}</h1>
