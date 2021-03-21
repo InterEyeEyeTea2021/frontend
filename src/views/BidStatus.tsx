@@ -26,7 +26,7 @@ export default function BidStatus() {
     location: "Location",
     payments: [
       { pay_name: "Order Completion", value: 2000, suggested_value: 1500 },
-      { pay_name: "Advanced", value: null, suggested_value: null },
+      { pay_name: "Advanced", value: null, suggested_value: 200 },
     ],
     milestones: [
       { name: "Acquire Materials" },

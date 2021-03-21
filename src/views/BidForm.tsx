@@ -57,10 +57,10 @@ export default function BidForm() {
     payments: [
       {
         keyname: "completion",
-        pay_name: "Order Completion",
+        pay_name: "Total Value",
         suggested_value: 2000,
       },
-      { keyname: "advanced", pay_name: "Advanced", suggested_value: null },
+      { keyname: "advanced", pay_name: "Advanced", suggested_value: 200 },
     ],
     milestones: [
       { name: "Acquire Materials" },
@@ -195,7 +195,11 @@ export default function BidForm() {
                 {p.suggested_value ? p.suggested_value : "Nil"}
               </div>
             </div>
+          </div>
+        ))}
 
+        {data.payments.map((p, i) => (
+          <div>
             <label htmlFor={"payment" + p.keyname}>{p.pay_name}</label>
             <input
               name={"payment" + p.keyname}
@@ -205,9 +209,9 @@ export default function BidForm() {
                 required: false,
               })}
             />
-            <br />
           </div>
         ))}
+
         <button type="submit" disabled={isLoading}>
           {isLoading ? <Icon.Loader className="loader" /> : "Bid for Order"}
         </button>
