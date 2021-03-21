@@ -134,7 +134,7 @@ export default function BidForm() {
       </div>
       <div className="sme-details call_box">
         <div className="image">
-          <img src="https://i.imgur.com/JhrA6LS.png" alt="" />
+          <img src="https://i.imgur.com/0AJf1LN.png" alt="" />
         </div>
         <div className="details">
           <h1>{tender?.sme.name}</h1>

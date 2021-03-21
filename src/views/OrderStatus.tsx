@@ -236,7 +236,7 @@ export default function OrderStatus() {
             //   orderData?.shg.profile_image_uri ??
             //   `http://tinygraphs.com/isogrids/${orderData?.shg.name}?theme=seascape&numcolors=4`
             // }
-            src="https://i.imgur.com/JhrA6LS.png"
+            src="https://i.imgur.com/0AJf1LN.png"
             alt=""
           />
           <div className="details">
@@ -254,7 +254,7 @@ export default function OrderStatus() {
             //   orderData?.sme.profile_image_uri ??
             //   `http://tinygraphs.com/isogrids/${orderData?.sme.name}?theme=seascape&numcolors=4`
             // }
-            src="https://i.imgur.com/JhrA6LS.png"
+            src="https://i.imgur.com/0AJf1LN.png"
             alt=""
           />
           <div className="details">
