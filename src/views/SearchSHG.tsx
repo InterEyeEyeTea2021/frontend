@@ -68,7 +68,7 @@ export default function SearchSHG() {
         {tenders?.map((t, i) => (
           <Link to={`/tender/${t.id}/bid`} className="no_style">
             <div className="shg card">
-              <img src={t.media[0].uri} alt="" />
+              <img src={t?.media[0]?.uri} alt="" />
               <h1>{t.name}</h1>
               <p>{t.sme.name}</p>
               <p>{t.description}</p>
