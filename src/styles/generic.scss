@@ -95,6 +95,12 @@ html {
       font-weight: 500;
       color: $heading-text;
     }
+
+    &.description {
+      .value {
+        font-size: 1.2rem;
+      }
+    }
   }
 
   hr {

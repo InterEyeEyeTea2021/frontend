@@ -116,7 +116,7 @@ export default function TenderStatus() {
         <div className="value">{data.quanity}</div>
       </div>
 
-      <div className="detail">
+      <div className="detail description">
         <div className="label">Description</div>
         <div className="value">{tender?.description}</div>
       </div>

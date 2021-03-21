@@ -112,7 +112,7 @@ export default function Portfolio() {
         <div className="value">{user_data?.name_SHG}</div>
       </div>
 
-      {/* <div className="detail">
+      {/* <div className="detail description">
         <div className="label">Description</div>
         <div className="value"></div>
       </div> */}
