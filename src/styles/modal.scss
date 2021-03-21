@@ -5,4 +5,8 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+
+  input[type="file"] {
+    width: auto;
+  }
 }
