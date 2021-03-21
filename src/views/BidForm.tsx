@@ -7,7 +7,8 @@ import { BACKEND_URL } from "../constants/constants";
 import { useHistory, useParams } from "react-router";
 import toast from "react-hot-toast";
 import { authContext, SHGUser, useAuth } from "../hooks/Auth";
-import { Bid } from "../types";
+import { Bid, Milestone } from "../types";
+import Modal from "react-modal";
 
 interface Tender {
   id: number;
@@ -42,6 +43,8 @@ export default function BidForm() {
   const { register, handleSubmit, errors } = useForm();
   const [isLoading, setIsLoading] = useState(false);
   const [tender, setTender] = useState<Tender>();
+  const [confirmCompleteOpen, setConfirmCompleteOpen] = useState(false);
+  const [currentMilestone, setCurrentMilestone] = useState<Milestone>();
 
   let history = useHistory();
   let { id }: { id: string } = useParams();
@@ -67,12 +70,46 @@ export default function BidForm() {
         suggested_value: 200,
       },
     ],
-    milestones: [
-      { name: "Acquire Materials" },
-      { name: "Start Production" },
-      { name: "Finish Production" },
-      { name: "Ship the Product" },
-    ],
+  };
+
+  const [milestones, setMilestones] = useState<Milestone[]>([
+    {
+      id: 1,
+      name: "Acquire Materials",
+      description: "this is a milestone",
+      status: false,
+      media: [],
+    },
+    {
+      id: 2,
+      name: "Start Production",
+      description: "this is a milestone",
+      status: false,
+      media: [],
+    },
+    {
+      id: 3,
+      name: "Finish Production",
+      description: "this is a milestone",
+      status: false,
+      media: [],
+    },
+    {
+      id: 4,
+      name: "Ship the Product",
+      description: "this is a milestone",
+      status: false,
+      media: [],
+    },
+  ]);
+
+  const openCompleteModal = (m: Milestone) => {
+    setConfirmCompleteOpen(true);
+    setCurrentMilestone(m);
+  };
+
+  const closeCompleteModal = () => {
+    setConfirmCompleteOpen(false);
   };
 
   const onSubmit = (data: {
@@ -135,7 +172,7 @@ export default function BidForm() {
     <div className="main_content">
       <TitleHeader title="Create Bid" user_type="SHG" />
       <div className="full_image">
-        <img src={tender?.media[0].uri} alt="" />
+        <img src={tender?.media[0]?.uri} alt="" />
       </div>
       <div className="sme-details call_box">
         <div className="image">
@@ -178,10 +215,12 @@ export default function BidForm() {
       <h2>Milestones</h2>
 
       <div className="milestones">
-        {data.milestones.map((m, index) => (
-          <div className="milestone">
-            <div className="index">{index + 1}.</div>
-            <div className="name">{m.name}</div>
+        {milestones.map((m, index) => (
+          <div className="milestone" onClick={(e) => openCompleteModal(m)}>
+            <div className="upper-body">
+              <div className="index">{index + 1}.</div>
+              <div className="name">{m.name}</div>
+            </div>
             {/* <div className="check">check</div> */}
           </div>
         ))}
@@ -221,6 +260,24 @@ export default function BidForm() {
           {isLoading ? <Icon.Loader className="loader" /> : "Bid for Order"}
         </button>
       </form>
+
+      <Modal
+        isOpen={confirmCompleteOpen}
+        // onAfterOpen={afterOpenModal}
+        onRequestClose={closeCompleteModal}
+        // style={customStyles}
+        contentLabel="Confirm Complete Modal"
+      >
+        <h1>{currentMilestone?.name}</h1>
+        <p>{currentMilestone?.description}</p>
+        <div className="full_image">
+          <img src={currentMilestone?.media[0]?.uri} alt="" />
+        </div>
+
+        <button onClick={closeCompleteModal} className="default">
+          Close
+        </button>
+      </Modal>
     </div>
   );
 }
