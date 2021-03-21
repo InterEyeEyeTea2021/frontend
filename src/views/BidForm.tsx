@@ -60,7 +60,11 @@ export default function BidForm() {
         pay_name: "Total Value",
         suggested_value: 2000,
       },
-      { keyname: "advanced", pay_name: "Advanced", suggested_value: 200 },
+      {
+        keyname: "advanced",
+        pay_name: "Advanced(Min 10%)",
+        suggested_value: 200,
+      },
     ],
     milestones: [
       { name: "Acquire Materials" },
