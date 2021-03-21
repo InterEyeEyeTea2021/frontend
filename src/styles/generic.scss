@@ -165,6 +165,7 @@ html {
       margin-bottom: 0.5rem;
       border-radius: 0.5rem;
       display: flex;
+      flex-direction: column;
 
       .index {
         min-width: 1.5rem;
@@ -174,6 +175,10 @@ html {
         font-weight: 600;
         flex-grow: 1;
         color: $heading-text;
+      }
+
+      .upper-body {
+        display: flex;
       }
 
       .check {

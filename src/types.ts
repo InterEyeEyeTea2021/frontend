@@ -22,6 +22,17 @@ export interface Tender {
   };
 }
 
+export interface Milestone {
+  id: number;
+  name: string;
+  description: string;
+  status: boolean;
+  media: {
+    uri: string;
+    type: string;
+  }[];
+}
+
 export interface Fair {
   id: number;
   name: string;

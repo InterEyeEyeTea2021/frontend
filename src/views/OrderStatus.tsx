@@ -8,6 +8,7 @@ import axios from "axios";
 import { BACKEND_URL } from "../constants/constants";
 import Modal from "react-modal";
 import toast from "react-hot-toast";
+import { Milestone } from "../types";
 
 interface OrderData {
   order_id: number;
@@ -38,6 +39,7 @@ interface OrderData {
   };
 
   milestones: {
+    name: string;
     description: string;
     media: {
       uri: string;
@@ -54,6 +56,14 @@ export default function OrderStatus() {
   const auth = useAuth();
   let urlParams: { id: string } = useParams();
   const is_sme = auth?.user && auth.user.user_type === "SME";
+  const [currentMilestone, setCurrentMilestone] = useState<Milestone>({
+    id: 1,
+    name: "Acquire Materials",
+    description: "this is a milestone",
+    status: false,
+    media: [],
+  });
+  const [confirmMilestone, setConfirmMilestone] = useState(false);
   const [confirmCompleteOpen, setConfirmCompleteOpen] = useState(false);
 
   const history = useHistory();
@@ -140,22 +150,67 @@ export default function OrderStatus() {
       },
     ],
     milestones: [
-      { id: 1, name: "Milestone 1", status: true },
-      { id: 2, name: "Milestone 2", status: true },
-      { id: 3, name: "Milestone 3", status: false },
-      { id: 4, name: "Milestone 4", status: false },
+      {
+        id: 1,
+        name: "Milestone 1",
+        description: "this is a milestone",
+        status: true,
+      },
+      {
+        id: 2,
+        name: "Milestone 2",
+        description: "this is a milestone",
+        status: true,
+      },
+      {
+        id: 3,
+        name: "Milestone 3",
+        description: "this is a milestone",
+        status: false,
+      },
+      {
+        id: 4,
+        name: "Milestone 4",
+        description: "this is a milestone",
+        status: false,
+      },
     ],
   };
 
-  const [milestones, setMilestones] = useState([
-    { id: 1, name: "Acquire Materials", status: false },
-    { id: 2, name: "Start Production", status: false },
-    { id: 3, name: "Finish Production", status: false },
-    { id: 4, name: "Ship the Product", status: false },
+  const [milestones, setMilestones] = useState<Milestone[]>([
+    {
+      id: 1,
+      name: "Acquire Materials",
+      description: "this is a milestone",
+      status: false,
+      media: [],
+    },
+    {
+      id: 2,
+      name: "Start Production",
+      description: "this is a milestone",
+      status: false,
+      media: [],
+    },
+    {
+      id: 3,
+      name: "Finish Production",
+      description: "this is a milestone",
+      status: false,
+      media: [],
+    },
+    {
+      id: 4,
+      name: "Ship the Product",
+      description: "this is a milestone",
+      status: false,
+      media: [],
+    },
   ]);
 
-  const updateMilestone = (id: number) => {
+  const openMilestone = (id: number) => {
     let m = milestones.filter((m) => m.id === id)[0];
+    setCurrentMilestone(m);
     let newMilestones = milestones.map((m) => {
       if (m.id == id) {
         return {
@@ -174,19 +229,38 @@ export default function OrderStatus() {
     if (completed === milestones.length) {
       setConfirmCompleteOpen(true);
     } else {
-      if (m.status) {
-        toast((t) => (
-          <div className="toast_with_icon">
-            <Icon.Info></Icon.Info>
-            {m.name + " marked as todo!"}
-          </div>
-        ));
-      } else {
-        toast.success(m.name + " marked as complete!");
-      }
-      // history.push("/dashboard");
-      setMilestones(newMilestones);
+      setConfirmMilestone(true);
     }
+  };
+
+  const closeCurrentMilestone = () => {
+    setConfirmMilestone(false);
+  };
+
+  const updateMilestone = (id: number) => {
+    let m = milestones.filter((m) => m.id === id)[0];
+    let newMilestones = milestones.map((m) => {
+      if (m.id == id) {
+        return {
+          ...m,
+          status: !m.status,
+        };
+      }
+      return m;
+    });
+    if (m.status) {
+      toast((t) => (
+        <div className="toast_with_icon">
+          <Icon.Info></Icon.Info>
+          {m.name + " marked as todo!"}
+        </div>
+      ));
+    } else {
+      toast.success(m.name + " marked as complete!");
+    }
+    // history.push("/dashboard");
+    setConfirmMilestone(false);
+    setMilestones(newMilestones);
   };
 
   return (
@@ -307,24 +381,23 @@ export default function OrderStatus() {
       <div className="milestones">
         {milestones.map((m, index) => (
           <div className="milestone">
-            <div className="index">{index + 1}.</div>
-            <div className="name">{m.name}</div>
-            <div className="check">
-              <input
-                type="checkbox"
-                name={m.name}
-                id={"mile_check" + m.name}
-                checked={orderData?.state == "completed" || m.status}
-                onClick={(e) => {
-                  if (!is_sme && orderData?.state != "completed") {
-                    updateMilestone(m.id);
-                  }
-                }}
-              />
-              <span className="checkbox__control">
-                <Icon.Check></Icon.Check>
-              </span>
+            <div className="upper-body">
+              <div className="index">{index + 1}.</div>
+              <div className="name">{m.name}</div>
+              <div className="check">
+                <input
+                  type="checkbox"
+                  name={m.name}
+                  id={"mile_check" + m.name}
+                  checked={orderData?.state == "completed" || m.status}
+                  onClick={(e) => openMilestone(m.id)}
+                />
+                <span className="checkbox__control">
+                  <Icon.Check></Icon.Check>
+                </span>
+              </div>
             </div>
+            <div className="description">{m.description}</div>
           </div>
         ))}
       </div>
@@ -350,6 +423,37 @@ export default function OrderStatus() {
         </button>
       </Modal>
 
+      <Modal
+        isOpen={confirmMilestone}
+        // onAfterOpen={afterOpenModal}
+        onRequestClose={closeCompleteModal}
+        // style={customStyles}
+        contentLabel="Confirm Complete Modal"
+      >
+        <h1>{currentMilestone?.name}</h1>
+        <p>{currentMilestone?.description}</p>
+        <label htmlFor="media"> Upload Image </label>
+        <input
+          type="file"
+          accept="image/png, image/jpeg"
+          name="media"
+          ref={register({ required: false })}
+        />
+        <p>Canceling will not mark this milestone.</p>
+        <button
+          onClick={(e) => {
+            if (!is_sme && orderData?.state != "completed") {
+              updateMilestone(currentMilestone.id);
+            }
+          }}
+          disabled={isLoading}
+        >
+          {isLoading ? <Icon.Loader className="loader" /> : "Update Milestone"}
+        </button>
+        <button onClick={closeCurrentMilestone} className="default">
+          Cancel
+        </button>
+      </Modal>
       <hr />
     </div>
   );
