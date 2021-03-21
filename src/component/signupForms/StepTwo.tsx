@@ -44,7 +44,7 @@ export default function StepTwo({
         ref={register({ required: false })}
       />
 
-      <span className="label"> Prodcution Capacity </span>
+      {/* <span className="label"> Prodcution Capacity </span>
       <input
         name="production_cap"
         placeholder={productionCap}
@@ -56,7 +56,7 @@ export default function StepTwo({
         name="order_size"
         placeholder={orderSize}
         ref={register({ required: false })}
-      />
+      /> */}
 
       <span className="label"> Contact Number (WhatsApp) </span>
       <input
