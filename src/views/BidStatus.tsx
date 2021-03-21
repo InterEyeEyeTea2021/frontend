@@ -6,12 +6,15 @@ import { useHistory, useParams } from "react-router";
 import axios from "axios";
 import { BACKEND_URL } from "../constants/constants";
 import { SHGUser, useAuth } from "../hooks/Auth";
-import { Bid, Tender } from "../types";
+import { Bid, Tender, Milestone } from "../types";
 import toast from "react-hot-toast";
+import Modal from "react-modal";
 
 export default function BidStatus() {
   const { register, handleSubmit, errors } = useForm();
   const [tender, setTender] = useState<Tender>();
+  const [confirmCompleteOpen, setConfirmCompleteOpen] = useState(false);
+  const [currentMilestone, setCurrentMilestone] = useState<Milestone>();
   const [bid, setBid] = useState<Bid>();
   const auth = useAuth();
   const urlParams: { id: string } = useParams();
@@ -29,12 +32,45 @@ export default function BidStatus() {
       { pay_name: "Advanced", value: null, suggested_value: 200 },
     ],
     quanity: 100,
-    milestones: [
-      { name: "Acquire Materials" },
-      { name: "Start Production" },
-      { name: "Finish Production" },
-      { name: "Ship the Product" },
-    ],
+  };
+  const [milestones, setMilestones] = useState<Milestone[]>([
+    {
+      id: 1,
+      name: "Acquire Materials",
+      description: "this is a milestone",
+      status: false,
+      media: [],
+    },
+    {
+      id: 2,
+      name: "Start Production",
+      description: "this is a milestone",
+      status: false,
+      media: [],
+    },
+    {
+      id: 3,
+      name: "Finish Production",
+      description: "this is a milestone",
+      status: false,
+      media: [],
+    },
+    {
+      id: 4,
+      name: "Ship the Product",
+      description: "this is a milestone",
+      status: false,
+      media: [],
+    },
+  ]);
+
+  const openCompleteModal = (m: Milestone) => {
+    setConfirmCompleteOpen(true);
+    setCurrentMilestone(m);
+  };
+
+  const closeCompleteModal = () => {
+    setConfirmCompleteOpen(false);
   };
   useEffect(() => {
     axios
@@ -119,10 +155,12 @@ export default function BidStatus() {
       <h2>Milestones</h2>
 
       <div className="milestones">
-        {data.milestones.map((m, index) => (
-          <div className="milestone">
-            <div className="index">{index + 1}.</div>
-            <div className="name">{m.name}</div>
+        {milestones.map((m, index) => (
+          <div className="milestone" onClick={(e) => openCompleteModal(m)}>
+            <div className="upper-body">
+              <div className="index">{index + 1}.</div>
+              <div className="name">{m.name}</div>
+            </div>
             {/* <div className="check">check</div> */}
           </div>
         ))}
@@ -150,6 +188,24 @@ export default function BidStatus() {
       <button className="button default" onClick={cancelBid}>
         Cancel Bid
       </button>
+
+      <Modal
+        isOpen={confirmCompleteOpen}
+        // onAfterOpen={afterOpenModal}
+        onRequestClose={closeCompleteModal}
+        // style={customStyles}
+        contentLabel="Confirm Complete Modal"
+      >
+        <h1>{currentMilestone?.name}</h1>
+        <p>{currentMilestone?.description}</p>
+        <div className="full_image">
+          <img src={currentMilestone?.media[0]?.uri} alt="" />
+        </div>
+
+        <button onClick={closeCompleteModal} className="default">
+          Close
+        </button>
+      </Modal>
     </div>
   );
 }
