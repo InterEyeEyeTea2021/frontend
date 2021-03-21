@@ -88,16 +88,18 @@ export default function Portfolio() {
       </div>
       <div className="user_panel">
         <div className="name">{user_data?.name}</div>
-        <button
-          className="button small default"
-          onClick={(e) => {
-            auth?.signout(() => {
-              history.push("/");
-            });
-          }}
-        >
-          Signout
-        </button>
+        {!url_set && (
+          <button
+            className="button small default"
+            onClick={(e) => {
+              auth?.signout(() => {
+                history.push("/");
+              });
+            }}
+          >
+            Signout
+          </button>
+        )}
       </div>
 
       <hr />
@@ -119,7 +121,7 @@ export default function Portfolio() {
         <div className="label">Industry Type</div>
         <div className="value">{user_data?.industry_type}</div>
       </div>
-
+      {/* 
       <div className="detail">
         <div className="label">Production Capacity</div>
         <div className="value">{user_data?.production_cap}</div>
@@ -128,7 +130,7 @@ export default function Portfolio() {
       <div className="detail">
         <div className="label">Order Sizes</div>
         <div className="value">{user_data?.order_size}</div>
-      </div>
+      </div> */}
 
       {!is_sme && !url_set && (
         <button
