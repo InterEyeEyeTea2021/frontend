@@ -72,13 +72,13 @@ function Login() {
               className={`type ${type == "SHG" && "current"}`}
               onClick={() => handleTypeChange("SHG")}
             >
-              SHG
+              Producer
             </div>
             <div
               className={`type ${type == "SME" && "current"}`}
               onClick={() => handleTypeChange("SME")}
             >
-              SME
+              Buyer
             </div>
           </div>
           <button type="submit" disabled={isLoading}>

@@ -54,6 +54,7 @@ export default function BidForm() {
     description: "Description",
     skills_req: "Skills Required",
     location: "Location",
+    quanity: 100,
     payments: [
       {
         keyname: "completion",
@@ -148,10 +149,10 @@ export default function BidForm() {
         <div className="value">{tender?.name}</div>
       </div>
 
-      {/* <div className="detail">
-        <div className="label">Industry Type</div>
-        <div className="value">{data.industry_type}</div>
-      </div> */}
+      <div className="detail">
+        <div className="label">Quantity</div>
+        <div className="value">{data.quanity}</div>
+      </div>
 
       <div className="detail">
         <div className="label">Description</div>
