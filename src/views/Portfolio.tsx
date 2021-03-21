@@ -7,6 +7,8 @@ import { BACKEND_URL } from "../constants/constants";
 import { getPlaceholderImage } from "../helpers";
 import { useAuth, SHGUser } from "../hooks/Auth";
 import { SHGprofileData } from "../types";
+import toast from "react-hot-toast";
+import * as Icon from "react-feather";
 
 interface Product {
   product_id: number;
@@ -20,6 +22,8 @@ interface Product {
 
 export default function Portfolio() {
   const [products, setProducts] = useState<Product[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [accepted, setAccepted] = useState(false);
 
   let history = useHistory();
 
@@ -63,6 +67,17 @@ export default function Portfolio() {
     }
   }, [urlParams]);
 
+  const acceptPls = (e: React.MouseEvent) => {
+    setIsLoading(true);
+    toast.success("Connection request sent");
+
+    window.setTimeout(() => {
+      toast.success("Connection request accepted!");
+      setIsLoading(false);
+      setAccepted(true);
+    }, 3000);
+  };
+
   useEffect(() => {
     axios
       .get(`${BACKEND_URL}/product/shg/${shg_id}`)
@@ -100,8 +115,31 @@ export default function Portfolio() {
             Signout
           </button>
         )}
+        {!accepted
+          ? url_set && (
+              <button
+                className="button default"
+                onClick={acceptPls}
+                disabled={isLoading}
+              >
+                {isLoading ? "Request Sent" : "Connect"}
+              </button>
+            )
+          : ""}
       </div>
 
+      {accepted ? (
+        <div className="call_box">
+          <div className="details">
+            <p>{user_data?.phone}</p>
+          </div>
+          <div className="call">
+            <Icon.PhoneCall></Icon.PhoneCall>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
       <hr />
       <TitleHeader
         title="Portfolio"
