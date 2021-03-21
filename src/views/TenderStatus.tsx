@@ -45,10 +45,11 @@ export default function TenderStatus() {
 
   const data = {
     tender_name: "Tender Name",
-    industry_type: "Agriculture",
+    industry_type: "Textile",
     description: "Description",
     skills_req: "Skills Required",
     location: "Location",
+    quanity: 100,
     bids: [
       {
         image: "https://i.imgur.com/khUO2T7.png",
@@ -111,6 +112,11 @@ export default function TenderStatus() {
       </div>
 
       <div className="detail">
+        <div className="label">Quantity</div>
+        <div className="value">{data.quanity}</div>
+      </div>
+
+      <div className="detail description">
         <div className="label">Description</div>
         <div className="value">{tender?.description}</div>
       </div>
@@ -119,7 +125,6 @@ export default function TenderStatus() {
         <div className="label">Skills Required</div>
         <div className="value">{data.skills_req}</div>
       </div>
-
       {/* <button className="button" onClick={() => history.push("/search")}>
         Invite SHGs
       </button> */}
@@ -134,7 +139,7 @@ export default function TenderStatus() {
             <img src={profile_pics[i % 2]} alt="" />
           </div>
           <div className="details">
-            <h1>SHG</h1>
+            <h1>Producer</h1>
             <p>Bid: {b.amount}</p>
           </div>
         </div>

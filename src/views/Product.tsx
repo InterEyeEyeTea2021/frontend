@@ -88,7 +88,7 @@ export default function Product() {
         <div className="value">{product?.name}</div>
       </div>
 
-      <div className="detail">
+      <div className="detail description">
         <div className="label">Description</div>
         <div className="value">{product?.description}</div>
       </div>

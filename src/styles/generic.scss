@@ -37,7 +37,7 @@ html {
 
     .user_type {
       color: $primary;
-      font-size: 1.5rem;
+      font-size: 1.25rem;
     }
   }
 
@@ -94,6 +94,12 @@ html {
       font-size: 1.5rem;
       font-weight: 500;
       color: $heading-text;
+    }
+
+    &.description {
+      .value {
+        font-size: 1.2rem;
+      }
     }
   }
 

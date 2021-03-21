@@ -20,7 +20,7 @@ export default function BidStatus() {
 
   const data = {
     tender_name: "Tender Name",
-    industry_type: "Agriculture",
+    industry_type: "Textile",
     description: "Description",
     skills_req: "Skills Required",
     location: "Location",
@@ -28,6 +28,7 @@ export default function BidStatus() {
       { pay_name: "Order Completion", value: 2000, suggested_value: 1500 },
       { pay_name: "Advanced", value: null, suggested_value: 200 },
     ],
+    quanity: 100,
     milestones: [
       { name: "Acquire Materials" },
       { name: "Start Production" },
@@ -96,15 +97,19 @@ export default function BidStatus() {
 
       <h2>Tender Details</h2>
       <div className="detail">
-        <div className="label">Tender Name</div>
+        <div className="label">Product Name</div>
         <div className="value">{tender?.name}</div>
       </div>
       <div className="detail">
+        <div className="label">Quantity</div>
+        <div className="value">{data.quanity}</div>
+      </div>
+      <div className="detail">
         <div className="label">Industry Type</div>
-        <div className="value">{auth?.user?.industry_type}</div>
+        <div className="value">{data.industry_type}</div>
       </div>
 
-      <div className="detail">
+      <div className="detail description">
         <div className="label">Description</div>
         <div className="value">{tender?.description}</div>
       </div>
