@@ -28,7 +28,7 @@ export default function BidStatus() {
     skills_req: "Skills Required",
     location: "Location",
     payments: [
-      { pay_name: "Order Completion", value: 2000, suggested_value: 1500 },
+      { pay_name: "Total Value", value: 2000, suggested_value: 1500 },
       { pay_name: "Advanced", value: null, suggested_value: 200 },
     ],
     quanity: 100,
@@ -168,7 +168,7 @@ export default function BidStatus() {
 
       <hr />
 
-      <h2>Payments</h2>
+      <h2>Payment Breakup</h2>
 
       {data.payments.map((p, i) => (
         <div className="payment_details">
@@ -178,10 +178,15 @@ export default function BidStatus() {
               {p.suggested_value ? p.suggested_value : "Nil"}
             </div>
           </div>
-          <div className="detail">
-            <div className="label">Your Bid</div>
-            <div className="value">{p.value ? p.value : "Nil"}</div>
-          </div>
+        </div>
+      ))}
+
+      <hr />
+
+      {data.payments.map((p, i) => (
+        <div className="detail">
+          <div className="label">Your Bid</div>
+          <div className="value">{p.value ? p.value : "Nil"}</div>
         </div>
       ))}
 

@@ -245,19 +245,6 @@ export default function DashboardSHG() {
         <p> No orders yet </p>
       )}
 
-      {/* <h2> Payments </h2>
-      {data.payments.map((payment, id) => (
-        <Link to="/order/1/payment/1" className="no_style">
-          <div className="payment lite">
-            <h1 className="amount">{payment.amount}</h1>
-            <div className="details">
-              <h1> {payment.project_name} </h1>
-              <p> {payment.name_SHG} </p>
-            </div>
-          </div>
-        </Link>
-      ))} */}
-
       <h2> Portfolio </h2>
       <div className="order">
         <div className="image">

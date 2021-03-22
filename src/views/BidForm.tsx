@@ -228,7 +228,7 @@ export default function BidForm() {
 
       <hr />
 
-      <h2>Payments</h2>
+      <h2>Payment Breakup</h2>
 
       <form onSubmit={handleSubmit(onSubmit)}>
         {data.payments.map((p, i) => (
