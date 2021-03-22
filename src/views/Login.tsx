@@ -48,7 +48,7 @@ function Login() {
       <div className="form">
         <h1>Login</h1>
         <div className="error">{message}</div>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
           <span className="label"> Username </span>
           <input
             name="username"

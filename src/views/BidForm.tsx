@@ -76,28 +76,28 @@ export default function BidForm() {
     {
       id: 1,
       name: "Acquire Materials",
-      description: "this is a milestone",
+      description: "Acquire Cloth and Needles",
       status: false,
       media: [],
     },
     {
       id: 2,
       name: "Start Production",
-      description: "this is a milestone",
+      description: "Start producing the saree",
       status: false,
       media: [],
     },
     {
       id: 3,
       name: "Finish Production",
-      description: "this is a milestone",
+      description: "Finish production of all saree",
       status: false,
       media: [],
     },
     {
       id: 4,
       name: "Ship the Product",
-      description: "this is a milestone",
+      description: "Ship on the determined address",
       status: false,
       media: [],
     },
@@ -218,9 +218,10 @@ export default function BidForm() {
         {milestones.map((m, index) => (
           <div className="milestone" onClick={(e) => openCompleteModal(m)}>
             <div className="upper-body">
-              <div className="index">{index + 1}.</div>
+              <div className="index">&bull;</div>
               <div className="name">{m.name}</div>
             </div>
+            <p className="description">{m.description}</p>
             {/* <div className="check">check</div> */}
           </div>
         ))}

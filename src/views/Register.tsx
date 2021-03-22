@@ -32,7 +32,7 @@ function Register() {
     phone: "+91 XXXX XX XXXX",
     WAcontact: "+91 XXXX XX XXXX", // for WhatsApp
     user_type: "SHG",
-    industry_type: "Agriculture, Something, Engineering",
+    industry_type: "Agriculture, Textile, Handicraft, Woodcraft",
     account_number: "Account Number",
     branch_code: "IFSC Code",
 

@@ -162,7 +162,7 @@ html {
       }
       font-size: 1.3rem;
       padding: 0.5rem 1rem;
-      margin-bottom: 0.5rem;
+      margin-bottom: 1rem;
       border-radius: 0.5rem;
       display: flex;
       flex-direction: column;
@@ -171,6 +171,8 @@ html {
 
       .index {
         min-width: 1.5rem;
+        font-size: 4rem;
+        line-height: 1.25rem;
       }
 
       .name {
@@ -181,6 +183,10 @@ html {
 
       .upper-body {
         display: flex;
+      }
+
+      .description {
+        margin: 0 0 0 1.5rem;
       }
 
       .check {

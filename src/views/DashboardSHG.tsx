@@ -258,8 +258,6 @@ export default function DashboardSHG() {
         </div>
         <div className="details">
           <h1>{user_data.name_SHG}</h1>
-          <p>Production Capacity: {user_data.production_cap}</p>
-          <p>Order Size: {user_data.order_size}</p>
         </div>
       </div>
       <button

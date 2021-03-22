@@ -152,27 +152,31 @@ export default function OrderStatus() {
     milestones: [
       {
         id: 1,
-        name: "Milestone 1",
-        description: "this is a milestone",
-        status: true,
+        name: "Acquire Materials",
+        description: "Acquire Cloth and Needles",
+        status: false,
+        media: [],
       },
       {
         id: 2,
-        name: "Milestone 2",
-        description: "this is a milestone",
-        status: true,
+        name: "Start Production",
+        description: "Start producing the saree",
+        status: false,
+        media: [],
       },
       {
         id: 3,
-        name: "Milestone 3",
-        description: "this is a milestone",
+        name: "Finish Production",
+        description: "Finish production of all saree",
         status: false,
+        media: [],
       },
       {
         id: 4,
-        name: "Milestone 4",
-        description: "this is a milestone",
+        name: "Ship the Product",
+        description: "Ship on the determined address",
         status: false,
+        media: [],
       },
     ],
   };
@@ -181,28 +185,28 @@ export default function OrderStatus() {
     {
       id: 1,
       name: "Acquire Materials",
-      description: "this is a milestone",
+      description: "Acquire Cloth and Needles",
       status: false,
       media: [],
     },
     {
       id: 2,
       name: "Start Production",
-      description: "this is a milestone",
+      description: "Start producing the saree",
       status: false,
       media: [],
     },
     {
       id: 3,
       name: "Finish Production",
-      description: "this is a milestone",
+      description: "Finish production of all saree",
       status: false,
       media: [],
     },
     {
       id: 4,
       name: "Ship the Product",
-      description: "this is a milestone",
+      description: "Ship on the determined address",
       status: false,
       media: [],
     },
@@ -382,7 +386,7 @@ export default function OrderStatus() {
         {milestones.map((m, index) => (
           <div className="milestone">
             <div className="upper-body">
-              <div className="index">{index + 1}.</div>
+              <div className="index">&bull;</div>
               <div className="name">{m.name}</div>
               <div className="check">
                 <input
@@ -430,8 +434,9 @@ export default function OrderStatus() {
         // style={customStyles}
         contentLabel="Confirm Complete Modal"
       >
-        <h1>{currentMilestone?.name}</h1>
-        <p>{currentMilestone?.description}</p>
+        <h2>{currentMilestone?.name}</h2>
+        <h3>{currentMilestone?.description}</h3>
+
         <label htmlFor="media"> Upload Image </label>
         <input
           type="file"
