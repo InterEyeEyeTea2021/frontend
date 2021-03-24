@@ -168,6 +168,19 @@ export default function BidStatus() {
 
       <hr />
 
+      <div>
+        <h3> Skills Tutorial </h3>
+        <iframe
+          src="https://www.youtube.com/embed/aAxGTnVNJiE"
+          title="YouTube video player"
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+        ></iframe>
+      </div>
+
+      <hr />
+
       <h2>Payments</h2>
 
       {data.payments.map((p, i) => (
@@ -184,7 +197,6 @@ export default function BidStatus() {
           </div>
         </div>
       ))}
-
       <button className="button default" onClick={cancelBid}>
         Cancel Bid
       </button>
