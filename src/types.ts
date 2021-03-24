@@ -64,3 +64,8 @@ export interface SHGprofileData {
   order_size: string;
   prod_capacity: string;
 }
+
+export interface Video {
+  kind: string;
+  videoId: string;
+}

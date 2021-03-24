@@ -4,9 +4,9 @@ import * as Icon from "react-feather";
 import TitleHeader from "../component/TitleHeader";
 import { useHistory, useParams } from "react-router";
 import axios from "axios";
-import { BACKEND_URL } from "../constants/constants";
+import { API_YOUTUBE, BACKEND_URL } from "../constants/constants";
 import { SHGUser, useAuth } from "../hooks/Auth";
-import { Bid, Tender, Milestone } from "../types";
+import { Bid, Tender, Milestone, Video } from "../types";
 import toast from "react-hot-toast";
 import Modal from "react-modal";
 
@@ -15,6 +15,7 @@ export default function BidStatus() {
   const [tender, setTender] = useState<Tender>();
   const [confirmCompleteOpen, setConfirmCompleteOpen] = useState(false);
   const [currentMilestone, setCurrentMilestone] = useState<Milestone>();
+  const [video, setVideo] = useState<Video>();
   const [bid, setBid] = useState<Bid>();
   const auth = useAuth();
   const urlParams: { id: string } = useParams();
@@ -88,23 +89,17 @@ export default function BidStatus() {
         setBid(bid);
         setTender(res.data.data);
 
-        // window.setTimeout(() => {
-        //   axios
-        //     .post(`${BACKEND_URL}/bid/acceptBid`, {
-        //       id: bid.id,
-        //       contract_uri: "https://google.com",
-        //     })
-        //     .then((res) => {
-        //       toast.success("Your Bid has been Accepted!");
-
-        //       window.setTimeout(
-        //         () => toast.success("Redirecting to Dashboard"),
-        //         3000
-        //       );
-        //       window.setTimeout(() => history.push("/dashboard"), 5000);
-        //       console.log(res.data);
-        //     });
-        // }, 3000);
+        axios
+          .get(
+            `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&type=video&q=handmade%20${res.data.data.name}&key=${API_YOUTUBE}`
+          )
+          .then((res) => {
+            console.log(res.data, "video");
+            setVideo(res.data.items[0].id);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       })
       .catch((err) => {
         console.log(err);
@@ -168,6 +163,19 @@ export default function BidStatus() {
 
       <hr />
 
+      <div>
+        <h3> Skills Tutorial </h3>
+        <iframe
+          src={`https://www.youtube.com/embed/${video?.videoId}`}
+          title="YouTube video player"
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+        ></iframe>
+      </div>
+
+      <hr />
+
       <h2>Payments</h2>
 
       {data.payments.map((p, i) => (
@@ -184,7 +192,6 @@ export default function BidStatus() {
           </div>
         </div>
       ))}
-
       <button className="button default" onClick={cancelBid}>
         Cancel Bid
       </button>
