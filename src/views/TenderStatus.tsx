@@ -48,6 +48,7 @@ export default function TenderStatus() {
     industry_type: "Textile",
     description: "Description",
     skills_req: "Skills Required",
+    price: 2200,
     location: "Location",
     quanity: 100,
     bids: [
@@ -124,6 +125,10 @@ export default function TenderStatus() {
       <div className="detail">
         <div className="label">Skills Required</div>
         <div className="value">{data.skills_req}</div>
+      </div>
+      <div className="detail">
+        <div className="label">Price</div>
+        <div className="value">{data.price}</div>
       </div>
       {/* <button className="button" onClick={() => history.push("/search")}>
         Invite SHGs
