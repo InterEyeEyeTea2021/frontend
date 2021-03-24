@@ -36,6 +36,7 @@ import ScrollToTop from "./component/ScrollToTop";
 import { Toaster } from "react-hot-toast";
 import NetworkSHG from "./views/NetworkSHG";
 import Mela from "./views/Mela";
+import Logistics from "./views/Logistics";
 
 function App() {
   let auth = useAuth();
@@ -146,6 +147,9 @@ function OrderRouter() {
     <Switch>
       <Route exact path={`${path}/:id`}>
         <OrderStatus />
+      </Route>
+      <Route path={`${path}/:id/logistics/`}>
+        <Logistics />
       </Route>
       <Route path={`${path}/:id/payment/`}>
         <RequestPayment />
