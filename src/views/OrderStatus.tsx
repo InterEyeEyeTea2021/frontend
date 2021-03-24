@@ -5,10 +5,10 @@ import TitleHeader from "../component/TitleHeader";
 import { Link, useHistory, useParams } from "react-router-dom";
 import { SHGUser, SMEUser, useAuth } from "../hooks/Auth";
 import axios from "axios";
-import { BACKEND_URL } from "../constants/constants";
+import { API_YOUTUBE, BACKEND_URL } from "../constants/constants";
 import Modal from "react-modal";
 import toast from "react-hot-toast";
-import { Milestone } from "../types";
+import { Milestone, Video } from "../types";
 
 interface OrderData {
   order_id: number;
@@ -53,6 +53,7 @@ Modal.setAppElement("#root");
 export default function OrderStatus() {
   const { register, handleSubmit, errors } = useForm();
   const [isLoading, setIsLoading] = useState(false);
+  const [video, setVideo] = useState<Video>();
   const auth = useAuth();
   let urlParams: { id: string } = useParams();
   const is_sme = auth?.user && auth.user.user_type === "SME";
@@ -90,6 +91,18 @@ export default function OrderStatus() {
         if (order) {
           setOrderData(order);
           console.log(order, "this order");
+
+          axios
+            .get(
+              `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&type=video&q=handmade%20${order.order_name}&key=${API_YOUTUBE}`
+            )
+            .then((res) => {
+              console.log(res.data, "video");
+              setVideo(res.data.items[0].id);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
         }
       })
       .catch((err) => {
@@ -409,6 +422,17 @@ export default function OrderStatus() {
           Logistics & Delivery
         </Link>
       )}
+
+      <div>
+        <h3> Skills Tutorial </h3>
+        <iframe
+          src={`https://www.youtube.com/embed/${video?.videoId}`}
+          title="YouTube video player"
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+        ></iframe>
+      </div>
 
       <Modal
         isOpen={confirmCompleteOpen}
