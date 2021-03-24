@@ -1,5 +1,6 @@
 export const BACKEND_URL = `https://api.grameen-setu.com`;
 export const API_IMGBB = "629784fe6b8af8814cae40bcd842db0d";
+export const API_YOUTUBE = "AIzaSyDchqcElIkBkSpD-MZZx2X0cmJAwsIozUM";
 
 export const profile_pics = [
   "https://i.imgur.com/BSif1S1.png",
