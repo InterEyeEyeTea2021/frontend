@@ -401,6 +401,14 @@ export default function OrderStatus() {
           </div>
         ))}
       </div>
+      {!is_sme && (
+        <Link
+          to={`/order/${urlParams.id}/logistics`}
+          className="button default"
+        >
+          Logistics & Delivery
+        </Link>
+      )}
 
       <Modal
         isOpen={confirmCompleteOpen}

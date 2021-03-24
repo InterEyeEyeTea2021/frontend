@@ -247,6 +247,15 @@ html {
         margin-bottom: 0.5rem;
         border-radius: 12px;
       }
+
+      &.logistics {
+        margin-bottom: 1rem;
+        img {
+          height: 25vw;
+          border-radius: 6px;
+          box-shadow: 0px 4px 10px rgba($color: #395742, $alpha: 0.33);
+        }
+      }
     }
   }
 
