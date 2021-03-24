@@ -86,13 +86,13 @@ export default function TenderStatus() {
       });
 
     axios
-      .get(`${BACKEND_URL}/bid/getTenderBids/`, {
+      .get(`${BACKEND_URL}/bid/getTenderBids`, {
         params: {
           id,
         },
       })
       .then((res) => {
-        setBids(res.data);
+        setBids(res.data.data);
       })
       .catch((err) => {
         console.log(err);
@@ -137,7 +137,6 @@ export default function TenderStatus() {
       <hr />
 
       <h2>Bids</h2>
-
       {bids.map((b, i) => (
         <div className="bid">
           <div className="image">
