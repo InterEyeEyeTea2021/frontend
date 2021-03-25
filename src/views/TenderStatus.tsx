@@ -5,6 +5,8 @@ import { useHistory, useParams } from "react-router";
 import { isConstructSignatureDeclaration } from "typescript";
 import TitleHeader from "../component/TitleHeader";
 import { BACKEND_URL, profile_pics } from "../constants/constants";
+import { Bid } from "../types";
+import toast from "react-hot-toast";
 
 interface Tender {
   id: number;
@@ -28,12 +30,6 @@ interface Tender {
     profile_image_uri: string;
     phone: string;
   };
-}
-
-interface Bid {
-  amount: string;
-  shg_id: number;
-  tender_id: number;
 }
 
 export default function TenderStatus() {
@@ -99,6 +95,28 @@ export default function TenderStatus() {
       });
   }, []);
 
+  const handleBidAccept = (id: number, uri: string) => {
+    axios
+      .post(`${BACKEND_URL}/bid/acceptBid`, {
+        id: id,
+        contract_uri: uri,
+      })
+      .then((res) => {
+        toast.success("The Bid has been Accepted!");
+
+        window.setTimeout(
+          () => toast.success("Redirecting to Dashboard"),
+          3000
+        );
+
+        window.setTimeout(() => history.push("/dashboard"), 5000);
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <div className="main_content tender_status">
       <TitleHeader title="Tender Status" user_type="SME" />
@@ -146,6 +164,12 @@ export default function TenderStatus() {
             <h1>Producer</h1>
             <p>Bid: {b.amount}</p>
           </div>
+          <button
+            className="primary button"
+            onClick={() => handleBidAccept(b.id, "contract_dedo")}
+          >
+            Accept Bid
+          </button>
         </div>
       ))}
 
