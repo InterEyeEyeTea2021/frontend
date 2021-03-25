@@ -38,14 +38,7 @@ interface OrderData {
     profile_image_uri: string;
   };
 
-  milestones: {
-    name: string;
-    description: string;
-    media: {
-      uri: string;
-      type: string;
-    }[];
-  }[];
+  milestones: Milestone[];
 }
 
 Modal.setAppElement("#root");
@@ -62,10 +55,16 @@ export default function OrderStatus() {
     name: "Acquire Materials",
     description: "this is a milestone",
     status: false,
-    media: [],
+    media: [
+      {
+        type: "image",
+        uri: "",
+      },
+    ],
   });
   const [confirmMilestone, setConfirmMilestone] = useState(false);
   const [confirmCompleteOpen, setConfirmCompleteOpen] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
 
   const history = useHistory();
 
@@ -74,11 +73,7 @@ export default function OrderStatus() {
   const [orderData, setOrderData] = useState<OrderData>();
 
   let id: any;
-  if (!is_sme) {
-    id = (auth?.user as SHGUser)?.shg_id || (auth?.user as SMEUser)?.sme_id;
-    console.log(auth?.user);
-  } else {
-  }
+  id = (auth?.user as SHGUser)?.shg_id || (auth?.user as SMEUser)?.sme_id;
 
   useEffect(() => {
     axios
@@ -90,6 +85,7 @@ export default function OrderStatus() {
         })[0];
         if (order) {
           setOrderData(order);
+          setMilestones(order.milestones);
           console.log(order, "this order");
 
           axios
@@ -111,7 +107,13 @@ export default function OrderStatus() {
   }, []);
 
   const closeCompleteModal = () => {
-    setConfirmCompleteOpen(false);
+    is_sme ? setOpenModal(false) : setConfirmCompleteOpen(false);
+  };
+
+  const openModalSME = (id: number) => {
+    setOpenModal(true);
+    let m = milestones!.filter((m) => m.id === id)[0];
+    setCurrentMilestone(m);
   };
 
   const completeOrder = (e: React.MouseEvent) => {
@@ -119,7 +121,7 @@ export default function OrderStatus() {
     axios
       .get(`${BACKEND_URL}/order/completeOrder?id=${urlParams.id}`)
       .then(() => {
-        let newMilestones = milestones.map((m) => {
+        let newMilestones = milestones!.map((m) => {
           return {
             ...m,
             status: true,
@@ -139,92 +141,12 @@ export default function OrderStatus() {
       .catch((e) => console.log(e));
   };
 
-  const data = {
-    order_name: "Order Name",
-    industry_type: "Agriculture",
-    description: "Description",
-    skills_req: "Skills Required",
-    location: "Location",
-    payments: [
-      {
-        amount: 2000,
-        name: "Machinery",
-        status: "pending",
-      },
-      {
-        amount: 5000,
-        name: "Machinery",
-        status: "paid",
-      },
-      {
-        amount: 2000,
-        name: "Machinery",
-        status: "paid",
-      },
-    ],
-    milestones: [
-      {
-        id: 1,
-        name: "Milestone 1",
-        description: "this is a milestone",
-        status: true,
-      },
-      {
-        id: 2,
-        name: "Milestone 2",
-        description: "this is a milestone",
-        status: true,
-      },
-      {
-        id: 3,
-        name: "Milestone 3",
-        description: "this is a milestone",
-        status: false,
-      },
-      {
-        id: 4,
-        name: "Milestone 4",
-        description: "this is a milestone",
-        status: false,
-      },
-    ],
-  };
-
-  const [milestones, setMilestones] = useState<Milestone[]>([
-    {
-      id: 1,
-      name: "Acquire Materials",
-      description: "this is a milestone",
-      status: false,
-      media: [],
-    },
-    {
-      id: 2,
-      name: "Start Production",
-      description: "this is a milestone",
-      status: false,
-      media: [],
-    },
-    {
-      id: 3,
-      name: "Finish Production",
-      description: "this is a milestone",
-      status: false,
-      media: [],
-    },
-    {
-      id: 4,
-      name: "Ship the Product",
-      description: "this is a milestone",
-      status: false,
-      media: [],
-    },
-  ]);
+  const [milestones, setMilestones] = useState<Milestone[]>();
 
   const openMilestone = (id: number) => {
-    let m = milestones.filter((m) => m.id === id)[0];
+    let m = milestones!.filter((m) => m.id === id)[0];
     setCurrentMilestone(m);
-    let newMilestones = milestones.map((m) => {
+    let newMilestones = milestones!.map((m) => {
       if (m.id == id) {
         return {
           ...m,
@@ -239,7 +161,7 @@ export default function OrderStatus() {
         completed++;
       }
     });
-    if (completed === milestones.length) {
+    if (completed === milestones!.length) {
       setConfirmCompleteOpen(true);
     } else {
       setConfirmMilestone(true);
@@ -251,8 +173,8 @@ export default function OrderStatus() {
   };
 
   const updateMilestone = (id: number) => {
-    let m = milestones.filter((m) => m.id === id)[0];
-    let newMilestones = milestones.map((m) => {
+    let m = milestones!.filter((m) => m.id === id)[0];
+    let newMilestones = milestones!.map((m) => {
       if (m.id == id) {
         return {
           ...m,
@@ -292,10 +214,10 @@ export default function OrderStatus() {
         <div className="label">Tender Name</div>
         <div className="value">{data.order_name}</div>
       </div> */}
-      <div className="detail">
+      {/* <div className="detail">
         <div className="label">Industry Type</div>
         <div className="value">{data.industry_type}</div>
-      </div>
+      </div> */}
 
       <div className="detail description">
         <div className="label">Description</div>
@@ -392,8 +314,8 @@ export default function OrderStatus() {
       <h2>Milestones</h2>
 
       <div className="milestones">
-        {milestones.map((m, index) => (
-          <div className="milestone">
+        {orderData?.milestones.map((m, index) => (
+          <div className="milestone" onClick={() => openModalSME(m.id)}>
             <div className="upper-body">
               <div className="index">{index + 1}.</div>
               <div className="name">{m.name}</div>
@@ -423,17 +345,38 @@ export default function OrderStatus() {
         </Link>
       )}
 
-      <div>
-        <h3> Skills Tutorial </h3>
-        <iframe
-          src={`https://www.youtube.com/embed/${video?.videoId}`}
-          title="YouTube video player"
-          frameBorder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-        ></iframe>
-      </div>
+      {!is_sme && (
+        <div>
+          <h3> Skills Tutorial </h3>
+          <iframe
+            src={`https://www.youtube.com/embed/${video?.videoId}`}
+            title="YouTube video player"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          ></iframe>
+        </div>
+      )}
 
+      {/* This is for viewing a milestone for sme */}
+      <Modal
+        isOpen={openModal}
+        // onAfterOpen={afterOpenModal}
+        onRequestClose={closeCompleteModal}
+        // style={customStyles}
+        contentLabel="Confirm Complete Modal"
+      >
+        <h1>{currentMilestone?.name}</h1>
+        <p>{currentMilestone?.description}</p>
+        <label> Image </label>
+        <img src={currentMilestone?.media[0]?.uri} />
+
+        <button onClick={closeCompleteModal} className="default">
+          Close
+        </button>
+      </Modal>
+
+      {/* This is when all the milestones have been marked complete */}
       <Modal
         isOpen={confirmCompleteOpen}
         // onAfterOpen={afterOpenModal}
@@ -455,6 +398,7 @@ export default function OrderStatus() {
         </button>
       </Modal>
 
+      {/* This is for completing a milestone */}
       <Modal
         isOpen={confirmMilestone}
         // onAfterOpen={afterOpenModal}
