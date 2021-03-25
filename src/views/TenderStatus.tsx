@@ -5,6 +5,8 @@ import { useHistory, useParams } from "react-router";
 import { isConstructSignatureDeclaration } from "typescript";
 import TitleHeader from "../component/TitleHeader";
 import { BACKEND_URL, profile_pics } from "../constants/constants";
+import { Bid } from "../types";
+import toast from "react-hot-toast";
 
 interface Tender {
   id: number;
@@ -30,12 +32,6 @@ interface Tender {
   };
 }
 
-interface Bid {
-  amount: string;
-  shg_id: number;
-  tender_id: number;
-}
-
 export default function TenderStatus() {
   const [tender, setTender] = useState<any>();
   const [bids, setBids] = useState<Bid[]>([]);
@@ -48,6 +44,7 @@ export default function TenderStatus() {
     industry_type: "Textile",
     description: "Description",
     skills_req: "Skills Required",
+    price: 2200,
     location: "Location",
     quanity: 100,
     bids: [
@@ -85,18 +82,40 @@ export default function TenderStatus() {
       });
 
     axios
-      .get(`${BACKEND_URL}/bid/getTenderBids/`, {
+      .get(`${BACKEND_URL}/bid/getTenderBids`, {
         params: {
           id,
         },
       })
       .then((res) => {
-        setBids(res.data);
+        setBids(res.data.data);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
+
+  const handleBidAccept = (id: number, uri: string) => {
+    axios
+      .post(`${BACKEND_URL}/bid/acceptBid`, {
+        id: id,
+        contract_uri: uri,
+      })
+      .then((res) => {
+        toast.success("The Bid has been Accepted!");
+
+        window.setTimeout(
+          () => toast.success("Redirecting to Dashboard"),
+          3000
+        );
+
+        window.setTimeout(() => history.push("/dashboard"), 5000);
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <div className="main_content tender_status">
@@ -125,6 +144,10 @@ export default function TenderStatus() {
         <div className="label">Skills Required</div>
         <div className="value">{data.skills_req}</div>
       </div>
+      <div className="detail">
+        <div className="label">Price</div>
+        <div className="value">{data.price}</div>
+      </div>
       {/* <button className="button" onClick={() => history.push("/search")}>
         Invite SHGs
       </button> */}
@@ -132,7 +155,6 @@ export default function TenderStatus() {
       <hr />
 
       <h2>Bids</h2>
-
       {bids.map((b, i) => (
         <div className="bid">
           <div className="image">
@@ -142,6 +164,12 @@ export default function TenderStatus() {
             <h1>Producer</h1>
             <p>Bid: {b.amount}</p>
           </div>
+          <button
+            className="primary button"
+            onClick={() => handleBidAccept(b.id, "contract_dedo")}
+          >
+            Accept Bid
+          </button>
         </div>
       ))}
 
