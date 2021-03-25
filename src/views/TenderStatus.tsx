@@ -165,7 +165,7 @@ export default function TenderStatus() {
             <p>Bid: {b.amount}</p>
           </div>
           <button
-            className="primary button"
+            className="button small"
             onClick={() => handleBidAccept(b.id, "contract_dedo")}
           >
             Accept Bid
