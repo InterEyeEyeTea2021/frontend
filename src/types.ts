@@ -3,6 +3,7 @@ export interface Tender {
   state: string;
   description: string;
   name: string;
+  plan_uri: string;
   media: {
     uri: string;
     type: string;
