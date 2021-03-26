@@ -50,12 +50,12 @@ export default function TenderStatus() {
     bids: [
       {
         image: "https://i.imgur.com/khUO2T7.png",
-        shg_name: "SHG Name",
+        shg_name: "Company Name",
         bid: 2000,
       },
       {
         image: "https://i.imgur.com/khUO2T7.png",
-        shg_name: "SHG Name",
+        shg_name: "Company Name",
         bid: 1000,
       },
     ],
