@@ -17,6 +17,10 @@ html {
 
   min-height: calc(100vh - 13rem);
 
+  @include lg {
+    padding-left: 5vw;
+  }
+
   .title_header {
     display: flex;
     align-items: center;
@@ -241,6 +245,9 @@ html {
       flex-direction: column;
       margin: 1rem 0 2rem 0;
       width: calc(50vw - 1.5rem);
+      @include lg {
+        width: calc(30vw - 1.5rem);
+      }
       .details {
         flex-grow: 1;
       }
@@ -258,6 +265,10 @@ html {
         // height: 64px;
         margin-bottom: 0.5rem;
         border-radius: 12px;
+        @include lg {
+          width: calc(30vw - 2rem);
+          height: calc(30vw - 2rem);
+        }
       }
 
       &.logistics {
@@ -266,6 +277,9 @@ html {
           height: 25vw;
           border-radius: 6px;
           box-shadow: 0px 4px 10px rgba($color: #395742, $alpha: 0.33);
+          @include lg {
+            height: 10vw;
+          }
         }
       }
     }
@@ -277,6 +291,20 @@ html {
       width: 100%;
       border-radius: 1rem;
       box-shadow: 0px 10px 20px rgba($color: #395742, $alpha: 0.33);
+
+      @include lg {
+        width: 60%;
+      }
+    }
+  }
+
+  iframe {
+    width: calc(100vw - 2rem);
+    height: calc(100vw * 9 / 16 - 2rem);
+    border-radius: 12px;
+    @include lg {
+      width: calc(60vw);
+      height: calc(60vw * 9 / 16);
     }
   }
 
