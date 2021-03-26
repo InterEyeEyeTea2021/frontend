@@ -48,6 +48,7 @@ export default function OrderStatus() {
   const { register, handleSubmit, errors } = useForm();
   const [isLoading, setIsLoading] = useState(false);
   const [video, setVideo] = useState<Video>();
+  const [milestones, setMilestones] = useState<Milestone[]>();
   const auth = useAuth();
   let urlParams: { id: string } = useParams();
   const is_sme = auth?.user && auth.user.user_type === "SME";
@@ -55,7 +56,7 @@ export default function OrderStatus() {
     id: 1,
     name: "Acquire Materials",
     description: "this is a milestone",
-    status: false,
+    status: "pending",
     media: [
       {
         type: "image",
@@ -108,13 +109,17 @@ export default function OrderStatus() {
   }, []);
 
   const closeCompleteModal = () => {
-    is_sme ? setOpenModal(false) : setConfirmCompleteOpen(false);
+    orderData?.state == "completed"
+      ? setOpenModal(false)
+      : setConfirmCompleteOpen(false);
   };
 
   const openModalSME = (id: number) => {
-    setOpenModal(true);
-    let m = milestones!.filter((m) => m.id === id)[0];
-    setCurrentMilestone(m);
+    if (orderData?.state == "completed") {
+      setOpenModal(true);
+      let m = milestones!.filter((m) => m.id === id)[0];
+      setCurrentMilestone(m);
+    }
   };
 
   const completeOrder = (e: React.MouseEvent) => {
@@ -125,7 +130,7 @@ export default function OrderStatus() {
         let newMilestones = milestones!.map((m) => {
           return {
             ...m,
-            status: true,
+            status: "completed",
           };
         });
         setIsLoading(false);
@@ -142,23 +147,22 @@ export default function OrderStatus() {
       .catch((e) => console.log(e));
   };
 
-  const [milestones, setMilestones] = useState<Milestone[]>();
-
   const openMilestone = (id: number) => {
+    if (orderData?.state == "completed") return;
     let m = milestones!.filter((m) => m.id === id)[0];
     setCurrentMilestone(m);
     let newMilestones = milestones!.map((m) => {
       if (m.id == id) {
         return {
           ...m,
-          status: !m.status,
+          status: m.status == "pending" ? "completed" : "pending",
         };
       }
       return m;
     });
     let completed = 0;
     newMilestones.forEach((m) => {
-      if (m.status) {
+      if (m.status == "completed") {
         completed++;
       }
     });
@@ -171,20 +175,22 @@ export default function OrderStatus() {
 
   const closeCurrentMilestone = () => {
     setConfirmMilestone(false);
+    setOpenModal(false);
   };
 
   const updateMilestone = (id: number) => {
     let m = milestones!.filter((m) => m.id === id)[0];
     let newMilestones = milestones!.map((m) => {
       if (m.id == id) {
+        console.log(m.status);
         return {
           ...m,
-          status: !m.status,
+          status: m.status == "pending" ? "completed" : "pending",
         };
       }
       return m;
     });
-    if (m.status) {
+    if (m.status == "completed") {
       toast((t) => (
         <div className="toast_with_icon">
           <Icon.Info></Icon.Info>
@@ -322,7 +328,7 @@ export default function OrderStatus() {
       <h2>Milestones</h2>
 
       <div className="milestones">
-        {orderData?.milestones.map((m, index) => (
+        {milestones?.map((m, index) => (
           <div className="milestone" onClick={() => openModalSME(m.id)}>
             <div className="upper-body">
               <div className="index">{index + 1}.</div>
@@ -332,7 +338,11 @@ export default function OrderStatus() {
                   type="checkbox"
                   name={m.name}
                   id={"mile_check" + m.name}
-                  checked={orderData?.state == "completed" || m.status}
+                  checked={
+                    orderData?.state == "completed" || m.status !== "pending"
+                      ? true
+                      : false
+                  }
                   onClick={(e) => openMilestone(m.id)}
                 />
                 <span className="checkbox__control">
@@ -376,7 +386,6 @@ export default function OrderStatus() {
       >
         <h1>{currentMilestone?.name}</h1>
         <p>{currentMilestone?.description}</p>
-        <label> Image </label>
         <img src={currentMilestone?.media[0]?.uri} />
 
         <button onClick={closeCompleteModal} className="default">
