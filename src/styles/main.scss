@@ -5,11 +5,14 @@
 body {
   color: $text;
   background-color: $background;
-  margin: 0;
+  margin: 0 auto;
+  @include lg {
+    max-width: 60vw;
+    padding-left: 5vw;
+  }
 }
 
 .home {
-  max-width: 800px;
   margin: auto;
   img {
     width: 100%;

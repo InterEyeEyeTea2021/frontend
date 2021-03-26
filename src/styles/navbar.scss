@@ -6,7 +6,6 @@ nav {
   // background-color: $background-alt;
   .wrapper {
     flex-grow: 1;
-    max-width: 1000px;
     display: flex;
     padding: 0.5rem 1rem;
     align-items: center;
@@ -15,6 +14,9 @@ nav {
     @include sm {
       // max-width: 80vw;
       flex-direction: column;
+    }
+    @include lg {
+      max-width: 60vw;
     }
   }
   a.no_style {
@@ -35,6 +37,9 @@ nav {
       margin: 0;
       // font-weight: normal;
       color: $heading-text;
+    }
+    @include lg {
+      padding-left: 4vw;
     }
   }
 
@@ -101,6 +106,36 @@ nav.bottomNav {
     p {
       margin-top: 0.2rem;
       font-size: 0.75rem;
+    }
+  }
+
+  @include lg {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 15vw;
+
+    ul {
+      flex-direction: column;
+      align-items: center;
+      margin: auto;
+      a {
+        padding: 0;
+        margin: 1rem 0;
+        width: inherit;
+
+        li {
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+          align-items: center;
+          padding: 1rem 0;
+          p {
+            margin: 0 0 0 1rem;
+            font-size: 1.2rem;
+          }
+        }
+      }
     }
   }
 }
