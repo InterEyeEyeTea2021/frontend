@@ -8,30 +8,6 @@ import { BACKEND_URL, profile_pics } from "../constants/constants";
 import { Bid } from "../types";
 import toast from "react-hot-toast";
 
-interface Tender {
-  id: number;
-  name: string;
-  state: string;
-  description: string;
-  media: {
-    uri: string;
-    type: string;
-  }[];
-  milestones: {
-    description: string;
-    media: {
-      uri: string;
-      type: string;
-    }[];
-  }[];
-  sme: {
-    id: number;
-    name: string;
-    profile_image_uri: string;
-    phone: string;
-  };
-}
-
 export default function TenderStatus() {
   const [tender, setTender] = useState<any>();
   const [bids, setBids] = useState<Bid[]>([]);
@@ -172,6 +148,13 @@ export default function TenderStatus() {
           </button>
         </div>
       ))}
+      <hr />
+
+      <h2>Tender Plan</h2>
+
+      <div className="full_image">
+        <img src={tender?.plan_uri} />
+      </div>
 
       <hr />
 

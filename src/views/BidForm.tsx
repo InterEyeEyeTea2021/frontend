@@ -7,37 +7,8 @@ import { API_YOUTUBE, BACKEND_URL } from "../constants/constants";
 import { useHistory, useParams } from "react-router";
 import toast from "react-hot-toast";
 import { authContext, SHGUser, useAuth } from "../hooks/Auth";
-import { Bid, Milestone, Video } from "../types";
+import { Bid, Milestone, Tender, Video } from "../types";
 import Modal from "react-modal";
-
-interface Tender {
-  id: number;
-  name: string;
-  state: string;
-  description: string;
-  media: {
-    uri: string;
-    type: string;
-  }[];
-  milestones: {
-    description: string;
-    media: {
-      uri: string;
-      type: string;
-    }[];
-  }[];
-  sme: {
-    id: number;
-    name: string;
-    profile_image_uri: string;
-    phone: string;
-  };
-  bids: {
-    amount: string;
-    shg_id: number;
-    tender_id: number;
-  }[];
-}
 
 export default function BidForm() {
   const { register, handleSubmit, errors } = useForm();
@@ -222,6 +193,13 @@ export default function BidForm() {
         <div className="label">Location</div>
         <div className="value">{data.location}</div>
       </div> */}
+      <hr />
+
+      <h2>Tender Plan</h2>
+
+      <div className="full_image">
+        <img src={tender?.plan_uri} />
+      </div>
 
       <hr />
 

@@ -49,6 +49,7 @@ export default function TenderForm() {
   };
 
   const handleModalClose = () => {
+    console.log(getValues("milestone0description"));
     setOpenModal(false);
   };
 
@@ -57,65 +58,78 @@ export default function TenderForm() {
     console.log("Submitted Form Data: ", data);
 
     if (data.media.length > 0) {
+      // For tender image
       const e = data.media[0];
       const d = new FormData();
       let photograph;
-      console.log(e);
       d.append("image", e);
+
+      // For plane image
+      const f = data.plan[0];
+      const h = new FormData();
+      let plan;
+      h.append("image", f);
       axios
-        .post("https://api.imgbb.com/1/upload?key=" + API_IMGBB, d)
-        .then((resp) => {
-          photograph = resp.data.data.image.url;
+        .all([
+          axios.post("https://api.imgbb.com/1/upload?key=" + API_IMGBB, d),
+          axios.post("https://api.imgbb.com/1/upload?key=" + API_IMGBB, h),
+        ])
+        .then(
+          axios.spread((resp1: any, resp2: any) => {
+            photograph = resp1.data.data.image.url;
+            plan = resp2.data.data.image.url;
 
-          const request_data = {
-            ...data,
-            sme_id: (auth?.user as SMEUser).sme_id,
-            milestones: [
-              {
-                name: data.milestone0,
-                description: data.milestone0description,
-                media: [],
-              },
-              {
-                name: data.milestone1,
-                description: data.milestone1description,
-                media: [],
-              },
-              {
-                name: data.milestone2,
-                description: data.milestone2description,
-                media: [],
-              },
-              {
-                name: data.milestone3,
-                description: data.milestone3description,
-                media: [],
-              },
-            ],
-            media: [
-              {
-                uri: photograph,
-                type: "image",
-              },
-            ],
-          };
+            const request_data = {
+              ...data,
+              plan_uri: plan,
+              sme_id: (auth?.user as SMEUser).sme_id,
+              milestones: [
+                {
+                  name: data.milestone0,
+                  description: data.milestone0description,
+                  media: [],
+                },
+                {
+                  name: data.milestone1,
+                  description: data.milestone1description,
+                  media: [],
+                },
+                {
+                  name: data.milestone2,
+                  description: data.milestone2description,
+                  media: [],
+                },
+                {
+                  name: data.milestone3,
+                  description: data.milestone3description,
+                  media: [],
+                },
+              ],
+              media: [
+                {
+                  uri: photograph,
+                  type: "image",
+                },
+              ],
+            };
 
-          axios
-            .post(
-              `${BACKEND_URL}/tender/create`,
-              request_data
-              // auth?.authHeader()
-            )
-            .then((res) => {
-              setIsLoading(false);
-              toast.success("Tender Created");
-              history.push("/dashboard");
-            })
-            .catch((err) => {
-              console.log(err);
-            });
-          console.log(photograph);
-        })
+            axios
+              .post(
+                `${BACKEND_URL}/tender/create`,
+                request_data
+                // auth?.authHeader()
+              )
+              .then((res) => {
+                setIsLoading(false);
+                toast.success("Tender Created");
+                history.push("/dashboard");
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+            console.log(photograph);
+          })
+        )
         .catch((e) => {
           console.log(e);
         });
@@ -223,6 +237,16 @@ export default function TenderForm() {
 
         <hr />
 
+        <label htmlFor="plan">Attach Plan</label>
+        <input
+          type="file"
+          accept="image/png, image/jpeg"
+          id="plan"
+          name="plan"
+          ref={register({ required: false })}
+          // onChange={}
+        />
+
         <h2>Milestones</h2>
 
         <ol>
@@ -277,7 +301,7 @@ export default function TenderForm() {
           placeholder="Milestone Description"
           defaultValue={getValues(`milestone${milestoneId}description`)}
           ref={register({
-            required: true,
+            required: false,
           })}
         />
         <button onClick={handleModalClose}>Update</button>

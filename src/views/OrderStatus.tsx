@@ -13,6 +13,7 @@ import { Milestone, Video } from "../types";
 interface OrderData {
   order_id: number;
   state: string;
+  plan_uri: string;
   description: string;
   contract: string;
   order_name: string;
@@ -275,6 +276,13 @@ export default function OrderStatus() {
           </div>
         </div>
       )}
+      <hr />
+
+      <h2>Tender Plan</h2>
+
+      <div className="full_image">
+        <img src={orderData?.plan_uri} />
+      </div>
 
       <hr />
 
