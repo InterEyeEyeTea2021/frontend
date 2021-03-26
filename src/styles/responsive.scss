@@ -12,7 +12,7 @@
 
 @mixin full_width($cut: 0rem) {
   @include lg {
-    width: calc(1000px);
+    width: calc(60vw);
   }
   @include sm {
     width: calc(100vw - #{$cut});
