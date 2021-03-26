@@ -199,19 +199,19 @@ export default function TenderForm() {
 
         <hr />
 
-        {/* <h2>Payments</h2>
+        <h2>Payments</h2>
 
-        <label htmlFor="order_completion">Order Completion</label>
+        <label htmlFor="order_completion">Total Value</label>
         <input
-          name="order_completion"
-          id="order_completion"
-          placeholder="Order Completion"
+          name="completion"
+          id="completion"
+          placeholder="Price"
           ref={register({
             required: true,
           })}
         />
 
-        <label htmlFor="advanced">Advanced (Empty if not required)</label>
+        <label htmlFor="advanced">Advanced (Min. 10%)</label>
         <input
           name="advanced"
           id="advanced"
@@ -221,7 +221,7 @@ export default function TenderForm() {
           })}
         />
 
-        <hr /> */}
+        <hr />
 
         <h2>Milestones</h2>
 
