@@ -147,6 +147,14 @@ export default function BidStatus() {
 
       <hr />
 
+      <h2>Tender Plan</h2>
+
+      <div className="full_image">
+        <img src={tender?.plan_uri} />
+      </div>
+
+      <hr />
+
       <h2>Milestones</h2>
 
       <div className="milestones">
