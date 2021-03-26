@@ -7,6 +7,7 @@ import { SMEUser, useAuth } from "../hooks/Auth";
 import toast from "react-hot-toast";
 import { useHistory, useParams } from "react-router-dom";
 import * as Icon from "react-feather";
+import Modal from "react-modal";
 
 interface Product {
   product_id: number;
@@ -21,8 +22,10 @@ interface Product {
 export default function TenderForm() {
   const [isLoading, setIsLoading] = useState(false);
   const [product, setProduct] = useState<Product>();
-  const { register, handleSubmit, errors } = useForm();
+  const { register, handleSubmit, errors, getValues } = useForm();
   const [message, setMessage] = useState("");
+  const [openModal, setOpenModal] = useState(false);
+  const [milestoneId, setMilestoneId] = useState<number>();
 
   let { id }: { id: string } = useParams();
   let auth = useAuth();
@@ -39,6 +42,15 @@ export default function TenderForm() {
         console.log(err);
       });
   }, []);
+
+  const handleModalOpen = (i: number) => {
+    setMilestoneId(i);
+    setOpenModal(true);
+  };
+
+  const handleModalClose = () => {
+    setOpenModal(false);
+  };
 
   const onSubmit = (data: any) => {
     setIsLoading(true);
@@ -60,19 +72,23 @@ export default function TenderForm() {
             sme_id: (auth?.user as SMEUser).sme_id,
             milestones: [
               {
-                description: data.milestone0,
+                name: data.milestone0,
+                description: data.milestone0description,
                 media: [],
               },
               {
-                description: data.milestone1,
+                name: data.milestone1,
+                description: data.milestone1description,
                 media: [],
               },
               {
-                description: data.milestone2,
+                name: data.milestone2,
+                description: data.milestone2description,
                 media: [],
               },
               {
-                description: data.milestone3,
+                name: data.milestone3,
+                description: data.milestone3description,
                 media: [],
               },
             ],
@@ -212,14 +228,22 @@ export default function TenderForm() {
         <ol>
           {milestones.map((m, index) => (
             <li>
-              <input
-                name={"milestone" + index}
-                id={"milestone" + index}
-                defaultValue={m.name}
-                ref={register({
-                  required: true,
-                })}
-              />
+              <div className="form-milestone">
+                <input
+                  name={"milestone" + index}
+                  id={"milestone" + index}
+                  defaultValue={m.name}
+                  ref={register({
+                    required: true,
+                  })}
+                />
+                <div
+                  className="form-fileplus"
+                  onClick={() => handleModalOpen(index)}
+                >
+                  <Icon.FilePlus />
+                </div>
+              </div>
             </li>
           ))}
         </ol>
@@ -231,6 +255,37 @@ export default function TenderForm() {
         {/* <input type="submit" value="Invite SHGs" disabled={isLoading} /> */}
         <div className="error">{message}</div>
       </form>
+
+      <Modal
+        isOpen={openModal}
+        onRequestClose={handleModalClose}
+        contentLabel="Confirm Complete Modal"
+      >
+        <h1>Milestone Details</h1>
+        <label htmlFor="milestone-name">Milestone</label>
+        <input
+          name={`milestone${milestoneId}`}
+          defaultValue={getValues(`milestone${milestoneId}`)}
+          ref={register({
+            required: true,
+          })}
+        />
+        <label htmlFor="milestone-description">Description</label>
+        <input
+          name={`milestone${milestoneId}description`}
+          id={`milestone${milestoneId}description`}
+          placeholder="Milestone Description"
+          defaultValue={getValues(`milestone${milestoneId}description`)}
+          ref={register({
+            required: true,
+          })}
+        />
+        <button onClick={handleModalClose}>Update</button>
+
+        <button onClick={handleModalClose} className="default">
+          Close
+        </button>
+      </Modal>
     </div>
   );
 }

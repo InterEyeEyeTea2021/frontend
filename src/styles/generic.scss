@@ -68,12 +68,24 @@ html {
 
   ol,
   ul {
+    padding-left: 20px;
+
+    .form-milestone {
+      display: flex;
+      flex-direction: row;
+
+      .form-fileplus {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+      }
+    }
     @include full_width(4rem);
     li {
       @include full_width(4rem);
     }
     li input {
-      max-width: 90%;
+      max-width: 80%;
     }
   }
 
